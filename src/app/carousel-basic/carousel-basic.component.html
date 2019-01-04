@@ -1,0 +1,7 @@
+<ngb-carousel *ngIf="slides" #rflCarousel>
+  <div *ngFor="let slide of slides">
+    <ng-template ngbSlide id="{{slide.slideId}}">
+      <div>{{slide.text}}</div>
+    </ng-template>
+  </div>
+</ngb-carousel>
