@@ -33,5 +33,8 @@
     <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Announcement">
       <slide-announcement [model]="slide"></slide-announcement>
     </ng-template>
+    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Weather">
+      <slide-weather [model]="slide"></slide-weather>
+    </ng-template>
   </ng-container>
 </ngb-carousel>

@@ -9,5 +9,6 @@ export enum SlideType {
     Fundraising = 9,
     FundraisingStats = 10,
     Video = 11,
-    Announcement = 12
+    Announcement = 12,
+    Weather = 13
 }

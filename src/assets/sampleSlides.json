@@ -96,5 +96,13 @@
     "SecondsToForceShowFor": "0",
     "ForceSlideToShowAtTime": "",
     "ShowForSeconds":"5"
+  },
+  {
+    "SlideId": "weather",
+    "Header": "This is the base slide of weather slide",
+    "SlideType": 13,
+    "SecondsToForceShowFor": "0",
+    "ForceSlideToShowAtTime": "",
+    "ShowForSeconds":"5"
   }
 ]
