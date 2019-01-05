@@ -32,11 +32,11 @@ export class CountdownClockComponent implements OnInit {
       let b = moment();
       //event not yet started
       let duration = moment.duration(b.diff(a));
-      let DaysTillStart = duration.days()
-      let HoursTillStart = duration.hours();
-      let MinutesTillStart = duration.minutes();
-      let SecondsTillStart = duration.seconds();
-      this.TimeTillEnd = Math.abs(DaysTillStart) + ' Days ' + Math.abs(HoursTillStart) + ' Hours ' + Math.abs(MinutesTillStart) + ' Minutes ' + Math.abs(SecondsTillStart) + ' seconds.';
+      let DaysTillEnd = duration.days()
+      let HoursTillEnd = duration.hours();
+      let MinutesTillEnd = duration.minutes();
+      let SecondsTillEnd = duration.seconds();
+      this.TimeTillEnd = Math.abs(DaysTillEnd) + ' Days ' + Math.abs(HoursTillEnd) + ' Hours ' + Math.abs(MinutesTillEnd) + ' Minutes ' + Math.abs(SecondsTillEnd) + ' seconds.';
     }
   }
 
