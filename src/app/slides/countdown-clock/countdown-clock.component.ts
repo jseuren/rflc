@@ -27,8 +27,8 @@ export class CountdownClockComponent implements OnInit {
 
   private calculateTimeTillEnd(): void {
     //if it is still valid to show the date time (as the end time has not already passed)
-    if (moment() <= moment(this.model.EndTime)) {
-      let a = moment(this.model.EndTime);
+    if (moment() <= moment(this.model.CountdownEndTime)) {
+      let a = moment(this.model.CountdownEndTime);
       let b = moment();
       //event not yet started
       let duration = moment.duration(b.diff(a));

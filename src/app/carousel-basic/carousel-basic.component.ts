@@ -6,7 +6,9 @@ import { SlideType } from '../models/slide-type';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment/moment';
 import { CountdownClockSlide } from '../models/countdown-clock/countdown-clock-slide';
-const secondsCounter = interval(5000);
+const intervalTime: number = 5000;
+const slideMover = interval(intervalTime);
+const secondsCounter = interval(1000);
 @Component({
   selector: 'ngb-carousel-basic',
   templateUrl: './carousel-basic.component.html',
@@ -18,6 +20,7 @@ export class CarouselBasicComponent implements AfterViewInit {
 
   SlideType: any = SlideType;
   slides: Array<ISlide>;
+  slidesFromServer: Array<ISlide>;
 
   constructor(config: NgbCarouselConfig, private _http: HttpClient) {
     // customize default values of carousels used by this component tree
@@ -30,7 +33,7 @@ export class CarouselBasicComponent implements AfterViewInit {
     config.interval = 172800000; //2 days....we want to custom control the sliding
 
     this.getSlides().subscribe(result => {
-      this.slides = result;
+      this.slidesFromServer = result;
       this.slides = this.getValidSlides();
     });
 
@@ -41,32 +44,63 @@ export class CarouselBasicComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    secondsCounter.subscribe(() =>
+    slideMover.subscribe(() =>
       this.displayNextSlide()
     );
-  }
 
-  private getValidSlides(): Array<ISlide> {
-    return this.slides.filter(x => {
-      if(x.hasOwnProperty('EndTime')) {
-        //if it is a countodown slide, has the time to countdown to
-        //already passed ? If so remove slide
-        if (moment() > moment((<CountdownClockSlide>x).EndTime)) {
-          return false;
-        } else {
-          //else slide is still valid so keep in array
-          return true;
-        }
-      } else {
-        return true;
-      }
+    secondsCounter.subscribe(() => {
+      this.checkForForcedSlideDisplay();
     })
   }
 
+  private getValidSlides(): Array<ISlide> {
+    return this.slidesFromServer.filter(x => {
+      if(x.hasOwnProperty('CountdownEndTime')) {
+        //if it is a countodown slide, has the time to countdown to
+        //already passed ? If so remove slide
+        if (moment() > moment((<CountdownClockSlide>x).CountdownEndTime)) {
+          return false;
+        } 
+      } 
+      return true;
+    });
+  }
+
+  //Is there a slide that must be displayed at a partiucalr time ?
+  private checkForForcedSlideDisplay(): boolean {
+    var forcedSlides = this.slidesFromServer.filter(x => {
+      if(x.ForceSlideToShowAtTime) {
+        var forceTime = moment(x.ForceSlideToShowAtTime);
+        var endTime = moment(x.ForceSlideToShowAtTime).add(x.SecondsToForceShowFor,'seconds');
+        //if the forced time has passed but end forced time is less than now
+        if(forceTime < moment() && endTime > moment()) {
+          return true;
+        }
+      } 
+      return false;
+    });
+    if(forcedSlides && forcedSlides.length){
+      this.slides = forcedSlides;
+      //there may bemultipe configured so only allow them to rotate through until they are invalid
+      var int = this.getRandomInt(0, this.slides.length - 1);
+      this.carousel.select(this.slides[int].SlideId);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   private displayNextSlide(): void {
-    this.slides = this.getValidSlides();
-    var int = this.getRandomInt(0, this.slides.length - 1);
-    this.carousel.select(this.slides[int].SlideId);
+    //If a slide needs to be forced to be dispslayed due to a specified time sent down
+    //then let that slide be displayed until it needs to
+    if(!this.checkForForcedSlideDisplay()) {
+      //filter out anyslides that may no longer be valid to display
+      this.slides = this.getValidSlides();
+      
+      var int = this.getRandomInt(0, this.slides.length - 1);
+      this.carousel.select(this.slides[int].SlideId);
+    }
+    
   }
 
   private getRandomInt(min, max) {
