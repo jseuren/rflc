@@ -3,9 +3,6 @@
     <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.CountdownClock">
       <slide-countdown-clock [model]="slide"></slide-countdown-clock>
     </ng-template>
-    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Clock">
-      <slide-clock [model]="slide"></slide-clock>
-    </ng-template>
     <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.IndividualLeaderBoard">
       <slide-individual-leaderboard [model]="slide"></slide-individual-leaderboard>
     </ng-template>
@@ -15,5 +12,12 @@
     <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.UpcomingSchedule">
       <slide-upcoming-schedule [model]="slide"></slide-upcoming-schedule>
     </ng-template>
+    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Instagram">
+      <silde-instagram [model]="slide"></silde-instagram>
+    </ng-template>
+    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.SlideShow">
+      <slide-slide-show [model]="slide"></slide-slide-show>
+    </ng-template>
+    
   </ng-container>
 </ngb-carousel>

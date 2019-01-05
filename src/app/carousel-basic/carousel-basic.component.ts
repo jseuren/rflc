@@ -39,6 +39,11 @@ export class CarouselBasicComponent implements AfterViewInit {
     //so set a time interval that will not slide through 
     //automatically, but allow us to control it
     config.interval = 172800000; 
+
+    this.getSlides().subscribe(result => {
+      this.slidesFromServer = result;
+      this.slides = result;
+    });
   }
 
   //get the array of slides from the server
@@ -47,11 +52,6 @@ export class CarouselBasicComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-
-    this.getSlides().subscribe(result => {
-      this.slidesFromServer = result;
-      this.displayNextSlide();
-    });
 
     //this is here to rotate through slides
     slideMover.subscribe(() => {

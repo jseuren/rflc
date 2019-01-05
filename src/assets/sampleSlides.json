@@ -35,5 +35,19 @@
     "SlideType": 5,
     "SecondsToForceShowFor": "0",
     "ForceSlideToShowAtTime": ""
+  },
+  {
+    "SlideId": "instagram",
+    "Header": "This is the base slide of instagram",
+    "SlideType": 6,
+    "SecondsToForceShowFor": "0",
+    "ForceSlideToShowAtTime": ""
+  },
+  {
+    "SlideId": "slide-show",
+    "Header": "This is the base slide of a slide show",
+    "SlideType": 7,
+    "SecondsToForceShowFor": "0",
+    "ForceSlideToShowAtTime": ""
   }
 ]
