@@ -13,6 +13,7 @@ import { InstagramComponent } from './slides/instagram/instagram.component';
 import { SlideShowComponent } from './slides/slide-show/slide-show.component';
 import { SponsorsComponent } from './slides/sponsors/sponsors.component';
 import { FundraisingComponent } from './slides/fundraising/fundraising.component';
+import { FundraisingStatsComponent } from './slides/fundraising-stats/fundraising-stats.component';
 
 @NgModule({
   imports:      [ BrowserModule, NgbCarouselModule, HttpClientModule ],
@@ -23,7 +24,7 @@ import { FundraisingComponent } from './slides/fundraising/fundraising.component
     IndividualLeaderboardComponent, 
     TeamLeaderboardComponent, 
     UpcomingScheduleComponent, 
-    InstagramComponent, SlideShowComponent, SponsorsComponent, FundraisingComponent 
+    InstagramComponent, SlideShowComponent, SponsorsComponent, FundraisingComponent, FundraisingStatsComponent 
   ],
   bootstrap:    [ AppComponent ]
 })

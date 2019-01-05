@@ -63,5 +63,12 @@
     "SlideType": 9,
     "SecondsToForceShowFor": "0",
     "ForceSlideToShowAtTime": ""
+  },
+  {
+    "SlideId": "fundraising-stats",
+    "Header": "This is the base slide of fundraising stats",
+    "SlideType": 10,
+    "SecondsToForceShowFor": "0",
+    "ForceSlideToShowAtTime": ""
   }
 ]
