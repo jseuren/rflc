@@ -1,22 +1,25 @@
-import { Component, ViewChild, AfterViewInit, TemplateRef  } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { NgbCarouselConfig, NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
-import { interval } from 'rxjs';
-import { Slide } from '../models/slide';
+import { interval, Observable } from 'rxjs';
+import { ISlide } from '../models/slide';
 import { SlideType } from '../models/slide-type';
-const secondsCounter = interval(1000);
+import { HttpClient } from '@angular/common/http';
+import * as moment from 'moment/moment';
+import { CountdownClockSlide } from '../models/countdown-clock/countdown-clock-slide';
+const secondsCounter = interval(5000);
 @Component({
   selector: 'ngb-carousel-basic',
   templateUrl: './carousel-basic.component.html',
   styleUrls: ['./carousel-basic.component.css'],
-  providers: [ NgbCarouselConfig ]
+  providers: [NgbCarouselConfig]
 })
 export class CarouselBasicComponent implements AfterViewInit {
-  @ViewChild('rflCarousel') carousel: NgbCarousel;
+  @ViewChild(NgbCarousel) carousel: NgbCarousel;
 
   SlideType: any = SlideType;
-  slides: Array<Slide>;
+  slides: Array<ISlide>;
 
-  constructor(private config: NgbCarouselConfig) {
+  constructor(config: NgbCarouselConfig, private _http: HttpClient) {
     // customize default values of carousels used by this component tree
     config.showNavigationArrows = false;
     config.showNavigationIndicators = false;
@@ -24,26 +27,46 @@ export class CarouselBasicComponent implements AfterViewInit {
     config.wrap = false;
     config.keyboard = false;
     config.pauseOnHover = false;
+    config.interval = 172800000; //2 days....we want to custom control the sliding
 
-    this.slides = [
-      { SlideId:"countdown",Header:"This is the base slide of a countdown timer",SlideType:SlideType.CountdownClock},
-      { SlideId:"clock",Header:"This is the base slide of a clock",SlideType:SlideType.Clock},
-      { SlideId:"individual-leaderboard",Header:"This is the base slide of an individual leaderbaord",SlideType:SlideType.IndividualLeaderBoard},
-      { SlideId:"team-leaderboard",Header:"This is the base slide of a team leaderbaord",SlideType:SlideType.TeamLeaderBoard},
-      { SlideId:"schedule",Header:"This is the base slide of the schedule",SlideType:SlideType.UpcomingSchedule},
-    ];
+    this.getSlides().subscribe(result => {
+      this.slides = result;
+      this.slides = this.getValidSlides();
+    });
+
+  }
+
+  getSlides(): Observable<Array<ISlide>> {
+    return this._http.get<Array<ISlide>>('./assets/sampleSlides.json');
   }
 
   ngAfterViewInit() {
-    this.carousel.pause();
-
-    secondsCounter.subscribe(() => 
+    secondsCounter.subscribe(() =>
       this.displayNextSlide()
     );
   }
 
+  private getValidSlides(): Array<ISlide> {
+    return this.slides.filter(x => {
+      if(x.hasOwnProperty('EndTime')) {
+        //if it is a countodown slide, has the time to countdown to
+        //already passed ? If so remove slide
+        if (moment() > moment((<CountdownClockSlide>x).EndTime)) {
+          return false;
+        } else {
+          //else slide is still valid so keep in array
+          return true;
+        }
+      } else {
+        return true;
+      }
+    })
+  }
+
   private displayNextSlide(): void {
-    this.carousel.select(this.slides[this.getRandomInt(0,this.slides.length - 1)].SlideId);
+    this.slides = this.getValidSlides();
+    var int = this.getRandomInt(0, this.slides.length - 1);
+    this.carousel.select(this.slides[int].SlideId);
   }
 
   private getRandomInt(min, max) {

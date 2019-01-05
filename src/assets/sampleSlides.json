@@ -1,0 +1,7 @@
+[
+    { "SlideId":"countdownTill","Header":"This is the base slide of a countdown timer till the start of the event","SlideType":1, "EndTime":"2019-01-05T04:54:00.000Z"},
+    { "SlideId":"countdownEnd","Header":"This is the base slide of a countdown timer till the end of the event","SlideType":1, "EndTime":"2019-01-08T22:00:00.000Z"},
+    { "SlideId":"individual-leaderboard","Header":"This is the base slide of an individual leaderbaord","SlideType":3},
+    { "SlideId":"team-leaderboard","Header":"This is the base slide of a team leaderbaord","SlideType":4},
+    { "SlideId":"schedule","Header":"This is the base slide of the schedule","SlideType":5}
+]

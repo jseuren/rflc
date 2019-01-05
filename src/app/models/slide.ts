@@ -1,7 +1,13 @@
 import { SlideType } from './slide-type';
 
-export class Slide {
-    public SlideId: string;
-    public Header: string;
-    public SlideType: SlideType;
+export class Slide implements ISlide {
+    SlideId: string;
+    Header: string;
+    SlideType: SlideType;
+}
+
+export interface ISlide {
+    SlideId: string;
+    Header: string;
+    SlideType: SlideType;
 }

@@ -1,7 +1,0 @@
-[
-    { "SlideId":"countdown","Header":"This is the base slide of a countdown timer","SlideType":1},
-    { "SlideId":"clock","Header":"This is the base slide of a clock","SlideType":2},
-    { "SlideId":"individual-leaderboard","Header":"This is the base slide of an individual leaderbaord","SlideType":3},
-    { "SlideId":"team-leaderboard","Header":"This is the base slide of a team leaderbaord","SlideType":4},
-    { "SlideId":"schedule","Header":"This is the base slide of the schedule","SlideType":5}
-]
