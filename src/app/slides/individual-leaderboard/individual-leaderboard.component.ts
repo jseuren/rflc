@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Slide } from 'src/app/models/slide';
+import { IndivdualLeaderBoardSlide } from 'src/app/models/individual-leaderboard/individual-leaderboard-slide';
 
 @Component({
   selector: 'slide-individual-leaderboard',
@@ -7,7 +7,7 @@ import { Slide } from 'src/app/models/slide';
   styleUrls: ['./individual-leaderboard.component.css']
 })
 export class IndividualLeaderboardComponent implements OnInit {
-  @Input() model: Slide;
+  @Input() model: IndivdualLeaderBoardSlide;
   constructor() { }
 
   ngOnInit() {

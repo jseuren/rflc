@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Slide } from 'src/app/models/slide';
+import { CountdownClockSlide } from 'src/app/models/countdown-clock/countdown-clock-slide';
 
 @Component({
   selector: 'slide-countdown-clock',
@@ -8,7 +8,7 @@ import { Slide } from 'src/app/models/slide';
 })
 export class CountdownClockComponent implements OnInit {
 
-  @Input() model: Slide;
+  @Input() model: CountdownClockSlide;
   constructor() { }
 
   ngOnInit() {

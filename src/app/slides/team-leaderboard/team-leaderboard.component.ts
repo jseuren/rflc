@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Slide } from 'src/app/models/slide';
+import { TeamLeaderBoardSlide } from 'src/app/models/team-leaderboard/team-leaderboard-slide';
 
 @Component({
   selector: 'slide-team-leaderboard',
@@ -7,7 +7,7 @@ import { Slide } from 'src/app/models/slide';
   styleUrls: ['./team-leaderboard.component.css']
 })
 export class TeamLeaderboardComponent implements OnInit {
-  @Input() model: Slide;
+  @Input() model: TeamLeaderBoardSlide;
   constructor() { }
 
   ngOnInit() {

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Slide } from 'src/app/models/slide';
+import { ClockSlide } from 'src/app/models/clock/clock-slide';
 
 @Component({
   selector: 'slide-clock',
@@ -7,7 +7,7 @@ import { Slide } from 'src/app/models/slide';
   styleUrls: ['./clock.component.css']
 })
 export class ClockComponent implements OnInit {
-  @Input() model: Slide;
+  @Input() model: ClockSlide;
   constructor() { }
 
   ngOnInit() {

@@ -26,11 +26,11 @@ export class CarouselBasicComponent implements AfterViewInit {
     config.pauseOnHover = false;
 
     this.slides = [
-      { SlideId:"countdown",Text:"This is the base slide of a countdown timer",SlideType:SlideType.CountdownClock},
-      { SlideId:"clock",Text:"This is the base slide of a clock",SlideType:SlideType.Clock},
-      { SlideId:"individual-leaderboard",Text:"This is the base slide of an individual leaderbaord",SlideType:SlideType.IndividualLeaderBoard},
-      { SlideId:"team-leaderboard",Text:"This is the base slide of a team leaderbaord",SlideType:SlideType.TeamLeaderBoard},
-      { SlideId:"schedule",Text:"This is the base slide of the schedule",SlideType:SlideType.UpcomingSchedule},
+      { SlideId:"countdown",Header:"This is the base slide of a countdown timer",SlideType:SlideType.CountdownClock},
+      { SlideId:"clock",Header:"This is the base slide of a clock",SlideType:SlideType.Clock},
+      { SlideId:"individual-leaderboard",Header:"This is the base slide of an individual leaderbaord",SlideType:SlideType.IndividualLeaderBoard},
+      { SlideId:"team-leaderboard",Header:"This is the base slide of a team leaderbaord",SlideType:SlideType.TeamLeaderBoard},
+      { SlideId:"schedule",Header:"This is the base slide of the schedule",SlideType:SlideType.UpcomingSchedule},
     ];
   }
 
