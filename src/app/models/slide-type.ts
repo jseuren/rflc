@@ -5,5 +5,6 @@ export enum SlideType {
     UpcomingSchedule = 5,
     Instagram = 6,
     SlideShow = 7,
-    Sponsors = 8
+    Sponsors = 8,
+    Fundraising = 9
 }

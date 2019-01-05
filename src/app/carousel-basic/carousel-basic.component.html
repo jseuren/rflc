@@ -21,5 +21,8 @@
     <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Sponsors">
       <slide-sponsors [model]="slide"></slide-sponsors>
     </ng-template>
+    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Fundraising">
+      <slide-fundraising [model]="slide"></slide-fundraising>
+    </ng-template>
   </ng-container>
 </ngb-carousel>

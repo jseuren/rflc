@@ -12,6 +12,7 @@ import { UpcomingScheduleComponent } from './slides/upcoming-schedule/upcoming-s
 import { InstagramComponent } from './slides/instagram/instagram.component';
 import { SlideShowComponent } from './slides/slide-show/slide-show.component';
 import { SponsorsComponent } from './slides/sponsors/sponsors.component';
+import { FundraisingComponent } from './slides/fundraising/fundraising.component';
 
 @NgModule({
   imports:      [ BrowserModule, NgbCarouselModule, HttpClientModule ],
@@ -22,7 +23,7 @@ import { SponsorsComponent } from './slides/sponsors/sponsors.component';
     IndividualLeaderboardComponent, 
     TeamLeaderboardComponent, 
     UpcomingScheduleComponent, 
-    InstagramComponent, SlideShowComponent, SponsorsComponent 
+    InstagramComponent, SlideShowComponent, SponsorsComponent, FundraisingComponent 
   ],
   bootstrap:    [ AppComponent ]
 })
