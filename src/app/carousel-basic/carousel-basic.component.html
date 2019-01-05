@@ -27,5 +27,8 @@
     <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.FundraisingStats">
       <slide-fundraising-stats [model]="slide"></slide-fundraising-stats>
     </ng-template>
+    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Video">
+      <slide-video [model]="slide"></slide-video>
+    </ng-template>
   </ng-container>
 </ngb-carousel>

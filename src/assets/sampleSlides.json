@@ -80,5 +80,13 @@
     "SecondsToForceShowFor": "0",
     "ForceSlideToShowAtTime": "",
     "ShowForSeconds":"2"
+  },
+  {
+    "SlideId": "video",
+    "Header": "This is the base slide of video slide",
+    "SlideType": 11,
+    "SecondsToForceShowFor": "0",
+    "ForceSlideToShowAtTime": "",
+    "ShowForSeconds":"7"
   }
 ]

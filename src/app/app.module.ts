@@ -14,9 +14,15 @@ import { SlideShowComponent } from './slides/slide-show/slide-show.component';
 import { SponsorsComponent } from './slides/sponsors/sponsors.component';
 import { FundraisingComponent } from './slides/fundraising/fundraising.component';
 import { FundraisingStatsComponent } from './slides/fundraising-stats/fundraising-stats.component';
+import { VideoComponent } from './slides/video/video.component';
 
 @NgModule({
-  imports:      [ BrowserModule, NgbCarouselModule, HttpClientModule, NgbModule.forRoot() ],
+  imports:      [ 
+    BrowserModule, 
+    NgbCarouselModule, 
+    HttpClientModule, 
+    NgbModule.forRoot() 
+  ],
   declarations: [ 
     AppComponent, 
     CarouselBasicComponent, 
@@ -28,8 +34,11 @@ import { FundraisingStatsComponent } from './slides/fundraising-stats/fundraisin
     SlideShowComponent, 
     SponsorsComponent, 
     FundraisingComponent, 
-    FundraisingStatsComponent 
+    FundraisingStatsComponent, 
+    VideoComponent 
   ],
-  bootstrap:    [ AppComponent ]
+  bootstrap:    [ 
+    AppComponent 
+  ]
 })
 export class AppModule { }
