@@ -3,8 +3,8 @@
     "SlideId": "countdownTill",
     "Header": "This is the base slide of a countdown timer till the start of the event",
     "SlideType": 1,
-    "CountdownEndTime": "2019-01-05T05:59:00.000Z",
-    "ForceSlideToShowAtTime": "2019-01-05T05:58:00.000Z",
+    "CountdownEndTime": "2019-01-05T06:13:00.000Z",
+    "ForceSlideToShowAtTime": "2019-01-05T06:12:00.000Z",
     "SecondsToForceShowFor": "60"
   },
   {
@@ -12,7 +12,7 @@
     "Header": "This is the base slide of a countdown timer till the end of the event",
     "SlideType": 1,
     "CountdownEndTime": "2019-01-08T22:00:00.000Z",
-    "ForceSlideToShowAtTime": "",
+    "ForceSlideToShowAtTime": "2019-01-05T06:12:00.000Z",
     "SecondsToForceShowFor": "300"
   },
   {
