@@ -18,6 +18,8 @@
     <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.SlideShow">
       <slide-slide-show [model]="slide"></slide-slide-show>
     </ng-template>
-    
+    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Sponsors">
+      <slide-sponsors [model]="slide"></slide-sponsors>
+    </ng-template>
   </ng-container>
 </ngb-carousel>

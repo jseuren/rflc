@@ -49,5 +49,12 @@
     "SlideType": 7,
     "SecondsToForceShowFor": "0",
     "ForceSlideToShowAtTime": ""
+  },
+  {
+    "SlideId": "sponsors",
+    "Header": "This is the base slide of sponsors",
+    "SlideType": 8,
+    "SecondsToForceShowFor": "0",
+    "ForceSlideToShowAtTime": ""
   }
 ]
