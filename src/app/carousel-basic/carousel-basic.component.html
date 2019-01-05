@@ -1,7 +1,24 @@
 <ngb-carousel *ngIf="slides" #rflCarousel>
-  <div *ngFor="let slide of slides">
-    <ng-template ngbSlide id="{{slide.slideId}}">
-      <div>{{slide.text}}</div>
+  <ng-container *ngFor="let slide of slides">
+    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.CountdownTimer">
+      COUNTDOWN
+      <div>{{slide.Text}}</div>
     </ng-template>
-  </div>
+    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Clock">
+      CLOCK
+      <div>{{slide.Text}}</div>
+    </ng-template>
+    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.IndividualLeaderBoard">
+      INIDIVDUAL LEADER BOARD
+      <div>{{slide.Text}}</div>
+    </ng-template>
+    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.TeamLeaderBoard">
+      TEAM LEADER BOARD
+      <div>{{slide.Text}}</div>
+    </ng-template>
+    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.UpcomingSchedule">
+      UPCOMING SCHEDULE
+      <div>{{slide.Text}}</div>
+    </ng-template>
+  </ng-container>
 </ngb-carousel>

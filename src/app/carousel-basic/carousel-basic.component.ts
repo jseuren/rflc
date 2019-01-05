@@ -1,7 +1,8 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, ViewChild, AfterViewInit, TemplateRef  } from '@angular/core';
 import { NgbCarouselConfig, NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { interval } from 'rxjs';
+import { Slide } from '../models/slide';
+import { SlideType } from '../models/slide-type';
 const secondsCounter = interval(1000);
 @Component({
   selector: 'ngb-carousel-basic',
@@ -12,35 +13,10 @@ const secondsCounter = interval(1000);
 export class CarouselBasicComponent implements AfterViewInit {
   @ViewChild('rflCarousel') carousel: NgbCarousel;
 
-  slides = [
-    {
-      slideId:"countdown",
-      text:"This is the base slide of a countdown timer",
-      slideType:"countdown"
-    },
-    {
-      slideId:"clock",
-      text:"This is the base slide of a clock",
-      slideType:"clock"
-    },
-    {
-      slideId:"individual-leaderboard",
-      text:"This is the base slide of an individual leaderbaord",
-      slideType:"individual-leaderboard"
-    },
-    {
-      slideId:"team-leaderboard",
-      text:"This is the base slide of a team leaderbaord",
-      slideType:"team-leaderboard"
-    },
-    {
-      slideId:"schedule",
-      text:"This is the base slide of the schedule",
-      slideType:"schedule"
-    }
-  ];
+  SlideType: any = SlideType;
+  slides: Array<Slide>;
 
-  constructor(private config: NgbCarouselConfig, private _http: HttpClient) {
+  constructor(private config: NgbCarouselConfig) {
     // customize default values of carousels used by this component tree
     config.showNavigationArrows = false;
     config.showNavigationIndicators = false;
@@ -48,6 +24,14 @@ export class CarouselBasicComponent implements AfterViewInit {
     config.wrap = false;
     config.keyboard = false;
     config.pauseOnHover = false;
+
+    this.slides = [
+      { SlideId:"countdown",Text:"This is the base slide of a countdown timer",SlideType:SlideType.CountdownTimer},
+      { SlideId:"clock",Text:"This is the base slide of a clock",SlideType:SlideType.Clock},
+      { SlideId:"individual-leaderboard",Text:"This is the base slide of an individual leaderbaord",SlideType:SlideType.IndividualLeaderBoard},
+      { SlideId:"team-leaderboard",Text:"This is the base slide of a team leaderbaord",SlideType:SlideType.TeamLeaderBoard},
+      { SlideId:"schedule",Text:"This is the base slide of the schedule",SlideType:SlideType.UpcomingSchedule},
+    ];
   }
 
   ngAfterViewInit() {
@@ -59,7 +43,7 @@ export class CarouselBasicComponent implements AfterViewInit {
   }
 
   private displayNextSlide(): void {
-    this.carousel.select(this.slides[this.getRandomInt(0,this.slides.length - 1)].slideId);
+    this.carousel.select(this.slides[this.getRandomInt(0,this.slides.length - 1)].SlideId);
   }
 
   private getRandomInt(min, max) {
