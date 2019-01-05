@@ -35,7 +35,10 @@ export class CarouselBasicComponent implements AfterViewInit {
     config.wrap = false;
     config.keyboard = false;
     config.pauseOnHover = false;
-    config.interval = 172800000; //2 days....we want to custom control the sliding
+    //2 days....we want to custom control the sliding
+    //so set a time interval that will not slide through 
+    //automatically, but allow us to control it
+    config.interval = 172800000; 
   }
 
   //get the array of slides from the server
