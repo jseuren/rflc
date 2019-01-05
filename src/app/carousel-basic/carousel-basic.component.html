@@ -30,5 +30,8 @@
     <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Video">
       <slide-video [model]="slide"></slide-video>
     </ng-template>
+    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Announcement">
+      <slide-announcement [model]="slide"></slide-announcement>
+    </ng-template>
   </ng-container>
 </ngb-carousel>

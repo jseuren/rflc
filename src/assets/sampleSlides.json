@@ -88,5 +88,13 @@
     "SecondsToForceShowFor": "0",
     "ForceSlideToShowAtTime": "",
     "ShowForSeconds":"7"
+  },
+  {
+    "SlideId": "announcement",
+    "Header": "This is the base slide of announcement slide",
+    "SlideType": 12,
+    "SecondsToForceShowFor": "0",
+    "ForceSlideToShowAtTime": "",
+    "ShowForSeconds":"5"
   }
 ]

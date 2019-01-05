@@ -15,6 +15,7 @@ import { SponsorsComponent } from './slides/sponsors/sponsors.component';
 import { FundraisingComponent } from './slides/fundraising/fundraising.component';
 import { FundraisingStatsComponent } from './slides/fundraising-stats/fundraising-stats.component';
 import { VideoComponent } from './slides/video/video.component';
+import { AnnouncementComponent } from './slides/announcement/announcement.component';
 
 @NgModule({
   imports:      [ 
@@ -35,7 +36,7 @@ import { VideoComponent } from './slides/video/video.component';
     SponsorsComponent, 
     FundraisingComponent, 
     FundraisingStatsComponent, 
-    VideoComponent 
+    VideoComponent, AnnouncementComponent 
   ],
   bootstrap:    [ 
     AppComponent 
