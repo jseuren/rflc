@@ -7,5 +7,5 @@ export enum SlideType {
     SlideShow = 7,
     Sponsors = 8,
     Fundraising = 9,
-    FundraisingStats = 9
+    FundraisingStats = 10
 }

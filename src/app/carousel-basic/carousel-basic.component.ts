@@ -1,6 +1,6 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { NgbCarouselConfig, NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
-import { interval, Observable } from 'rxjs';
+import { interval, timer, Observable, Subscription } from 'rxjs';
 import { ISlide } from '../models/slide';
 import { SlideType } from '../models/slide-type';
 import { HttpClient } from '@angular/common/http';
@@ -8,24 +8,28 @@ import * as moment from 'moment/moment';
 import { CountdownClockSlide } from '../models/countdown-clock/countdown-clock-slide';
 
 const intervalTime: number = 5000;
-const slideMover = interval(intervalTime);
+//const slideMover = interval(intervalTime);
 //check every second of a slide needs to be forced to how
 const secondsCounter = interval(1000);
 const slideRetreiver = interval(intervalTime);
-
+const kickOffCarousel = timer(10);
 @Component({
   selector: 'ngb-carousel-basic',
   templateUrl: './carousel-basic.component.html',
   styleUrls: ['./carousel-basic.component.css'],
   providers: [NgbCarouselConfig]
 })
-export class CarouselBasicComponent implements AfterViewInit {
+export class CarouselBasicComponent implements AfterViewInit, OnDestroy {
   @ViewChild(NgbCarousel) carousel: NgbCarousel;
 
   //Allow slide type enum to be used in templates
   SlideType: any = SlideType;
   slides: Array<ISlide>;
   slidesFromServer: Array<ISlide>;
+
+  slideMover: Subscription;
+
+
 
   constructor(config: NgbCarouselConfig, private _http: HttpClient) {
     // customize default values of carousels used by this component tree
@@ -38,7 +42,8 @@ export class CarouselBasicComponent implements AfterViewInit {
     //2 days....we want to custom control the sliding
     //so set a time interval that will not slide through 
     //automatically, but allow us to control it
-    config.interval = 172800000; 
+    config.interval = 172800000;
+
 
     this.getSlides().subscribe(result => {
       this.slidesFromServer = result;
@@ -50,13 +55,16 @@ export class CarouselBasicComponent implements AfterViewInit {
   getSlides(): Observable<Array<ISlide>> {
     return this._http.get<Array<ISlide>>('./assets/sampleSlides.json');
   }
+  ngOnDestroy() {
+    
+  }
 
   ngAfterViewInit() {
 
-    //this is here to rotate through slides
-    slideMover.subscribe(() => {
+    //makes the inital selction of the carousel
+    kickOffCarousel.subscribe(() => {
       this.displayNextSlide();
-    });
+    })
 
     //This is here to check if a slide needs to show at a specific time
     secondsCounter.subscribe(() => {
@@ -107,7 +115,7 @@ export class CarouselBasicComponent implements AfterViewInit {
       this.slides = forcedSlides;
       //there may bemultipe configured so only allow them to rotate through until they are invalid
       var int = this.getRandomInt(0, this.slides.length - 1);
-      this.carousel.select(this.slides[int].SlideId);
+      this.selectSlide(this.slides[int]);
       return true;
     } else {
       return false;
@@ -124,7 +132,7 @@ export class CarouselBasicComponent implements AfterViewInit {
       this.slides = this.getValidSlides();
 
       var int = this.getRandomInt(0, this.slides.length - 1);
-      this.carousel.select(this.slides[int].SlideId);
+      this.selectSlide(this.slides[int]);
     }
 
   }
@@ -132,5 +140,12 @@ export class CarouselBasicComponent implements AfterViewInit {
   //get a random number so as to randmise the display of the tiles
   private getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  private selectSlide(slide :ISlide): void {
+    this.carousel.select(slide.SlideId);
+    if(this.slideMover)
+      this.slideMover.unsubscribe();
+    this.slideMover = timer(slide.ShowForSeconds * 1000).subscribe(() => this.displayNextSlide());
   }
 }

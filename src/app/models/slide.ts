@@ -6,6 +6,7 @@ export class Slide implements ISlide {
     SlideType: SlideType;
     SecondsToForceShowFor: number;
     ForceSlideToShowAtTime: string;
+    ShowForSeconds: number;
 }
 
 export interface ISlide {
@@ -14,4 +15,5 @@ export interface ISlide {
     SlideType: SlideType;
     SecondsToForceShowFor: number;
     ForceSlideToShowAtTime: string;
+    ShowForSeconds: number;
 }

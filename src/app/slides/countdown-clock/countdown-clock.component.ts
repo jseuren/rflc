@@ -19,6 +19,8 @@ export class CountdownClockComponent implements OnInit {
   }
 
   ngOnInit() {
+    //set inital time to display
+    this.calculateTimeTillEnd();
     //recalcualte every second
     source.subscribe(() => {
       this.calculateTimeTillEnd();

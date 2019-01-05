@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
-import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarouselModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselBasicComponent } from './carousel-basic/carousel-basic.component';
 import { CountdownClockComponent } from './slides/countdown-clock/countdown-clock.component';
 import { IndividualLeaderboardComponent } from './slides/individual-leaderboard/individual-leaderboard.component';
@@ -16,7 +16,7 @@ import { FundraisingComponent } from './slides/fundraising/fundraising.component
 import { FundraisingStatsComponent } from './slides/fundraising-stats/fundraising-stats.component';
 
 @NgModule({
-  imports:      [ BrowserModule, NgbCarouselModule, HttpClientModule ],
+  imports:      [ BrowserModule, NgbCarouselModule, HttpClientModule, NgbModule.forRoot() ],
   declarations: [ 
     AppComponent, 
     CarouselBasicComponent, 
@@ -24,7 +24,11 @@ import { FundraisingStatsComponent } from './slides/fundraising-stats/fundraisin
     IndividualLeaderboardComponent, 
     TeamLeaderboardComponent, 
     UpcomingScheduleComponent, 
-    InstagramComponent, SlideShowComponent, SponsorsComponent, FundraisingComponent, FundraisingStatsComponent 
+    InstagramComponent, 
+    SlideShowComponent, 
+    SponsorsComponent, 
+    FundraisingComponent, 
+    FundraisingStatsComponent 
   ],
   bootstrap:    [ AppComponent ]
 })
