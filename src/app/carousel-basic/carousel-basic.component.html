@@ -1,4 +1,4 @@
-<ngb-carousel *ngIf="slides" #rflCarousel>
+<ngb-carousel *ngIf="slides" #rflCarousel class="h-100">
   <ng-container *ngFor="let slide of slides">
     <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.CountdownClock">
       <slide-countdown-clock [model]="slide"></slide-countdown-clock>

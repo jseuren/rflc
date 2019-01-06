@@ -55,6 +55,11 @@ Author: SAEROX
 @import url(../../../../assets/icons/themify/css/themify-icons.min.css);
 @import url(../../../../assets/icons/meteocons/css/meteocons.min.css);
 
+@font-face{font-family:'FocoCC';src:url('https://www.cancer.org.au/fonts/emhd/fococc_rg-webfont.eot');src:url('https://www.cancer.org.au/fonts/emhd/fococc_rg-webfont.eot?iefix') format('eot'),url('../../../../assets/css/fonts/fococc_rg-webfont.woff') format('woff'),url('https://www.cancer.org.au/fonts/emhd/fococc_rg-webfont.ttf') format('truetype'),url('https://www.cancer.org.au/fonts/emhd/fococc_rg-webfont.svg#webfontp9QQgcGy') format('svg');font-weight:normal!important;font-style:normal!important}
+@font-face{font-family:'FocoCCBold';src:url("https://www.cancer.org.au/fonts/emhd/fococc_bd-webfont.eot");src:url("https://www.cancer.org.au/fonts/emhd/fococc_bd-webfont.eot?#iefix") format("embedded-opentype"),url("https://www.cancer.org.au/fonts/emhd/fococc_bd-webfont.woff2") format("woff2"),url("../../../../assets/css/fonts/fococc_bd-webfont.woff") format("woff"),url('https://www.cancer.org.au/fonts/emhd/fococc_bd-webfont.ttf') format('truetype'),url("https://www.cancer.org.au/fonts/emhd/fococc_bd-webfont.svg#foco_ccbold") format("svg");font-weight:normal;font-style:normal}
+@font-face{font-family:'FocoCCLight';src:url("https://www.cancer.org.au/fonts/emhd/fococc_lt-webfont.eot");src:url("https://www.cancer.org.au/fonts/emhd/fococc_lt-webfont.eot?#iefix") format("embedded-opentype"),url("https://www.cancer.org.au/fonts/emhd/fococc_lt-webfont.woff2") format("woff2"),url("../../../../assets/css/fonts/fococc_lt-webfont.woff") format("woff"),url('https://www.cancer.org.au/fonts/emhd/fococc_lt-webfont.ttf') format('truetype'),url("https://www.cancer.org.au/fonts/emhd/fococc_lt-webfont.svg#foco_cclight") format("svg");font-weight:normal;font-style:normal}
+@font-face{font-family:'FocoCCBlack';src:url("https://www.cancer.org.au/fonts/emhd/fococc_blk-webfont.eot");src:url("https://www.cancer.org.au/fonts/emhd/fococc_blk-webfont.eot?#iefix") format("embedded-opentype"),url("https://www.cancer.org.au/fonts/emhd/fococc_blk-webfont.woff2") format("woff2"),url("../../../../assets/css/fonts/fococc_blk-webfont.woff") format("woff"),url('https://www.cancer.org.au/fonts/emhd/fococc_blk-webfont.ttf') format('truetype'),url("https://www.cancer.org.au/fonts/emhd/fococc_blk-webfont.svg#foco_ccblack") format("svg");font-weight:normal;font-style:normal}
+
 html {
   font-size: 14px;
 }
@@ -64,7 +69,7 @@ body,html {
 }
 
 body {
-  font-family: "Montserrat", sans-serif;
+  font-family: "FocoCC","foco",Arial,Helvetica,Sans-Serif;
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.5;
@@ -708,6 +713,10 @@ button, input {
 .bg-fixed-06 {
   background: linear-gradient(135deg, rgba(66,39,90,0.4) 0%,rgba(115,75,109,0.95) 100%),
               url('../../../../assets/img/background/06.jpg') no-repeat center center; 
+}
+
+.bg-fixed-rfl {
+  background: linear-gradient(135deg, rgba(15,30,100,0.4) 0%,rgba(125,70,160,0.95) 100%); 
 }
 
 .bg-fixed-01, 
@@ -13778,7 +13787,7 @@ be a descendant of the grid when it is being dragged.
 }
 
 .coming-soon h1 {
-  font-family: "Montserrat", sans-serif;
+  font-family: "FocoCCBlack",Arial,Helvetica,Sans-Serif;
   color: #2c304d;
   font-size: 3rem;
   margin-bottom: 0;
@@ -13824,7 +13833,7 @@ be a descendant of the grid when it is being dragged.
   font-size: 2.6rem;
   font-weight: 600;
   margin: 0;
-  color: #e76c90;
+  color: #7D46A0;
 }
 
 .coming-soon #countdown p {

@@ -1,3 +1,25 @@
-COUNTDOWN
-<div>{{model.Header}}</div>
-<div>{{TimeTillEnd}}</div>
+<div class="coming-soon mx-auto">
+  <div class="logo-centered">
+    <a href="db-default.html">
+      <img src="assets/img/rfl/RFL_LOGO_LOCKUP_HOR_RGB.png" alt="logo">
+    </a>
+  </div>
+  <h1>{{model.Header}}</h1>
+  <div class="sub-heading">{{model.SubHeader}}</div>
+  <div class="row align-items-center justify-content-center">
+    <div id="countdown">
+      <div class="counter"><span>{{Days}}</span>
+        <p>Days</p>
+      </div>
+      <div class="counter"><span>{{Hours}}</span>
+        <p>Hours</p>
+      </div>
+      <div class="counter"><span>{{Minutes}}</span>
+        <p>Minutes</p>
+      </div>
+      <div class="counter"><span>{{Seconds}}</span>
+        <p>Seconds</p>
+      </div>
+    </div>
+  </div>
+</div>

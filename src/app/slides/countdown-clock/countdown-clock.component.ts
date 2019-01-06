@@ -12,8 +12,10 @@ export class CountdownClockComponent implements OnInit {
 
   @Input() model: CountdownClockSlide;
 
-  public TimeTillEnd: string;
-
+  public Days : number;
+  public Hours : number;
+  public Minutes : number;
+  public Seconds : number;
   constructor() { 
    
   }
@@ -35,11 +37,10 @@ export class CountdownClockComponent implements OnInit {
       let b = moment();
       //event not yet started
       let duration = moment.duration(b.diff(a));
-      let DaysTillEnd = duration.days()
-      let HoursTillEnd = duration.hours();
-      let MinutesTillEnd = duration.minutes();
-      let SecondsTillEnd = duration.seconds();
-      this.TimeTillEnd = Math.abs(DaysTillEnd) + ' Days ' + Math.abs(HoursTillEnd) + ' Hours ' + Math.abs(MinutesTillEnd) + ' Minutes ' + Math.abs(SecondsTillEnd) + ' seconds.';
+      this.Days = Math.abs(duration.days());
+      this.Hours = Math.abs(duration.hours());
+      this.Minutes = Math.abs(duration.minutes());
+      this.Seconds = Math.abs(duration.seconds());
     }
   }
 

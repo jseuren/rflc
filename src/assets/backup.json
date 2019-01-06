@@ -1,0 +1,109 @@
+[
+    {
+      "SlideId": "countdownTill",
+      "Header": "This is the base slide of a countdown timer till the start of the event",
+      "SlideType": 1,
+      "CountdownEndTime": "2019-01-05T06:13:00.000Z",
+      "ForceSlideToShowAtTime": "2019-01-05T06:12:00.000Z",
+      "SecondsToForceShowFor": "60",
+      "ShowForSeconds":"6"
+    },
+    {
+      "SlideId": "countdownEnd",
+      "Header": "This is the base slide of a countdown timer till the end of the event",
+      "SlideType": 1,
+      "CountdownEndTime": "2019-01-08T22:00:00.000Z",
+      "ForceSlideToShowAtTime": "2019-01-05T06:12:00.000Z",
+      "SecondsToForceShowFor": "300",
+      "ShowForSeconds":"5"
+    },
+    {
+      "SlideId": "individual-leaderboard",
+      "Header": "This is the base slide of an individual leaderbaord",
+      "SlideType": 3,
+      "SecondsToForceShowFor": "0",
+      "ForceSlideToShowAtTime": "",
+      "ShowForSeconds":"4"
+    },
+    {
+      "SlideId": "team-leaderboard",
+      "Header": "This is the base slide of a team leaderbaord",
+      "SlideType": 4,
+      "SecondsToForceShowFor": "0",
+      "ForceSlideToShowAtTime": "",
+      "ShowForSeconds":"3"
+    },
+    {
+      "SlideId": "schedule",
+      "Header": "This is the base slide of the schedule",
+      "SlideType": 5,
+      "SecondsToForceShowFor": "0",
+      "ForceSlideToShowAtTime": "",
+      "ShowForSeconds":"2"
+    },
+    {
+      "SlideId": "instagram",
+      "Header": "This is the base slide of instagram",
+      "SlideType": 6,
+      "SecondsToForceShowFor": "0",
+      "ForceSlideToShowAtTime": "",
+      "ShowForSeconds":"4"
+    },
+    {
+      "SlideId": "slide-show",
+      "Header": "This is the base slide of a slide show",
+      "SlideType": 7,
+      "SecondsToForceShowFor": "0",
+      "ForceSlideToShowAtTime": "",
+      "ShowForSeconds":"8"
+    },
+    {
+      "SlideId": "sponsors",
+      "Header": "This is the base slide of sponsors",
+      "SlideType": 8,
+      "SecondsToForceShowFor": "0",
+      "ForceSlideToShowAtTime": "",
+      "ShowForSeconds":"3"
+    },
+    {
+      "SlideId": "fundraising",
+      "Header": "This is the base slide of fundraising",
+      "SlideType": 9,
+      "SecondsToForceShowFor": "0",
+      "ForceSlideToShowAtTime": "",
+      "ShowForSeconds":"5"
+    },
+    {
+      "SlideId": "fundraising-stats",
+      "Header": "This is the base slide of fundraising stats",
+      "SlideType": 10,
+      "SecondsToForceShowFor": "0",
+      "ForceSlideToShowAtTime": "",
+      "ShowForSeconds":"2"
+    },
+    {
+      "SlideId": "video",
+      "Header": "This is the base slide of video slide",
+      "SlideType": 11,
+      "SecondsToForceShowFor": "0",
+      "ForceSlideToShowAtTime": "",
+      "ShowForSeconds":"7"
+    },
+    {
+      "SlideId": "announcement",
+      "Header": "This is the base slide of announcement slide",
+      "SlideType": 12,
+      "SecondsToForceShowFor": "0",
+      "ForceSlideToShowAtTime": "",
+      "ShowForSeconds":"5"
+    },
+    {
+      "SlideId": "weather",
+      "Header": "This is the base slide of weather slide",
+      "SlideType": 13,
+      "SecondsToForceShowFor": "0",
+      "ForceSlideToShowAtTime": "",
+      "ShowForSeconds":"5"
+    }
+  ]
+  
