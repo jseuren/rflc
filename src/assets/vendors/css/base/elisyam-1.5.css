@@ -716,7 +716,7 @@ button, input {
 }
 
 .bg-fixed-rfl {
-  background: linear-gradient(135deg, rgba(15,30,100,0.4) 0%,rgba(125,70,160,0.95) 100%); 
+  background: linear-gradient(135deg, rgba(15,30,100,0.8) 0%,rgba(125,70,160,0.95) 100%); 
 }
 
 .bg-fixed-01, 
@@ -13777,8 +13777,8 @@ be a descendant of the grid when it is being dragged.
   background: #fff;
   font-size: 0.9rem;
   padding: 3.8rem 3rem;
-  width: 600px;
-  max-width: 600px;
+  width: 900px;
+  max-width: 900px;
   text-align: center;
   display: block;
   border-radius: 4px;
@@ -13801,6 +13801,7 @@ be a descendant of the grid when it is being dragged.
 .coming-soon .sub-heading {
   color: #2c304d;
   font-size: 2rem;
+  line-height: 3;
 }
 
 .coming-soon .group {
@@ -13829,16 +13830,16 @@ be a descendant of the grid when it is being dragged.
 }
 
 .coming-soon #countdown span {
-  font-family: 'Montserrat', serif;
-  font-size: 2.6rem;
+  font-family: "FocoCBlackC","foco",Arial,Helvetica,Sans-Serif;
+  font-size: 6.5rem;
   font-weight: 600;
   margin: 0;
   color: #7D46A0;
 }
 
 .coming-soon #countdown p {
-  font-size: 1.2rem;
-  color: #98a8b4;
+  font-size: 2.2rem;
+  color: #2c304d;
 }
 
 .coming-soon .notify-form {
