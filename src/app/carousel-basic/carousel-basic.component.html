@@ -1,40 +1,46 @@
-<ngb-carousel *ngIf="slides" #rflCarousel class="h-100">
-  <ng-container *ngFor="let slide of slides">
-    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.CountdownClock">
-      <slide-countdown-clock [model]="slide"></slide-countdown-clock>
-    </ng-template>
-    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.IndividualLeaderBoard">
-      <slide-individual-leaderboard [model]="slide"></slide-individual-leaderboard>
-    </ng-template>
-    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.TeamLeaderBoard">
-      <slide-team-leaderboard [model]="slide"></slide-team-leaderboard>
-    </ng-template>
-    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.UpcomingSchedule">
-      <slide-upcoming-schedule [model]="slide"></slide-upcoming-schedule>
-    </ng-template>
-    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Instagram">
-      <silde-instagram [model]="slide"></silde-instagram>
-    </ng-template>
-    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.SlideShow">
-      <slide-slide-show [model]="slide"></slide-slide-show>
-    </ng-template>
-    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Sponsors">
-      <slide-sponsors [model]="slide"></slide-sponsors>
-    </ng-template>
-    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Fundraising">
-      <slide-fundraising [model]="slide"></slide-fundraising>
-    </ng-template>
-    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.FundraisingStats">
-      <slide-fundraising-stats [model]="slide"></slide-fundraising-stats>
-    </ng-template>
-    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Video">
-      <slide-video [model]="slide"></slide-video>
-    </ng-template>
-    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Announcement">
-      <slide-announcement [model]="slide"></slide-announcement>
-    </ng-template>
-    <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Weather">
-      <slide-weather [model]="slide"></slide-weather>
-    </ng-template>
-  </ng-container>
-</ngb-carousel>
+<div class="bg-fixed-rfl container-fluid h-100 overflow-y">
+  <div class="row flex-row h-100">
+    <div class="col-12 my-auto">
+      <ngb-carousel *ngIf="slides" #rflCarousel class="h-100">
+        <ng-container *ngFor="let slide of slides">
+          <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.CountdownClock">
+            <slide-countdown-clock [model]="slide"></slide-countdown-clock>
+          </ng-template>
+          <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.IndividualLeaderBoard">
+            <slide-individual-leaderboard [model]="slide"></slide-individual-leaderboard>
+          </ng-template>
+          <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.TeamLeaderBoard">
+            <slide-team-leaderboard [model]="slide"></slide-team-leaderboard>
+          </ng-template>
+          <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.UpcomingSchedule">
+            <slide-upcoming-schedule [model]="slide"></slide-upcoming-schedule>
+          </ng-template>
+          <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Instagram">
+            <silde-instagram [model]="slide"></silde-instagram>
+          </ng-template>
+          <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.SlideShow">
+            <slide-slide-show [model]="slide"></slide-slide-show>
+          </ng-template>
+          <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Sponsors">
+            <slide-sponsors [model]="slide"></slide-sponsors>
+          </ng-template>
+          <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Fundraising">
+            <slide-fundraising [model]="slide"></slide-fundraising>
+          </ng-template>
+          <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.FundraisingStats">
+            <slide-fundraising-stats [model]="slide"></slide-fundraising-stats>
+          </ng-template>
+          <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Video">
+            <slide-video [model]="slide"></slide-video>
+          </ng-template>
+          <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Announcement">
+            <slide-announcement [model]="slide"></slide-announcement>
+          </ng-template>
+          <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Weather">
+            <slide-weather [model]="slide"></slide-weather>
+          </ng-template>
+        </ng-container>
+      </ngb-carousel>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>Rflc</title>
@@ -13,20 +14,79 @@
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
   <script>
     WebFont.load({
-      google: {"families":["Montserrat:400,500,600,700","Noto+Sans:400,700","FocoCCBlack:400,500,600,700"]},
-      active: function() {
-          sessionStorage.fonts = true;
+      google: {
+        "families": ["Montserrat:400,500,600,700", "Noto+Sans:400,700", "FocoCCBlack:400,500,600,700"]
+      },
+      active: function () {
+        sessionStorage.fonts = true;
       }
     });
+
   </script>
 </head>
-<body class="bg-fixed-rfl">
-  <div class="container-fluid h-100 overflow-y">
-    <div class="row flex-row h-100">
-      <div class="col-12 my-auto">
+
+<body>
+  
         <my-app>loading</my-app>
-      </div>
-    </div>
-  </div>
+      
+
+  <script>
+    // window.onSpotifyWebPlaybackSDKReady = () => {
+    //   // You can now initialize Spotify.Player and use the SDK
+    //   const token =
+    //     'BQAVJwVLJC31XQ0LHCh-BySzYqQS6C6MG9T4VMaR3-pULWxI2-xvFZS6v3WZIztRcheTOL_dJwG0t9eLjleh6RVbHh9J-T-LpPIQ8b_mvXSaRRlRYVlsbJ5MFZp9t9MerU7CIwFYLWVxdXRs3sGDeA43XYS4ECQqIKqgElCo';
+
+
+    //   const player = new Spotify.Player({
+    //     name: 'rflcPlayer',
+    //     getOAuthToken: cb => {
+    //       cb(token);
+    //     },
+    //     volume: 1
+    //   });
+
+    //   // Ready
+    //   player.addListener('ready', ({
+    //     device_id
+    //   }) => {
+    //     const play = ({
+    //       spotify_uri,
+    //       playerInstance: {
+    //         _options: {
+    //           getOAuthToken,
+    //           id
+    //         }
+    //       }
+    //     }) => {
+    //       getOAuthToken(access_token => {
+    //         fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
+    //           method: 'PUT',
+    //           body: JSON.stringify({
+    //             uris: [spotify_uri]
+    //           }),
+    //           headers: {
+    //             'Content-Type': 'application/json',
+    //             'Authorization': `Bearer ${access_token}`
+    //           },
+    //         });
+    //       });
+    //     };
+    //   });
+    //   // spotify:user:1249155726:playlist:1jkpwfUofmQBrV9xKadIHy
+
+    //   //spotify:user:1230982431:playlist:5zf9TzvxlFmbSAXx0y8JbB
+    //   // Connect to the player!
+    //   player.connect().then(success => {
+    //     if (success) {
+    //       play({
+    //         playerInstance: player,
+    //         spotify_uri: 'spotify:track:5QLHGv0DfpeXLNFo7SFEy1',
+    //       });
+    //     }
+    //   });
+    // };
+
+  </script>
 </body>
+
 </html>

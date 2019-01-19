@@ -6,18 +6,18 @@ import { SlideType } from '../models/slide-type';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment/moment';
 import { CountdownClockSlide } from '../models/countdown-clock/countdown-clock-slide';
+import { SpotifyService } from '../services/spotify.service';
 
 const intervalTime: number = 5000;
 //const slideMover = interval(intervalTime);
 //check every second of a slide needs to be forced to how
 const secondsCounter = interval(1000);
 const slideRetreiver = interval(intervalTime);
-const kickOffCarousel = timer(10);
 @Component({
   selector: 'ngb-carousel-basic',
   templateUrl: './carousel-basic.component.html',
   styleUrls: ['./carousel-basic.component.css'],
-  providers: [NgbCarouselConfig]
+  providers: [NgbCarouselConfig, SpotifyService]
 })
 export class CarouselBasicComponent implements AfterViewInit, OnDestroy {
   @ViewChild(NgbCarousel) carousel: NgbCarousel;
@@ -28,10 +28,10 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy {
   slidesFromServer: Array<ISlide>;
 
   slideMover: Subscription;
+  private accessToken: string;
+  private spotifyAccess = interval();
 
-
-
-  constructor(config: NgbCarouselConfig, private _http: HttpClient) {
+  constructor(config: NgbCarouselConfig, private _http: HttpClient, private spotifyService: SpotifyService) {
     // customize default values of carousels used by this component tree
     config.showNavigationArrows = false;
     config.showNavigationIndicators = false;
@@ -44,10 +44,32 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy {
     //automatically, but allow us to control it
     config.interval = 172800000;
 
+    //initiate access token for spotify
+    (<any>window).onSpotifyWebPlaybackSDKReady = () => {
+      this.spotifyService.requestAuthorization().subscribe(response => {
+        this.accessToken = response.access_token;
+        this.spotifyAccess = interval(response.expires_in);
+        this.spotifyAccess.subscribe(() => {
+          this.refreshToken();
+        });
+      });
+    };
 
     this.getSlides().subscribe(result => {
       this.slidesFromServer = result;
       this.slides = result;
+      this.displayNextSlide();
+    });
+  }
+
+  //refresh the access token from Spotify once it has expired
+  refreshToken(): void {
+    this.spotifyService.refreshAuthorization().subscribe(response => {
+      this.accessToken = response.access_token;
+      this.spotifyAccess = interval(response.expires_in);
+      this.spotifyAccess.subscribe(() => {
+        this.refreshToken();
+      });
     });
   }
 
@@ -60,11 +82,6 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-
-    //makes the inital selction of the carousel
-    kickOffCarousel.subscribe(() => {
-      this.displayNextSlide();
-    })
 
     //This is here to check if a slide needs to show at a specific time
     secondsCounter.subscribe(() => {
@@ -131,8 +148,10 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy {
       //filter out anyslides that may no longer be valid to display
       this.slides = this.getValidSlides();
 
-      var int = this.getRandomInt(0, this.slides.length - 1);
-      this.selectSlide(this.slides[int]);
+      if(this.slides && this.slides.length) {
+        var int = this.getRandomInt(0, this.slides.length - 1);
+        this.selectSlide(this.slides[int]);
+      }
     }
 
   }

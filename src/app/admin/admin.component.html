@@ -1,0 +1,12 @@
+<nav>
+  <a routerLink="/slides" routerLinkActive="active">Goto Slides</a><br />
+  <a routerLink="./spotify" routerLinkActive="active">Setup Spotify Playlist</a>
+</nav>
+<div *ngIf="AppConfigLocal.settings.SelectedPlaylistDetails">
+  <h2>Selected Playlist:- {{AppConfigLocal.settings.SelectedPlaylistDetails.name}}</h2>
+  <ul>
+    <li *ngFor="let trackDetails of AppConfigLocal.settings.SelectedPlayList.items">
+      {{trackDetails.track.name}}
+    </li>
+  </ul>
+</div>

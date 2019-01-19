@@ -2106,7 +2106,7 @@ span.badge-pulse-orange {
 }
 
 .badge-text.info {
-  background:#08a6c3; 
+  background:#0F1E64; 
 }
 
 .badge-text.danger {
@@ -2863,6 +2863,7 @@ ul.social-network li {
 
 .table-hover tbody tr:hover {
   background: rgba(52, 40, 104, 0.04);
+  cursor: pointer;
 }
 
 .table-bordered th, .table-bordered td {
@@ -2884,8 +2885,8 @@ ul.social-network li {
   color: #fff;
 }
 
-.table .td-actions a i.delete:hover {
-  background: #e76c90;
+.table .td-actions a i.select:hover {
+  background: #1db954;
   color: #fff;
 }
 
