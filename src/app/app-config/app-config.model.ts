@@ -1,9 +1,9 @@
 
 export interface IAppConfig  {
-    AuthenticationBearerToken:string;
-    AuthenticationState:string;
-    Expires:number;
+    access_token:string;
+    refresh_token:string;
     Playlist:string;
-    SelectedPlayList:SpotifyApi.PagingObject<SpotifyApi.PlaylistTrackObject>;
     SelectedPlaylistDetails: SpotifyApi.PlaylistBaseObject;
+    Device: SpotifyApi.Device;
+    DeviceId: string;
 }

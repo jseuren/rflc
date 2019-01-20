@@ -1,6 +1,5 @@
 import { APP_INITIALIZER } from '@angular/core';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { NgbCarouselModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -20,19 +19,20 @@ import { WeatherComponent } from './slides/weather/weather.component';
 import { AppConfig } from './app-config/app.config';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpModule } from '@angular/http';
 
 export function initializeApp(appConfig: AppConfig) {
-  return () => appConfig.load();
+  return () => appConfig.initialize();
 }
 
 @NgModule({
   imports:      [ 
     BrowserModule, 
     NgbCarouselModule, 
-    HttpClientModule, 
     NgbModule.forRoot(),
     RouterModule.forRoot([]),
     AppRoutingModule,
+    HttpModule
   ],
   providers: [
     AppConfig,
@@ -54,7 +54,7 @@ export function initializeApp(appConfig: AppConfig) {
     FundraisingStatsComponent, 
     VideoComponent, 
     AnnouncementComponent, 
-    WeatherComponent
+    WeatherComponent 
   ],
   bootstrap:    [ 
     AppComponent 

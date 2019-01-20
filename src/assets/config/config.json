@@ -1,6 +1,7 @@
 {
-  "AuthenticationBearerToken": "BQD5IVz7PssYBy-WrUDEirhkNzrGvQqbc6wNCaiqD5FvZ-wVYwjlRWcdMds7-7WrgwGA_acZDmpXtw63X3-TO3M1PA3eo8lq5kBE-6xJcCNzhMas-I9l_s9taDv-Ohb9OGAzC4P00-_ez7Cn_nYrY325O1_TGRTVecIwqA",
+  "AuthenticationBearerToken": "BQD_UGTEDuHxuvUbO12LbDEAaIdGULLbtwHjddkter2zB0zg_3L6rMdMCTUd0liRO7FTl8DCGcF8LkxEXofcitYOJi2ziiGWEXkB1jaJazT6zrAwDNfoUXmjs9bgWnJear7ol1IayXgN2DXWDqUGwV3QRX4pnBHmSvCYlg",
   "AuthenticationState": "dsfgjhfgh3546",
   "Expires": "",
-  "Playlist": ""
+  "Playlist": "",
+  "DeviceId":""
 }

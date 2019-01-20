@@ -28,8 +28,6 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy {
   slidesFromServer: Array<ISlide>;
 
   slideMover: Subscription;
-  private accessToken: string;
-  private spotifyAccess = interval();
 
   constructor(config: NgbCarouselConfig, private _http: HttpClient, private spotifyService: SpotifyService) {
     // customize default values of carousels used by this component tree
@@ -44,32 +42,10 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy {
     //automatically, but allow us to control it
     config.interval = 172800000;
 
-    //initiate access token for spotify
-    (<any>window).onSpotifyWebPlaybackSDKReady = () => {
-      this.spotifyService.requestAuthorization().subscribe(response => {
-        this.accessToken = response.access_token;
-        this.spotifyAccess = interval(response.expires_in);
-        this.spotifyAccess.subscribe(() => {
-          this.refreshToken();
-        });
-      });
-    };
-
     this.getSlides().subscribe(result => {
       this.slidesFromServer = result;
       this.slides = result;
       this.displayNextSlide();
-    });
-  }
-
-  //refresh the access token from Spotify once it has expired
-  refreshToken(): void {
-    this.spotifyService.refreshAuthorization().subscribe(response => {
-      this.accessToken = response.access_token;
-      this.spotifyAccess = interval(response.expires_in);
-      this.spotifyAccess.subscribe(() => {
-        this.refreshToken();
-      });
     });
   }
 
@@ -162,9 +138,12 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy {
   }
 
   private selectSlide(slide :ISlide): void {
-    this.carousel.select(slide.SlideId);
-    if(this.slideMover)
-      this.slideMover.unsubscribe();
-    this.slideMover = timer(slide.ShowForSeconds * 1000).subscribe(() => this.displayNextSlide());
+    //if carousel is fully initialised
+    if(this.carousel) {
+      this.carousel.select(slide.SlideId);
+      if(this.slideMover)
+        this.slideMover.unsubscribe();
+      this.slideMover = timer(slide.ShowForSeconds * 1000).subscribe(() => this.displayNextSlide());
+    }
   }
 }

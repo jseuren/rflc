@@ -1,35 +1,88 @@
-<div *ngIf="userPlaylists" class="container-fluid h-100 overflow-y">
-  <div class="row flex-row h-100">
-    <div class="col-12 my-auto">
+<div class="row flex-row h-100">
+  <div class="col-12 my-auto">
+    <div class="container-fluid h-100 overflow-y">
+      <div *ngIf="!AppConfigLocal.settings.access_token">
+        <button (click)="logIntoSpotify()">Log In</button>
+      </div>
+      <div *ngIf="AppConfigLocal.settings.access_token">
+        Access Token : {{AppConfigLocal.settings.access_token}} <br />
+        Refresh Token : {{AppConfigLocal.settings.refresh_token}}
+      </div>
+      <div *ngIf="readyToPlaySpotify()">
+            <button (click)="start()">StartPlaylist</button>
+            <button (click)="pause()">Pause</button>
+            <button (click)="resume()">Resume</button>
+            <button (click)="volume100()">Volume 100%</button>
+            <button (click)="volume75()">Volume 75%</button>
+            <button (click)="volume50()">Volume 50%</button>
+            <button (click)="volume25()">Volume 25%</button>
+      </div>
+      <div *ngIf="userDevices">
         <div class="widget has-shadow">
-            <div class="widget-header bordered no-actions d-flex align-items-center">
-                <h4>My Playlists</h4>
+          <div class="widget-header bordered no-actions d-flex align-items-center">
+            <h4>Devices</h4>
+          </div>
+          <div class="widget-body">
+            <div class="table-responsive">
+              <table class="table table-hover mb-0">
+                <thead>
+                  <tr>
+                    <th>Device Name</th>
+                    <th>Device Id</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let device of userDevices" (click)="onSpotifyDeviceSelect(device)">
+                    <td><span class="text-primary">{{device.name}}</span></td>
+                    <td>{{device.id}}</td>
+                    <td><span style="width:100px;"><span [class.success]="device.id === AppConfigLocal.settings.DeviceId"
+                          [class.info]="device.id !== AppConfigLocal.settings.DeviceId" class="badge-text badge-text-small">{{device.id
+                          !== AppConfigLocal.settings.DeviceId ? 'Not ' : ''}}Selected</span></span></td>
+                    <td class="td-actions">
+                      <a><i title="Select Device to play to" class="la la-spotify select"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div class="widget-body">
-                <div class="table-responsive">
-                    <table class="table table-hover mb-0">
-                        <thead>
-                            <tr>
-                                <th>Playlist Name</th>
-                                <th>No of Tracks</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let playlist of userPlaylists.items" (click)="onSpotifyPlaylistSelect(playlist)">
-                                <td><span class="text-primary">{{playlist.name}}</span></td>
-                                <td>{{playlist.tracks.total}}</td>
-                                <td><span style="width:100px;"><span [class.success]="playlist.id === AppConfigLocal.settings.Playlist" [class.info]="playlist.id !== AppConfigLocal.settings.Playlist" class="badge-text badge-text-small">{{playlist.id !== AppConfigLocal.settings.Playlist ? 'Not ' : ''}}Selected</span></span></td>
-                                <td class="td-actions">
-                                    <a><i title="Select Playlist to play on Spotify" class="la la-spotify select"></i></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
+      <div *ngIf="AppConfigLocal.settings.Device && userPlaylists && AppConfigLocal.settings.access_token">
+        <div class="widget has-shadow">
+          <div class="widget-header bordered no-actions d-flex align-items-center">
+            <h4>My Playlists</h4>
+          </div>
+          <div class="widget-body">
+            <div class="table-responsive">
+              <table class="table table-hover mb-0">
+                <thead>
+                  <tr>
+                    <th>Playlist Name</th>
+                    <th>No of Tracks</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let playlist of userPlaylists.items" (click)="onSpotifyPlaylistSelect(playlist)">
+                    <td><span class="text-primary">{{playlist.name}}</span></td>
+                    <td>{{playlist.tracks.total}}</td>
+                    <td><span style="width:100px;"><span [class.success]="playlist.id === AppConfigLocal.settings.Playlist"
+                          [class.info]="playlist.id !== AppConfigLocal.settings.Playlist" class="badge-text badge-text-small">{{playlist.id
+                          !== AppConfigLocal.settings.Playlist ? 'Not ' : ''}}Selected</span></span></td>
+                    <td class="td-actions">
+                      <a><i title="Select Playlist to play on Spotify" class="la la-spotify select"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

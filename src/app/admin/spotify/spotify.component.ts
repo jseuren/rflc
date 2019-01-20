@@ -1,59 +1,44 @@
 import { Component, OnInit } from '@angular/core';
 import { SpotifyService } from 'src/app/services/spotify.service';
-import { Playlists } from 'src/app/models/spotify/playlists';
 import { AppConfig } from 'src/app/app-config/app.config';
-import { Router } from '@angular/router';
-import { Playlist } from 'src/app/models/spotify/playlist';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-spotify',
   templateUrl: './spotify.component.html',
   styleUrls: ['./spotify.component.css'],
-  providers:[SpotifyService]
+  providers: [SpotifyService]
 })
 export class SpotifyComponent implements OnInit {
 
   //assign appConfig to component so as it can be used at template level
   AppConfigLocal = AppConfig;
   private userPlaylists: SpotifyApi.PlaylistSearchResponse;
-  constructor(private _spotifyService : SpotifyService, private router: Router) {
+  private userDevices: SpotifyApi.Device[];
+  constructor(private _spotifyService: SpotifyService, private activatedRoute: ActivatedRoute, private router: Router) {
 
-    if(AppConfig.settings.AuthenticationBearerToken) {
+    activatedRoute.queryParams.subscribe(params => {
+      AppConfig.settings.access_token = new URLSearchParams(window.location.search).get('access_token');
+      AppConfig.settings.refresh_token = new URLSearchParams(window.location.search).get('refresh_token');
+    })
 
-      //playlist selection only here
-      _spotifyService.getPlaylists().subscribe(playlists => {
-        this.userPlaylists = playlists;
-      });
-    } else if(location.hash) { //if we are returning from Spotify authentication
-    //   this.route.fragment.subscribe((fragment: string) => {
-    //     var authParams = this.parseParms(fragment);
-    //     if(!authParams.state)
-    //     {
-    //       alert('No State returned from Spotify.  Hijack attempt');
-    //       return;
-    //     }
-    //     if(authParams.state !== globals.AuthenticationState) {
-    //       alert('State returned from Spotify to not match.  Hijack attempt');
-    //       return;
-    //     }
-    //     if(!authParams.access_token) {
-    //       alert('No Token Returned From Spotify');
-    //       return;
-    //     } else {
-    //       globals.AuthenticationBearerToken = authParams.access_token;
-    //       globals.Expires = authParams.expires_in;
-    //     }
 
-    //     //need to dynamically load
-    //     //<script src="https://sdk.scdn.co/spotify-player.js"></script>
-    //     //after confirmation of authentication as well as playlist selected
-    //  // var authenticationValues = location.hash.substring(1,location.hash.length).split('&').;
+    _spotifyService.getDevices().subscribe(devices => {
+      this.userDevices = devices;
+    },err => {
+        console.log(err)
+    },() => {
+        //completed
+    });
 
-    //   });
-    } //else {
-     // window.location.href = 'https://accounts.spotify.com/authorize?client_id=a47d16f20d5d4856a604272ccfa4a277&redirect_uri=' + window.location.href + '&response_type=token&state=' + globals.AuthenticationState;
-   // }
-   }
+    _spotifyService.getPlaylists().subscribe(playlists => {
+      this.userPlaylists = playlists;
+    },err => {
+        console.log(err)
+    },() => {
+        //completed
+    });
+  }
 
   ngOnInit() {
   }
@@ -61,10 +46,48 @@ export class SpotifyComponent implements OnInit {
   onSpotifyPlaylistSelect(playlist: SpotifyApi.PlaylistObjectFull) {
     AppConfig.settings.SelectedPlaylistDetails = playlist;
     AppConfig.settings.Playlist = playlist.id;
-    this._spotifyService.getPlaylist(playlist.id).subscribe(playlist => {
-      AppConfig.settings.SelectedPlayList = playlist;
-      this.router.navigateByUrl('admin');
-    });
   }
- 
+
+  onSpotifyDeviceSelect(device: SpotifyApi.Device) {
+    AppConfig.settings.Device = device;
+    AppConfig.settings.DeviceId = device.id;
+    if (this.readyToPlaySpotify())
+      this.router.navigateByUrl('admin');
+  }
+
+  logIntoSpotify() {
+    window.location.href = "http://localhost:8888/login"
+  }
+
+  readyToPlaySpotify(): boolean {
+    return (AppConfig.settings.SelectedPlaylistDetails != null && AppConfig.settings.Device != null && AppConfig.settings.access_token != '');
+  }
+
+  resume(): void {
+    this._spotifyService.resume();
+  }
+
+  pause(): void {
+    this._spotifyService.pause();
+  }
+  start() : void {
+    this._spotifyService.startPlaylist(AppConfig.settings.SelectedPlaylistDetails.uri);
+  }
+
+  volume100() : void {
+    this._spotifyService.volume100Percent();
+  }
+
+  volume75() : void {
+    this._spotifyService.volume75Percent();
+  }
+
+  volume50() : void {
+    this._spotifyService.volume50Percent();
+  }
+
+  volume25() : void {
+    this._spotifyService.volume25Percent();
+  }
+
 }
