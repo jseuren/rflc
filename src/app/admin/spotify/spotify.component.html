@@ -1,21 +1,41 @@
 <div class="row flex-row h-100">
   <div class="col-12 my-auto">
     <div class="container-fluid h-100 overflow-y">
-      <div *ngIf="!AppConfigLocal.settings.access_token">
-        <button (click)="logIntoSpotify()">Log In</button>
+      <div class="row">
+        <a routerLink="/admin" routerLinkActive="active">Back to Admin</a><br />
       </div>
-      <div *ngIf="AppConfigLocal.settings.access_token">
-        Access Token : {{AppConfigLocal.settings.access_token}} <br />
-        Refresh Token : {{AppConfigLocal.settings.refresh_token}}
+      {{AppConfigLocal.settings | json}}
+      <div *ngIf="!AppConfigLocal.settings.access_token" class="row">
+        <button (click)="logIntoSpotify()">Log In To Spotify Account</button>
       </div>
-      <div *ngIf="readyToPlaySpotify()">
-            <button (click)="startPlaylist()">StartPlaylist</button>
-            <button (click)="pause()">Pause</button>
-            <button (click)="resume()">Resume</button>
-            <button (click)="volume100()">Volume 100%</button>
-            <button (click)="volume75()">Volume 75%</button>
-            <button (click)="volume50()">Volume 50%</button>
-            <button (click)="volume25()">Volume 25%</button>
+      <div *ngIf="AppConfigLocal.settings.access_token" class="row">
+        <strong>Access Token :</strong>
+        <p>{{AppConfigLocal.settings.access_token}}</p>
+      </div>
+      <div *ngIf="AppConfigLocal.settings.access_token" class="row">
+        <strong>Refresh Token :</strong>
+        <p>{{AppConfigLocal.settings.refresh_token}}</p>
+      </div>
+      <div *ngIf="AppConfigLocal.settings.access_token" class="row">
+        <p>Log onto <a target="_blank" href="https://developer.spotify.com/dashboard/applications">Spotify Developers
+            Dashboard</a> to register an application and get a client key and secret</p>
+      </div>
+      <div *ngIf="AppConfigLocal.settings.access_token" class="row">
+        <p><label for="clientid"><strong>Spotify Application Client Id:</strong></label>&nbsp;<input id="clientid" type="text"
+            [(ngModel)]="AppConfigLocal.settings.ClientId"></p>
+      </div>
+      <div *ngIf="AppConfigLocal.settings.access_token" class="row">
+        <p><label for="clientsecret"><strong>Spotify Application Client Secret:</strong></label>&nbsp;<input id="clientsecret"
+            type="text" [(ngModel)]="AppConfigLocal.settings.ClientSecret"></p>
+      </div>
+      <div *ngIf="readyToPlaySpotify()" class="row">
+        <button (click)="startPlaylist()">StartPlaylist</button>
+        <button (click)="pause()">Pause</button>
+        <button (click)="resume()">Resume</button>
+        <button (click)="volume100()">Volume 100%</button>
+        <button (click)="volume75()">Volume 75%</button>
+        <button (click)="volume50()">Volume 50%</button>
+        <button (click)="volume25()">Volume 25%</button>
       </div>
       <div *ngIf="userDevices">
         <div class="widget has-shadow">

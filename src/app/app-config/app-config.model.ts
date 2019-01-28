@@ -6,4 +6,6 @@ export interface IAppConfig  {
     SelectedPlaylistDetails: SpotifyApi.PlaylistBaseObject;
     Device: SpotifyApi.Device;
     DeviceId: string;
+    ClientId: string;
+    ClientSecret: string;
 }

@@ -18,25 +18,31 @@ export class SpotifyComponent implements OnInit {
   constructor(private _spotifyService: SpotifyService, private activatedRoute: ActivatedRoute, private router: Router) {
 
     activatedRoute.queryParams.subscribe(params => {
-      AppConfig.settings.access_token = new URLSearchParams(window.location.search).get('access_token');
-      AppConfig.settings.refresh_token = new URLSearchParams(window.location.search).get('refresh_token');
+      if (window.location.search) {
+        var access = new URLSearchParams(window.location.search).get('access_token');
+        var refresh = new URLSearchParams(window.location.search).get('refresh_token');
+        if (access)
+          AppConfig.settings.access_token = new URLSearchParams(window.location.search).get('access_token');
+        if (refresh)
+          AppConfig.settings.refresh_token = new URLSearchParams(window.location.search).get('refresh_token');
+      }
     })
 
 
     _spotifyService.getDevices().subscribe(devices => {
       this.userDevices = devices;
-    },err => {
-        console.log(err)
-    },() => {
-        //completed
+    }, err => {
+      console.log(err)
+    }, () => {
+      //completed
     });
 
     _spotifyService.getPlaylists().subscribe(playlists => {
       this.userPlaylists = playlists;
-    },err => {
-        console.log(err)
-    },() => {
-        //completed
+    }, err => {
+      console.log(err)
+    }, () => {
+      //completed
     });
   }
 
@@ -70,23 +76,23 @@ export class SpotifyComponent implements OnInit {
   pause(): void {
     this._spotifyService.pause();
   }
-  startPlaylist() : void {
+  startPlaylist(): void {
     this._spotifyService.startPlaylist(AppConfig.settings.SelectedPlaylistDetails.uri);
   }
 
-  volume100() : void {
+  volume100(): void {
     this._spotifyService.volume100Percent();
   }
 
-  volume75() : void {
+  volume75(): void {
     this._spotifyService.volume75Percent();
   }
 
-  volume50() : void {
+  volume50(): void {
     this._spotifyService.volume50Percent();
   }
 
-  volume25() : void {
+  volume25(): void {
     this._spotifyService.volume25Percent();
   }
 

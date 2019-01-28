@@ -20,7 +20,6 @@ import { AppConfig } from './app-config/app.config';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpModule } from '@angular/http';
-
 export function initializeApp(appConfig: AppConfig) {
   return () => appConfig.initialize();
 }
