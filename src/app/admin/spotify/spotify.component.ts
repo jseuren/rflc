@@ -70,7 +70,7 @@ export class SpotifyComponent implements OnInit {
   pause(): void {
     this._spotifyService.pause();
   }
-  start() : void {
+  startPlaylist() : void {
     this._spotifyService.startPlaylist(AppConfig.settings.SelectedPlaylistDetails.uri);
   }
 

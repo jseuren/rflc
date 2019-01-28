@@ -9,7 +9,7 @@
         Refresh Token : {{AppConfigLocal.settings.refresh_token}}
       </div>
       <div *ngIf="readyToPlaySpotify()">
-            <button (click)="start()">StartPlaylist</button>
+            <button (click)="startPlaylist()">StartPlaylist</button>
             <button (click)="pause()">Pause</button>
             <button (click)="resume()">Resume</button>
             <button (click)="volume100()">Volume 100%</button>
