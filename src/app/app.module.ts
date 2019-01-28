@@ -20,6 +20,7 @@ import { AppConfig } from './app-config/app.config';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http'; 
 export function initializeApp(appConfig: AppConfig) {
   return () => appConfig.initialize();
 }
@@ -31,7 +32,8 @@ export function initializeApp(appConfig: AppConfig) {
     NgbModule.forRoot(),
     RouterModule.forRoot([]),
     AppRoutingModule,
-    HttpModule
+    HttpModule,
+    HttpClientModule
   ],
   providers: [
     AppConfig,
