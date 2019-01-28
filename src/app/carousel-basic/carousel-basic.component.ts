@@ -45,7 +45,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy {
     this.getSlides().subscribe(result => {
       this.slidesFromServer = result;
       this.slides = result;
-      this.displayNextSlide();
+
     });
   }
 
@@ -58,6 +58,12 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
+
+    //seems to work better here to start the initiaiting of the slide
+    //Will be able to get a reference to the carousel
+    setTimeout(() => {
+      this.displayNextSlide();
+    });
 
     //This is here to check if a slide needs to show at a specific time
     secondsCounter.subscribe(() => {
