@@ -20,7 +20,8 @@ import { AppConfig } from './app-config/app.config';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpModule } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule } from '@angular/common/http';
+import { SpotifyPlayerComponent } from './spotify-player/spotify-player/spotify-player.component'; 
 export function initializeApp(appConfig: AppConfig) {
   return () => appConfig.initialize();
 }
@@ -55,7 +56,7 @@ export function initializeApp(appConfig: AppConfig) {
     FundraisingStatsComponent, 
     VideoComponent, 
     AnnouncementComponent, 
-    WeatherComponent 
+    WeatherComponent, SpotifyPlayerComponent 
   ],
   bootstrap:    [ 
     AppComponent 

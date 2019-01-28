@@ -29,7 +29,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy {
 
   slideMover: Subscription;
 
-  constructor(config: NgbCarouselConfig, private _http: HttpClient, private spotifyService: SpotifyService) {
+  constructor(config: NgbCarouselConfig, private _http: HttpClient) {
     // customize default values of carousels used by this component tree
     config.showNavigationArrows = false;
     config.showNavigationIndicators = false;
@@ -54,7 +54,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy {
     return this._http.get<Array<ISlide>>('./assets/sampleSlides.json');
   }
   ngOnDestroy() {
-    
+
   }
 
   ngAfterViewInit() {
@@ -103,7 +103,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy {
       }
       return false;
     });
-    //if tehre are nay forced slides
+    //if there are any forced slides
     if (forcedSlides && forcedSlides.length) {
       this.slides = forcedSlides;
       //there may bemultipe configured so only allow them to rotate through until they are invalid
@@ -124,7 +124,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy {
       //filter out anyslides that may no longer be valid to display
       this.slides = this.getValidSlides();
 
-      if(this.slides && this.slides.length) {
+      if (this.slides && this.slides.length) {
         var int = this.getRandomInt(0, this.slides.length - 1);
         this.selectSlide(this.slides[int]);
       }
@@ -137,11 +137,11 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-  private selectSlide(slide :ISlide): void {
+  private selectSlide(slide: ISlide): void {
     //if carousel is fully initialised
-    if(this.carousel) {
+    if (this.carousel) {
       this.carousel.select(slide.SlideId);
-      if(this.slideMover)
+      if (this.slideMover)
         this.slideMover.unsubscribe();
       this.slideMover = timer(slide.ShowForSeconds * 1000).subscribe(() => this.displayNextSlide());
     }
