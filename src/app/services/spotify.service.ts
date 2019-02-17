@@ -6,10 +6,6 @@ import { map, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class SpotifyService {
-    private playlistsUrl: string;
-    private playPlaylistUrl: string;
-    private devicicesUrl: string;
-    private pauseUrl: string;
 
     constructor(private _http: Http) {
     }
@@ -102,30 +98,4 @@ export class SpotifyService {
             }),
             map((response) => response.json()));
     }
-
-
-    // public requestAuthorization() {
-
-
-    //     return this._http.post<AuthrizationResponse>('https://accounts.spotify.com/api/token', "grant_type=client_credentials", {
-    //         headers: {
-    //             'Content-Type': 'application/x-www-form-urlencoded',
-    //             'Authorization': 'Bearer ' + AppConfig.settings.AuthenticationBearerToken
-    //         }
-    //     });
-
-    //     // return this._http.post<AuthrizationResponse>('https://accounts.spotify.com/api/token',"grant_type=client_credentials",{headers: new HttpHeaders({
-    //     //     'Content-Type':'application/x-www-form-urlencoded',
-    //     //     'Authorization': 'Basic ' + btoa('a47d16f20d5d4856a604272ccfa4a277:d24041947aa34b6d85c28361b37714dd')
-    //     // })});
-    // }
-
-    // public refreshAuthorization() {
-    //     return this._http.post<AuthrizationResponse>('https://accounts.spotify.com/api/token', "grant_type=refresh_token", {
-    //         headers: new HttpHeaders({
-    //             'Content-Type': 'application/x-www-form-urlencoded',
-    //             'Authorization': 'Bearer ' + AppConfig.settings.AuthenticationBearerToken
-    //         })
-    //     });
-    // }
 }

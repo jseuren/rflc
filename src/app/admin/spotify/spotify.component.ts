@@ -25,6 +25,8 @@ export class SpotifyComponent implements OnInit {
           AppConfig.settings.access_token = new URLSearchParams(window.location.search).get('access_token');
         if (refresh)
           AppConfig.settings.refresh_token = new URLSearchParams(window.location.search).get('refresh_token');
+
+          AppConfig.save();
       }
     })
 
@@ -52,11 +54,13 @@ export class SpotifyComponent implements OnInit {
   onSpotifyPlaylistSelect(playlist: SpotifyApi.PlaylistObjectFull) {
     AppConfig.settings.SelectedPlaylistDetails = playlist;
     AppConfig.settings.Playlist = playlist.id;
+    AppConfig.save();
   }
 
   onSpotifyDeviceSelect(device: SpotifyApi.Device) {
     AppConfig.settings.Device = device;
     AppConfig.settings.DeviceId = device.id;
+    AppConfig.save();
     if (this.readyToPlaySpotify())
       this.router.navigateByUrl('admin');
   }

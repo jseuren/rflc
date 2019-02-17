@@ -1,15 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { IAppConfig } from './app-config.model';
 
 @Injectable()
-export class AppConfig  {
+export class AppConfig {
     static settings: IAppConfig;
-    constructor(private http: Http) {}
+
+    constructor() { }
     initialize() {
         return new Promise<void>((resolve, reject) => {
-                 AppConfig.settings = {} as IAppConfig;
-                 resolve();
-             });
+            var savedSettings = JSON.parse(localStorage.getItem('appconfig'));
+            AppConfig.settings = savedSettings || {} as IAppConfig;
+            resolve();
+        });
+    }
+
+    //save to local storage so as not to have to re-enter detail every time
+    static save() {
+        localStorage.setItem('appconfig', JSON.stringify(AppConfig.settings));
     }
 }

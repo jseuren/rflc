@@ -3,7 +3,8 @@ import { SpotifyService } from 'src/app/services/spotify.service';
 import { AppConfig } from 'src/app/app-config/app.config';
 import { interval } from 'rxjs';
 
-const refreshTokenCounter = interval(8000);
+//30 minutes
+const refreshTokenCounter = interval(1800000);
 
 @Component({
   selector: 'spotify-player',
@@ -23,14 +24,17 @@ export class SpotifyPlayerComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
 
+    //every 30 mins refresh the access otken from Spotify so as the player will never "stop"
     refreshTokenCounter.subscribe(() => {
       this._spotifyService.refreshToken().subscribe(data => {
         AppConfig.settings.access_token = data.access_token;
+        AppConfig.save();
       })
     });
 
   }
  
+  //Are all the components there that are required to play spotify ?
   canPlaySpotify(): boolean {
     return !!(AppConfig.settings.ClientId &&
       AppConfig.settings.ClientSecret &&
@@ -40,6 +44,7 @@ export class SpotifyPlayerComponent implements OnInit, AfterViewInit {
       AppConfig.settings.refresh_token);
   }
 
+  //Ensure a plylist, device and token are ready before playing
   readyToPlaySpotify(): boolean {
     return (AppConfig.settings.SelectedPlaylistDetails != null && AppConfig.settings.Device != null && AppConfig.settings.access_token != '');
   }
