@@ -1,12 +1,17 @@
-import { Component, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnDestroy, OnInit } from '@angular/core';
 import { NgbCarouselConfig, NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
-import { interval, timer, Observable, Subscription } from 'rxjs';
+import { interval, timer,  Subscription } from 'rxjs';
 import { ISlide } from '../models/slide';
 import { SlideType } from '../models/slide-type';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment/moment';
 import { CountdownClockSlide } from '../models/countdown-clock/countdown-clock-slide';
 import { SpotifyService } from '../services/spotify.service';
+import { NgbSlideEvent } from '@ng-bootstrap/ng-bootstrap/carousel/carousel';
+import { first } from 'rxjs/operators';
+import { from } from 'rxjs';
+import { SpotifyPlayerComponent } from '../spotify-player/spotify-player/spotify-player.component';
+import { ActivatedRoute } from '@angular/router';
 
 const intervalTime: number = 5000;
 //const slideMover = interval(intervalTime);
@@ -19,8 +24,9 @@ const slideRetreiver = interval(intervalTime);
   styleUrls: ['./carousel-basic.component.css'],
   providers: [NgbCarouselConfig, SpotifyService]
 })
-export class CarouselBasicComponent implements AfterViewInit, OnDestroy {
+export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit {
   @ViewChild(NgbCarousel) carousel: NgbCarousel;
+  @ViewChild(SpotifyPlayerComponent) spotifyPlayer: SpotifyPlayerComponent;
 
   //Allow slide type enum to be used in templates
   SlideType: any = SlideType;
@@ -29,7 +35,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy {
 
   slideMover: Subscription;
 
-  constructor(config: NgbCarouselConfig, private _http: HttpClient) {
+  constructor(config: NgbCarouselConfig, private _http: HttpClient, private route: ActivatedRoute, ) {
     // customize default values of carousels used by this component tree
     config.showNavigationArrows = false;
     config.showNavigationIndicators = false;
@@ -42,19 +48,25 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy {
     //automatically, but allow us to control it
     config.interval = 172800000;
 
-    this.getSlides().subscribe(result => {
-      this.slidesFromServer = result;
-      this.slides = result;
 
-    });
   }
 
   //get the array of slides from the server
-  getSlides(): Observable<Array<ISlide>> {
-    return this._http.get<Array<ISlide>>('./assets/sampleSlides.json');
+  getSlides(): Promise<Array<ISlide>> {
+    return this._http.get<Array<ISlide>>('./assets/sampleSlides.json').toPromise().then(slides => {
+      return slides;
+    });
   }
   ngOnDestroy() {
+    this.spotifyPlayer.pause();
+  }
 
+  ngOnInit(): void {
+    this.route.data
+      .subscribe(data => {
+        this.slidesFromServer = data.slides;
+        this.slides = data.slides;
+      });
   }
 
   ngAfterViewInit() {
@@ -73,7 +85,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy {
     //half way through a slide retireveal get updated Slides from server
     setTimeout(() => {
       slideRetreiver.subscribe(() => {
-        this.getSlides().subscribe(result => {
+        this.getSlides().then(result => {
           this.slidesFromServer = result;
         });
       });
@@ -98,7 +110,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy {
   //Is there a slide that must be displayed at a partiucalr time ?
   private checkForForcedSlideDisplay(): boolean {
     //filter out the slides that have a forced show time
-    var forcedSlides = this.slidesFromServer.filter(x => {
+    var forcedSlides = this.slidesFromServer ? this.slidesFromServer.filter(x => {
       if (x.ForceSlideToShowAtTime) {
         var forceTime = moment(x.ForceSlideToShowAtTime);
         var endTime = moment(x.ForceSlideToShowAtTime).add(x.SecondsToForceShowFor, 'seconds');
@@ -108,7 +120,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy {
         }
       }
       return false;
-    });
+    }) : [];
     //if there are any forced slides
     if (forcedSlides && forcedSlides.length) {
       this.slides = forcedSlides;
@@ -151,5 +163,33 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy {
         this.slideMover.unsubscribe();
       this.slideMover = timer(slide.ShowForSeconds * 1000).subscribe(() => this.displayNextSlide());
     }
+  }
+
+  onCarouselSlide(params: NgbSlideEvent): void {
+
+    var currentSlide: ISlide;
+
+    //Check if it is a video slide and we need to pause Spotify
+    from(this.slides)
+      .pipe(first(slide => slide.SlideId === params.current)).subscribe(
+        current => {
+          currentSlide = current;
+          if (current.SlideType === SlideType.Video) {
+            this.spotifyPlayer.pause();
+          }
+        });
+
+    //if currentslide is not a video slide
+    if (currentSlide.SlideType !== SlideType.Video) {
+      //If previous slide was a video and current one is not a video the restart Spotify
+      from(this.slides)
+        .pipe(first(slide => slide.SlideId === params.prev)).subscribe(
+          previous => {
+            if (previous.SlideType === SlideType.Video) {
+              this.spotifyPlayer.resume();
+            }
+          });
+    }
+
   }
 }

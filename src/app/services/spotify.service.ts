@@ -22,6 +22,10 @@ export class SpotifyService {
         });
     }
 
+    public refreshToken() : Observable<SpotifyApi.RefreshTokenResponse>{
+        return this.get<SpotifyApi.RefreshTokenResponse>('http://localhost:8888/refresh_token?refresh_token=' + AppConfig.settings.refresh_token);
+    }
+
     public getPlaylists(): Observable<SpotifyApi.PlaylistSearchResponse> {
         return this.get<SpotifyApi.PlaylistSearchResponse>('https://api.spotify.com/v1/me/playlists/');
     }

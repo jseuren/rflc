@@ -1,2 +1,9 @@
-VIDEO
-<div>{{model.Header}}</div>
+
+                        <youtube-player
+                        [videoId]="model.YouTubeVideoId"
+                        (ready)="savePlayer($event)"
+                        (change)="onStateChange($event)"
+                      ></youtube-player>
+ 
+
+

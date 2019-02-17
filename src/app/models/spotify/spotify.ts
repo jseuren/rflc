@@ -953,4 +953,8 @@ declare namespace SpotifyApi {
         devices: Device[]
     }
 
+    interface RefreshTokenResponse {
+        access_token: string;
+    }
+
 }
