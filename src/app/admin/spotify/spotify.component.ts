@@ -26,26 +26,19 @@ export class SpotifyComponent implements OnInit {
         if (refresh)
           AppConfig.settings.refresh_token = new URLSearchParams(window.location.search).get('refresh_token');
 
-          AppConfig.save();
+        AppConfig.save();
+
+        this.refreshDevices();
+
+        this.refreshPlayLists();
       }
     })
 
+    if (AppConfig.settings.access_token && AppConfig.settings.refresh_token) {
+      this.refreshDevices();
 
-    _spotifyService.getDevices().subscribe(devices => {
-      this.userDevices = devices;
-    }, err => {
-      console.log(err)
-    }, () => {
-      //completed
-    });
-
-    _spotifyService.getPlaylists().subscribe(playlists => {
-      this.userPlaylists = playlists;
-    }, err => {
-      console.log(err)
-    }, () => {
-      //completed
-    });
+      this.refreshPlayLists();
+    }
   }
 
   ngOnInit() {
@@ -66,7 +59,7 @@ export class SpotifyComponent implements OnInit {
   }
 
   logIntoSpotify() {
-    window.location.href = "http://localhost:8888/login"
+    window.location.href = "http://localhost:8888/login?client_id=" + AppConfig.settings.ClientId + "&client_secret=" + AppConfig.settings.ClientSecret;
   }
 
   readyToPlaySpotify(): boolean {
@@ -98,6 +91,26 @@ export class SpotifyComponent implements OnInit {
 
   volume25(): void {
     this._spotifyService.volume25Percent();
+  }
+
+  refreshDevices(): void {
+    this._spotifyService.getDevices().subscribe(devices => {
+      this.userDevices = devices;
+    }, err => {
+      console.log(err)
+    }, () => {
+      //completed
+    });
+  }
+
+  refreshPlayLists(): void {
+    this._spotifyService.getPlaylists().subscribe(playlists => {
+      this.userPlaylists = playlists;
+    }, err => {
+      console.log(err)
+    }, () => {
+      //completed
+    });
   }
 
 }

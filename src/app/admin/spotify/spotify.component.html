@@ -4,8 +4,15 @@
       <div class="row">
         <a routerLink="/admin" routerLinkActive="active">Back to Admin</a><br />
       </div>
-      {{AppConfigLocal.settings | json}}
       <div *ngIf="!AppConfigLocal.settings.access_token" class="row">
+        <p><label for="clientid"><strong>Spotify Application Client Id:</strong></label>&nbsp;<input id="clientid" type="text"
+            [(ngModel)]="AppConfigLocal.settings.ClientId" size="40"></p>
+      </div>
+      <div *ngIf="!AppConfigLocal.settings.access_token" class="row">
+        <p><label for="clientsecret"><strong>Spotify Application Client Secret:</strong></label>&nbsp;<input id="clientsecret"
+            type="text" [(ngModel)]="AppConfigLocal.settings.ClientSecret" size="40"></p>
+      </div>
+      <div *ngIf="(AppConfigLocal.settings.ClientId && AppConfigLocal.settings.ClientSecret)" class="row">
         <button (click)="logIntoSpotify()">Log In To Spotify Account</button>
       </div>
       <div *ngIf="AppConfigLocal.settings.access_token" class="row">
@@ -20,14 +27,6 @@
         <p>Log onto <a target="_blank" href="https://developer.spotify.com/dashboard/applications">Spotify Developers
             Dashboard</a> to register an application and get a client key and secret</p>
       </div>
-      <div *ngIf="AppConfigLocal.settings.access_token" class="row">
-        <p><label for="clientid"><strong>Spotify Application Client Id:</strong></label>&nbsp;<input id="clientid" type="text"
-            [(ngModel)]="AppConfigLocal.settings.ClientId"></p>
-      </div>
-      <div *ngIf="AppConfigLocal.settings.access_token" class="row">
-        <p><label for="clientsecret"><strong>Spotify Application Client Secret:</strong></label>&nbsp;<input id="clientsecret"
-            type="text" [(ngModel)]="AppConfigLocal.settings.ClientSecret"></p>
-      </div>
       <div *ngIf="readyToPlaySpotify()" class="row">
         <button (click)="startPlaylist()">StartPlaylist</button>
         <button (click)="pause()">Pause</button>
@@ -39,8 +38,15 @@
       </div>
       <div *ngIf="userDevices">
         <div class="widget has-shadow">
-          <div class="widget-header bordered no-actions d-flex align-items-center">
+          <div class="widget-header bordered no-actions align-items-center">
             <h4>Devices</h4>
+            <ul class="pull-right">
+              <li>
+                <a id="refreshDevices" (click)="refreshDevices()">
+                  <i class="la la-refresh"></i>
+                </a>
+              </li>
+            </ul>
           </div>
           <div class="widget-body">
             <div class="table-responsive">
@@ -72,8 +78,15 @@
       </div>
       <div *ngIf="AppConfigLocal.settings.Device && userPlaylists && AppConfigLocal.settings.access_token">
         <div class="widget has-shadow">
-          <div class="widget-header bordered no-actions d-flex align-items-center">
+          <div class="widget-header bordered no-actions align-items-center">
             <h4>My Playlists</h4>
+            <ul class="pull-right">
+              <li>
+                <a id="refreshPlaylists" (click)="refreshPlayLists()">
+                  <i class="la la-refresh"></i>
+                </a>
+              </li>
+            </ul>
           </div>
           <div class="widget-body">
             <div class="table-responsive">

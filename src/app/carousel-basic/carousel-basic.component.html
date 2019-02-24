@@ -2,7 +2,7 @@
 <spotify-player></spotify-player>
 <div class="bg-fixed-rfl container-fluid h-100 overflow-y">
   <div class="row flex-row h-100">
-    <div class="col-12 my-auto">
+    <div class="col-12 my-auto" id="CarouselContainer">
       <ngb-carousel *ngIf="slides" #rflCarousel class="h-100" (slide)="onCarouselSlide($event)" >
         <ng-container *ngFor="let slide of slides">
           <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.CountdownClock">

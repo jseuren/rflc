@@ -18,7 +18,7 @@ export class SpotifyService {
         });
     }
 
-    public refreshToken() : Observable<SpotifyApi.RefreshTokenResponse>{
+    public refreshToken(): Observable<SpotifyApi.RefreshTokenResponse> {
         return this.get<SpotifyApi.RefreshTokenResponse>('http://localhost:8888/refresh_token?refresh_token=' + AppConfig.settings.refresh_token);
     }
 
@@ -36,36 +36,36 @@ export class SpotifyService {
 
     public startPlaylist(playlist_uri: string) {
         this.put('https://api.spotify.com/v1/me/player/play?device_id=' + AppConfig.settings.Device.id, {
-                "context_uri": playlist_uri,
-                "offset": {
-                    "position": 0
-                },
-                "position_ms": 0
+            "context_uri": playlist_uri,
+            "offset": {
+                "position": 0
+            },
+            "position_ms": 0
         }).subscribe();
     }
 
     public pause() {
-        this.put('https://api.spotify.com/v1/me/player/pause?device_id=' + AppConfig.settings.Device.id,"").subscribe();
+        this.put('https://api.spotify.com/v1/me/player/pause?device_id=' + AppConfig.settings.Device.id, "").subscribe();
     }
 
     public resume() {
-        this.put('https://api.spotify.com/v1/me/player/play?device_id=' + AppConfig.settings.Device.id,"").subscribe();
+        this.put('https://api.spotify.com/v1/me/player/play?device_id=' + AppConfig.settings.Device.id, "").subscribe();
     }
 
     public volume100Percent() {
-        this.put('https://api.spotify.com/v1/me/player/volume?device_id=' + AppConfig.settings.Device.id + '&volume_percent=100',"").subscribe();
+        this.put('https://api.spotify.com/v1/me/player/volume?device_id=' + AppConfig.settings.Device.id + '&volume_percent=100', "").subscribe();
     }
 
     public volume50Percent() {
-        this.put('https://api.spotify.com/v1/me/player/volume?device_id=' + AppConfig.settings.Device.id + '&volume_percent=50',"").subscribe();
+        this.put('https://api.spotify.com/v1/me/player/volume?device_id=' + AppConfig.settings.Device.id + '&volume_percent=50', "").subscribe();
     }
 
     public volume75Percent() {
-        this.put('https://api.spotify.com/v1/me/player/volume?device_id=' + AppConfig.settings.Device.id + '&volume_percent=75',"").subscribe();
+        this.put('https://api.spotify.com/v1/me/player/volume?device_id=' + AppConfig.settings.Device.id + '&volume_percent=75', "").subscribe();
     }
 
     public volume25Percent() {
-        this.put('https://api.spotify.com/v1/me/player/volume?device_id=' + AppConfig.settings.Device.id + '&volume_percent=25',"").subscribe();
+        this.put('https://api.spotify.com/v1/me/player/volume?device_id=' + AppConfig.settings.Device.id + '&volume_percent=25', "").subscribe();
     }
 
 
@@ -77,8 +77,15 @@ export class SpotifyService {
 
         return this._http.put(`${url}`, body, requestOptions).pipe(
             catchError((err) => {
-                console.log(`An error occured on ${url}: error:${JSON.stringify(err.json())}`);
-                return observableThrowError([]);
+                if (err.status === 401) {
+                    this.refreshToken().subscribe(data => {
+                        AppConfig.settings.access_token = data.access_token;
+                        AppConfig.save();
+                    });
+                } else {
+                    console.log(`An error occured on ${url}: error:${JSON.stringify(err.json())}`);
+                    return observableThrowError([]);
+                }
             }),
             map((response) => {
                 return response.json()
@@ -93,8 +100,15 @@ export class SpotifyService {
 
         return this._http.get(`${url}`, requestOptions).pipe(
             catchError((err) => {
-                console.log(`An error occured on ${url}: error:${JSON.stringify(err.json())}`);
-                return observableThrowError([]);
+                if (err.status === 401) {
+                    this.refreshToken().subscribe(data => {
+                        AppConfig.settings.access_token = data.access_token;
+                        AppConfig.save();
+                    });
+                } else {
+                    console.log(`An error occured on ${url}: error:${JSON.stringify(err.json())}`);
+                    return observableThrowError([]);
+                }
             }),
             map((response) => response.json()));
     }
