@@ -17,11 +17,15 @@ export class VideoComponent implements OnInit {
   }
 
   ngOnInit() {
+    let slide = document.getElementsByClassName("carousel-item active");
   }
 
   savePlayer(player) {
     this.player = player;
+    let width = document.getElementsByClassName("carousel-item active")[0].clientWidth;
+    let height = document.getElementsByClassName("carousel-item active")[0].clientHeight;
     this.player.cueVideoById(this.model.YouTubeVideoId,1,"large");
+    this.player.setSize(width,height);
     console.log('player instance', player);
     this.playVideo();
   }
