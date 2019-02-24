@@ -1,11 +1,19 @@
 [
   {
+    "SlideId": "countdownTill",
+    "Header": "This is the base slide of a countdown timer till the start of the event",
+    "SlideType": 1,
+    "CountdownEndTime": "2019-02-26T06:13:00.000Z",
+    "ForceSlideToShowAtTime": "2019-02-27T06:12:00.000Z",
+    "SecondsToForceShowFor": "6",
+    "ShowForSeconds":"6"
+  },{
     "SlideId": "video",
     "Header": "This is the base slide of video slide",
     "SlideType": 11,
     "SecondsToForceShowFor": "0",
     "ForceSlideToShowAtTime": "",
-    "ShowForSeconds":"500",
-    "YouTubeVideoId":"KWZGAExj-es"
+    "ShowForSeconds":"5",
+    "YouTubeVideoId":"W0Luy1Iouic"
   }
 ]

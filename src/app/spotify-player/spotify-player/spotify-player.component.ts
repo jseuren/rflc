@@ -15,11 +15,13 @@ export class SpotifyPlayerComponent implements OnInit, AfterViewInit {
 
   constructor(private _spotifyService: SpotifyService) { }
 
+  playlistStarted: boolean = false;
+
   ngOnInit() {
-    if (this.canPlaySpotify()) {
-      this._spotifyService.volume100Percent();
-      this.startPlaylist();
-    }
+   // if (this.canPlaySpotify()) {
+    //  this._spotifyService.volume100Percent();
+   //   this.startPlaylist();
+   // }
   }
 
   ngAfterViewInit() {
@@ -51,11 +53,17 @@ export class SpotifyPlayerComponent implements OnInit, AfterViewInit {
 
   public startPlaylist(): void {
     this._spotifyService.startPlaylist(AppConfig.settings.SelectedPlaylistDetails.uri);
+    this.playlistStarted = true;
   }
 
   public resume(): void {
-    if (this.readyToPlaySpotify())
-      this._spotifyService.resume();
+    if (this.readyToPlaySpotify()){
+      if(!this.playlistStarted) {
+        this.startPlaylist();
+      }else {
+        this._spotifyService.resume();
+      }
+    }
   }
 
   public pause(): void {

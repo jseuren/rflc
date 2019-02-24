@@ -14,8 +14,6 @@ import { SpotifyPlayerComponent } from '../spotify-player/spotify-player/spotify
 import { ActivatedRoute } from '@angular/router';
 
 const intervalTime: number = 5000;
-//const slideMover = interval(intervalTime);
-//check every second of a slide needs to be forced to how
 const secondsCounter = interval(1000);
 const slideRetreiver = interval(intervalTime);
 @Component({
@@ -32,6 +30,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
   SlideType: any = SlideType;
   slides: Array<ISlide>;
   slidesFromServer: Array<ISlide>;
+  currentSlide: ISlide;
 
   slideMover: Subscription;
 
@@ -49,6 +48,10 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
     config.interval = 172800000;
 
 
+  }
+
+  isActiveSlide(slide: ISlide) {
+    return this.currentSlide && (slide.SlideId === this.currentSlide.SlideId);
   }
 
   //get the array of slides from the server
@@ -158,32 +161,37 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
   private selectSlide(slide: ISlide): void {
     //if carousel is fully initialised
     if (this.carousel) {
-      //if more than 1 slide to show
-      if (this.slides && this.slides.length > 1) {
-        this.carousel.select(slide.SlideId);
-        if (this.slideMover)
-          this.slideMover.unsubscribe();
-        this.slideMover = timer(slide.ShowForSeconds * 1000).subscribe(() => this.displayNextSlide());
+      //for inital load...do some basic setup here
+      if(!this.currentSlide) {
+        if(slide.SlideType !== SlideType.Video)
+          this.spotifyPlayer.resume();
       }
+
+      this.currentSlide = slide;
+
+      if (this.carousel.activeId !== slide.SlideId) {
+        this.carousel.select(slide.SlideId);
+      }
+
+      //set timer to check for next slide
+      if (this.slideMover)
+        this.slideMover.unsubscribe();
+      this.slideMover = timer(slide.ShowForSeconds * 1000).subscribe(() => this.displayNextSlide());
     }
   }
 
   onCarouselSlide(params: NgbSlideEvent): void {
-
-    var currentSlide: ISlide;
-
     //Check if it is a video slide and we need to pause Spotify
     from(this.slides)
       .pipe(first(slide => slide.SlideId === params.current)).subscribe(
         current => {
-          currentSlide = current;
-          if (current.SlideType === SlideType.Video) {
+          if (this.currentSlide.SlideType === SlideType.Video) {
             this.spotifyPlayer.pause();
           }
         });
 
     //if currentslide is not a video slide
-    if (currentSlide.SlideType !== SlideType.Video) {
+    if (this.currentSlide.SlideType !== SlideType.Video) {
       //If previous slide was a video and current one is not a video the restart Spotify
       from(this.slides)
         .pipe(first(slide => slide.SlideId === params.prev)).subscribe(

@@ -4,11 +4,11 @@
       <div class="row">
         <a routerLink="/admin" routerLinkActive="active">Back to Admin</a><br />
       </div>
-      <div *ngIf="!AppConfigLocal.settings.access_token" class="row">
+      <div class="row">
         <p><label for="clientid"><strong>Spotify Application Client Id:</strong></label>&nbsp;<input id="clientid" type="text"
             [(ngModel)]="AppConfigLocal.settings.ClientId" size="40"></p>
       </div>
-      <div *ngIf="!AppConfigLocal.settings.access_token" class="row">
+      <div class="row">
         <p><label for="clientsecret"><strong>Spotify Application Client Secret:</strong></label>&nbsp;<input id="clientsecret"
             type="text" [(ngModel)]="AppConfigLocal.settings.ClientSecret" size="40"></p>
       </div>
