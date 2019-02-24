@@ -1,6 +1,6 @@
 import { Component, ViewChild, AfterViewInit, OnDestroy, OnInit } from '@angular/core';
 import { NgbCarouselConfig, NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
-import { interval, timer,  Subscription } from 'rxjs';
+import { interval, timer, Subscription } from 'rxjs';
 import { ISlide } from '../models/slide';
 import { SlideType } from '../models/slide-type';
 import { HttpClient } from '@angular/common/http';
@@ -158,10 +158,13 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
   private selectSlide(slide: ISlide): void {
     //if carousel is fully initialised
     if (this.carousel) {
-      this.carousel.select(slide.SlideId);
-      if (this.slideMover)
-        this.slideMover.unsubscribe();
-      this.slideMover = timer(slide.ShowForSeconds * 1000).subscribe(() => this.displayNextSlide());
+      //if more than 1 slide to show
+      if (this.slides && this.slides.length > 1) {
+        this.carousel.select(slide.SlideId);
+        if (this.slideMover)
+          this.slideMover.unsubscribe();
+        this.slideMover = timer(slide.ShowForSeconds * 1000).subscribe(() => this.displayNextSlide());
+      }
     }
   }
 
