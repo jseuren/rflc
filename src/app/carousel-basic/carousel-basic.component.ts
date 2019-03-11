@@ -128,7 +128,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
     if (forcedSlides && forcedSlides.length) {
       this.slides = forcedSlides;
       //there may bemultipe configured so only allow them to rotate through until they are invalid
-      var int = this.getRandomInt(0, this.slides.length - 1);
+      var int = this.getRandomInt(this.slides.length);
       this.selectSlide(this.slides[int]);
       return true;
     } else {
@@ -146,7 +146,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
       this.slides = this.getValidSlides();
 
       if (this.slides && this.slides.length) {
-        var int = this.getRandomInt(0, this.slides.length - 1);
+        var int = this.getRandomInt(this.slides.length);
         this.selectSlide(this.slides[int]);
       }
     }
@@ -154,8 +154,12 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
   }
 
   //get a random number so as to randmise the display of the tiles
-  private getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
+  private getRandomInt(max) {
+    let random = Math.random();
+    console.log("Random number :- " + random);
+    let result = Math.floor(random * max);
+    console.log("Random slide :-" + result);
+    return result;
   }
 
   private selectSlide(slide: ISlide): void {

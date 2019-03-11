@@ -31,7 +31,7 @@ export class VideoComponent {
         let height = document.getElementsByClassName("carousel-item active")[0].clientHeight;
       //  this.player.cueVideoById(this.model.YouTubeVideoId,1,"large");
         this.player.setSize(width,height);
-        console.log('player instance', player);
+        //console.log('player instance', player);
         this.playVideo();
       } else {
         this.player.stopVideo();
@@ -40,7 +40,7 @@ export class VideoComponent {
   }
 
   onStateChange(event) {
-    console.log('player state', event.data);
+    //console.log('player state', event.data);
     if (event.data == YT.PlayerState.ENDED && !this.done ) {
       setTimeout(this.stopVideo, 6000);
       this.done = true;
