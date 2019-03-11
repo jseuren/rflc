@@ -33,7 +33,7 @@
             <slide-fundraising-stats [model]="slide"></slide-fundraising-stats>
           </ng-template>
           <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Video">
-            <slide-video [model]="slide" [isActiveSlide]="isActiveSlide(slide)"></slide-video>
+            <slide-video (duration)="onDuration($event)" [model]="slide" [isActiveSlide]="isActiveSlide(slide)"></slide-video>
           </ng-template>
           <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Announcement">
             <slide-announcement [model]="slide"></slide-announcement>

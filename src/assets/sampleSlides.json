@@ -13,15 +13,21 @@
     "SlideType": 11,
     "SecondsToForceShowFor": "0",
     "ForceSlideToShowAtTime": "",
-    "ShowForSeconds":"10",
-    "YouTubeVideoId":"nYh-n7EOtMA"
+    "YouTubeVideoId":"J54cSb8km5Y"
   },{
     "SlideId": "video1",
     "Header": "This is the base slide of video slide",
     "SlideType": 11,
     "SecondsToForceShowFor": "0",
     "ForceSlideToShowAtTime": "",
-    "ShowForSeconds":"10",
-    "YouTubeVideoId":"t2NgsJrrAyM"
+    "YouTubeVideoId":"B7bqAsxee4I"
+  },{
+    "SlideId": "video2",
+    "Header": "This is the base slide of video slide",
+    "SlideType": 11,
+    "SecondsToForceShowFor": "0",
+    "ForceSlideToShowAtTime": "",
+    "YouTubeVideoId":"3q66FR_p0Wc"
   }
 ]
+

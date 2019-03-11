@@ -155,10 +155,11 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
 
   //get a random number so as to randmise the display of the tiles
   private getRandomInt(max) {
+    console.log('number of slides to choose from:- ' + max);
     let random = Math.random();
     console.log("Random number :- " + random);
     let result = Math.floor(random * max);
-    console.log("Random slide :-" + result);
+    console.log("Random slide :- " + result);
     return result;
   }
 
@@ -166,8 +167,8 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
     //if carousel is fully initialised
     if (this.carousel) {
       //for inital load...do some basic setup here
-      if(!this.currentSlide) {
-        if(slide.SlideType !== SlideType.Video)
+      if (!this.currentSlide) {
+        if (slide.SlideType !== SlideType.Video)
           this.spotifyPlayer.resume();
       }
 
@@ -178,10 +179,24 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
       }
 
       //set timer to check for next slide
-      if (this.slideMover)
-        this.slideMover.unsubscribe();
-      this.slideMover = timer(slide.ShowForSeconds * 1000).subscribe(() => this.displayNextSlide());
+      //except for video slides
+      //they will emit an event with the duration of hte slide
+      if (slide.SlideType !== SlideType.Video) {
+        if (this.slideMover)
+          this.slideMover.unsubscribe();
+        this.slideMover = timer(slide.ShowForSeconds * 1000).subscribe(() => this.displayNextSlide());
+      }
     }
+  }
+
+  //event emitter for video slides to accept duration of slide and then
+  //refresh / look for next slide
+  onDuration(duration: number) {
+    //set timer to check for next slide
+    console.log('video duration ' + duration + ' seconds');
+    if (this.slideMover)
+      this.slideMover.unsubscribe();
+    this.slideMover = timer(duration * 1000).subscribe(() => this.displayNextSlide());
   }
 
   onCarouselSlide(params: NgbSlideEvent): void {
