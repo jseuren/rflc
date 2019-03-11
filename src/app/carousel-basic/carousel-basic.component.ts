@@ -30,7 +30,6 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
   SlideType: any = SlideType;
   slides: Array<ISlide>;
   slidesFromServer: Array<ISlide>;
-  currentSlide: ISlide;
 
   slideMover: Subscription;
 
@@ -51,15 +50,15 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
   }
 
   isActiveSlide(slide: ISlide) {
-    return this.currentSlide && (slide.SlideId === this.currentSlide.SlideId);
+    return !!this.carousel && (slide.SlideId === this.carousel.activeId);
   }
 
   //get the array of slides from the server
-  getSlides(): Promise<Array<ISlide>> {
-    return this._http.get<Array<ISlide>>('./assets/sampleSlides.json').toPromise().then(slides => {
-      return slides;
-    });
+  async getSlides(): Promise<Array<ISlide>> {
+    const slides = await this._http.get<Array<ISlide>>('./assets/sampleSlides.json').toPromise();
+    return slides;
   }
+
   ngOnDestroy() {
     this.spotifyPlayer.pause();
   }
@@ -127,9 +126,8 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
     //if there are any forced slides
     if (forcedSlides && forcedSlides.length) {
       this.slides = forcedSlides;
-      //there may bemultipe configured so only allow them to rotate through until they are invalid
-      var int = this.getRandomInt(this.slides.length);
-      this.selectSlide(this.slides[int]);
+      //there may be multipe configured so only allow them to rotate through until they are invalid
+      this.selectSlide(this.getRandomSlide());
       return true;
     } else {
       return false;
@@ -146,11 +144,21 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
       this.slides = this.getValidSlides();
 
       if (this.slides && this.slides.length) {
-        var int = this.getRandomInt(this.slides.length);
-        this.selectSlide(this.slides[int]);
+        this.selectSlide(this.getRandomSlide());
       }
     }
+  }
 
+  private getRandomSlide(): ISlide {
+
+    var random: number = 0;
+    do {
+      random = this.getRandomInt(this.slides.length);
+      console.log('Random number :- ' + random);
+    } while (this.slides.length === 1 || (this.carousel && (this.slides[random].SlideId === this.carousel.activeId)))
+
+    console.log('Random number selected:- ' + random);
+    return this.slides[random];
   }
 
   //get a random number so as to randmise the display of the tiles
@@ -159,7 +167,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
     let random = Math.random();
     console.log("Random number :- " + random);
     let result = Math.floor(random * max);
-    console.log("Random slide :- " + result);
+
     return result;
   }
 
@@ -167,15 +175,15 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
     //if carousel is fully initialised
     if (this.carousel) {
       //for inital load...do some basic setup here
-      if (!this.currentSlide) {
+      if (!this.carousel.activeId) {
         if (slide.SlideType !== SlideType.Video)
           this.spotifyPlayer.resume();
       }
 
-      this.currentSlide = slide;
 
       if (this.carousel.activeId !== slide.SlideId) {
         this.carousel.select(slide.SlideId);
+        console.log('Slide ' + slide.SlideId + ' selected');
       }
 
       //set timer to check for next slide
@@ -193,24 +201,26 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
   //refresh / look for next slide
   onDuration(duration: number) {
     //set timer to check for next slide
-    console.log('video duration ' + duration + ' seconds');
+    console.log('video duration ' + duration + ' seconds received for slide');
     if (this.slideMover)
       this.slideMover.unsubscribe();
     this.slideMover = timer(duration * 1000).subscribe(() => this.displayNextSlide());
   }
 
+  //Check if the spotify player needs to be paused or resumed based on
+  //whether or not it is a video slide
   onCarouselSlide(params: NgbSlideEvent): void {
     //Check if it is a video slide and we need to pause Spotify
     from(this.slides)
       .pipe(first(slide => slide.SlideId === params.current)).subscribe(
         current => {
-          if (this.currentSlide.SlideType === SlideType.Video) {
+          if (current.SlideType === SlideType.Video) {
             this.spotifyPlayer.pause();
           }
         });
 
     //if currentslide is not a video slide
-    if (this.currentSlide.SlideType !== SlideType.Video) {
+    if (this.slides.find(s => s.SlideId == params.current).SlideType !== SlideType.Video) {
       //If previous slide was a video and current one is not a video the restart Spotify
       from(this.slides)
         .pipe(first(slide => slide.SlideId === params.prev)).subscribe(
@@ -220,6 +230,5 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
             }
           });
     }
-
   }
 }
