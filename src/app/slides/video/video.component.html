@@ -1,5 +1,3 @@
-<youtube-player   
-[videoId]="model.YouTubeVideoId"
-(ready)="savePlayer($event)" 
-(change)="onStateChange($event)"
-[playerVars]="playerVars"></youtube-player>
+<video id="myVideo" #videoPlayer>
+  <source src="{{model.Filename}}" type="video/mp4">
+</video>

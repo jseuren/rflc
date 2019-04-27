@@ -155,7 +155,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
     do {
       random = this.getRandomInt(this.slides.length);
       console.log('Random number :- ' + random);
-    } while (this.slides.length === 1 || (this.carousel && (this.slides[random].SlideId === this.carousel.activeId)))
+    } while (this.slides.length > 1 && (this.carousel && (this.slides[random].SlideId === this.carousel.activeId)))
 
     console.log('Random number selected:- ' + random);
     return this.slides[random];
@@ -163,6 +163,8 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
 
   //get a random number so as to randmise the display of the tiles
   private getRandomInt(max) {
+    if (max === 1)
+      return 0;
     console.log('number of slides to choose from:- ' + max);
     let random = Math.random();
     console.log("Random number :- " + random);

@@ -22,7 +22,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { SpotifyPlayerComponent } from './spotify-player/spotify-player/spotify-player.component'; 
-import { YoutubePlayerModule } from 'ngx-youtube-player';
 
 export function initializeApp(appConfig: AppConfig) {
   return () => appConfig.initialize();
@@ -36,8 +35,7 @@ export function initializeApp(appConfig: AppConfig) {
     RouterModule.forRoot([]),
     AppRoutingModule,
     HttpModule,
-    HttpClientModule,
-    YoutubePlayerModule
+    HttpClientModule
   ],
   providers: [
     AppConfig,
