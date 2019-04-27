@@ -50,6 +50,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
   }
 
   isActiveSlide(slide: ISlide) {
+    //is teh carousel active and the carousel active slide ID equal to the slide being checked
     return !!this.carousel && (slide.SlideId === this.carousel.activeId);
   }
 
@@ -156,6 +157,9 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
       random = this.getRandomInt(this.slides.length);
       console.log('Random number :- ' + random);
     } while (this.slides.length > 1 && (this.carousel && (this.slides[random].SlideId === this.carousel.activeId)))
+    //If there is only 1 slide then no need to loop as it is the only one to display.
+    //If there is more than one slide then make sure that next selected slide is not equal to current one
+    //so as to get the slides rotating around
 
     console.log('Random number selected:- ' + random);
     return this.slides[random];
@@ -163,8 +167,10 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
 
   //get a random number so as to randmise the display of the tiles
   private getRandomInt(max) {
+    //If there is only 1 slide the force the first slide in the array to be shown
     if (max === 1)
       return 0;
+
     console.log('number of slides to choose from:- ' + max);
     let random = Math.random();
     console.log("Random number :- " + random);
@@ -181,7 +187,6 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
         if (slide.SlideType !== SlideType.Video)
           this.spotifyPlayer.resume();
       }
-
 
       if (this.carousel.activeId !== slide.SlideId) {
         this.carousel.select(slide.SlideId);
