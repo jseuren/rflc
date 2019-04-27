@@ -15,13 +15,19 @@ export class VideoComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     var duration = this.duration;
-    var video = this.videoplayer.nativeElement;
-
     this.videoplayer.nativeElement.addEventListener('loadeddata', function (_event: any) {
-      if(video.readyState >= 2) {
-        video.play();
-        duration.emit(Math.ceil(_event.target.duration));
+      if (this.videoplayer.nativeElement.readyState >= 2) {
+        if (this.isActiveSlide) {
+
+          this.videoplayer.nativeElement.play().then(function () {
+            duration.emit(Math.ceil(_event.target.duration));
+          })
+            .catch(function (error) {
+              //something happened so give a duration of 1 second so carousle moves onto next slide
+              duration.emit(Math.ceil(1));
+            });
+        }
       }
-    });
+    }.bind(this)); //Bind the current scope (this) to inner event listener
   }
 }

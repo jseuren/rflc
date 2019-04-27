@@ -3,8 +3,8 @@
     "SlideId": "countdownTill",
     "Header": "This is the base slide of a countdown timer till the start of the event",
     "SlideType": 1,
-    "CountdownEndTime": "2019-03-13T06:13:00.000Z",
-    "ForceSlideToShowAtTime": "2019-03-14T06:12:00.000Z",
+    "CountdownEndTime": "2019-04-28T06:13:00.000Z",
+    "ForceSlideToShowAtTime": "2019-04-29T06:12:00.000Z",
     "SecondsToForceShowFor": "6",
     "ShowForSeconds":"6"
   },{

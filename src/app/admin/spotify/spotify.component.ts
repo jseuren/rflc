@@ -59,6 +59,7 @@ export class SpotifyComponent implements OnInit {
   }
 
   logIntoSpotify() {
+    AppConfig.save();
     window.location.href = "http://localhost:8888/login?client_id=" + AppConfig.settings.ClientId + "&client_secret=" + AppConfig.settings.ClientSecret;
   }
 
