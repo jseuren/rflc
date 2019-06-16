@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { SpotifyService } from 'src/app/services/spotify.service';
 import { AppConfig } from 'src/app/app-config/app.config';
 import { interval } from 'rxjs';
@@ -11,18 +11,12 @@ const refreshTokenCounter = interval(1800000);
   templateUrl: './spotify-player.component.html',
   styleUrls: ['./spotify-player.component.css']
 })
-export class SpotifyPlayerComponent implements OnInit, AfterViewInit {
+export class SpotifyPlayerComponent implements AfterViewInit {
 
   constructor(private _spotifyService: SpotifyService) { }
 
   playlistStarted: boolean = false;
-
-  ngOnInit() {
-   // if (this.canPlaySpotify()) {
-    //  this._spotifyService.volume100Percent();
-   //   this.startPlaylist();
-   // }
-  }
+  public isPaused: boolean = false;
 
   ngAfterViewInit() {
 
@@ -54,6 +48,7 @@ export class SpotifyPlayerComponent implements OnInit, AfterViewInit {
   public startPlaylist(): void {
     this._spotifyService.startPlaylist(AppConfig.settings.SelectedPlaylistDetails.uri);
     this.playlistStarted = true;
+    this.isPaused = false;
   }
 
   public resume(): void {
@@ -63,12 +58,16 @@ export class SpotifyPlayerComponent implements OnInit, AfterViewInit {
       }else {
         this._spotifyService.resume();
       }
+      this.isPaused = false;
     }
   }
 
   public pause(): void {
     if (this.readyToPlaySpotify())
+    {
       this._spotifyService.pause();
+      this.isPaused = true;
+    }
   }
 
   public volume100(): void {

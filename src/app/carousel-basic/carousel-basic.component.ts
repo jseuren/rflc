@@ -12,6 +12,7 @@ import { first } from 'rxjs/operators';
 import { from } from 'rxjs';
 import { SpotifyPlayerComponent } from '../spotify-player/spotify-player/spotify-player.component';
 import { ActivatedRoute } from '@angular/router';
+import { globalVolumControl } from '../models/GobalVolumeControl/global-volume-control';
 
 const intervalTime: number = 5000;
 const secondsCounter = interval(1000);
@@ -34,7 +35,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
 
   slideMover: Subscription;
 
-  globalSoundControlOn:boolean;
+  globalSoundControlOn: boolean;
 
   constructor(config: NgbCarouselConfig, private _http: HttpClient, private route: ActivatedRoute, ) {
     // customize default values of carousels used by this component tree
@@ -69,8 +70,8 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
   }
 
   //get the array of slides from the server
-  async getMasterVolumeControl(): Promise<boolean> {
-    const volumeControl = await this._http.get<boolean>('./assets/sampleSlides.json').toPromise();
+  async getMasterVolumeControl(): Promise<globalVolumControl> {
+    const volumeControl = await this._http.get<globalVolumControl>('https://rflapp.azurewebsites.net/settings.php?s=master_volume').toPromise();
     return volumeControl;
   }
 
@@ -112,7 +113,16 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
     setTimeout(() => {
       slideRetreiver.subscribe(() => {
         this.getMasterVolumeControl().then(result => {
-          this.globalSoundControlOn = result;
+          if (this.globalSoundControlOn !== result.value) {
+            this.globalSoundControlOn = result.value;
+            if (this.globalSoundControlOn) {
+              if (this.spotifyPlayer.isPaused) {
+                if (this.slides.find(s => s.SlideId === this.carousel.activeId).SlideType !== SlideType.Video) {
+                  this.spotifyPlayer.resume();
+                }
+              }
+            }
+          }
         });
       });
     }, 1000)
@@ -207,7 +217,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
     if (this.carousel) {
       //for inital load...do some basic setup here
       if (!this.carousel.activeId) {
-        if (slide.SlideType !== SlideType.Video)
+        if (slide.SlideType !== SlideType.Video && this.globalSoundControlOn)
           this.spotifyPlayer.resume();
       }
 
@@ -244,7 +254,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
     from(this.slides)
       .pipe(first(slide => slide.SlideId === params.current)).subscribe(
         current => {
-          if (current.SlideType === SlideType.Video) {
+          if (current.SlideType === SlideType.Video || !this.globalSoundControlOn) {
             this.spotifyPlayer.pause();
           }
         });
@@ -255,7 +265,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
       from(this.slides)
         .pipe(first(slide => slide.SlideId === params.prev)).subscribe(
           previous => {
-            if (previous.SlideType === SlideType.Video) {
+            if (previous.SlideType === SlideType.Video && this.globalSoundControlOn) {
               this.spotifyPlayer.resume();
             }
           });
