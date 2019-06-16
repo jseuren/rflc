@@ -7,7 +7,8 @@
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="https://www.cancervic.org.au/App_Sites/ccv/Templates/Default/images/icons/favicon.ico">
+  <link rel="icon" type="image/x-icon"
+    href="https://www.cancervic.org.au/App_Sites/ccv/Templates/Default/images/icons/favicon.ico">
   <link rel="stylesheet" href="assets/vendors/css/base/bootstrap.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/themes/prism.css" />
   <link rel="stylesheet" href="assets/vendors/css/base/elisyam-1.5.css">
@@ -26,65 +27,7 @@
 </head>
 
 <body>
-<!-- <script src="https://sdk.scdn.co/spotify-player.js"></script> -->
-    <my-app></my-app>
-  <script>
-    // window.onSpotifyWebPlaybackSDKReady = () => {
-    //   // You can now initialize Spotify.Player and use the SDK
-    //   const token =
-    //     'BQAVJwVLJC31XQ0LHCh-BySzYqQS6C6MG9T4VMaR3-pULWxI2-xvFZS6v3WZIztRcheTOL_dJwG0t9eLjleh6RVbHh9J-T-LpPIQ8b_mvXSaRRlRYVlsbJ5MFZp9t9MerU7CIwFYLWVxdXRs3sGDeA43XYS4ECQqIKqgElCo';
-
-
-    //   const player = new Spotify.Player({
-    //     name: 'rflcPlayer',
-    //     getOAuthToken: cb => {
-    //       cb(token);
-    //     },
-    //     volume: 1
-    //   });
-
-    //   // Ready
-    //   player.addListener('ready', ({
-    //     device_id
-    //   }) => {
-    //     const play = ({
-    //       spotify_uri,
-    //       playerInstance: {
-    //         _options: {
-    //           getOAuthToken,
-    //           id
-    //         }
-    //       }
-    //     }) => {
-    //       getOAuthToken(access_token => {
-    //         fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
-    //           method: 'PUT',
-    //           body: JSON.stringify({
-    //             uris: [spotify_uri]
-    //           }),
-    //           headers: {
-    //             'Content-Type': 'application/json',
-    //             'Authorization': `Bearer ${access_token}`
-    //           },
-    //         });
-    //       });
-    //     };
-    //   });
-    //   // spotify:user:1249155726:playlist:1jkpwfUofmQBrV9xKadIHy
-
-    //   //spotify:user:1230982431:playlist:5zf9TzvxlFmbSAXx0y8JbB
-    //   // Connect to the player!
-    //   player.connect().then(success => {
-    //     if (success) {
-    //       play({
-    //         playerInstance: player,
-    //         spotify_uri: 'spotify:track:5QLHGv0DfpeXLNFo7SFEy1',
-    //       });
-    //     }
-    //   });
-    // };
-
-  </script>
+  <my-app></my-app>
 </body>
 
 </html>

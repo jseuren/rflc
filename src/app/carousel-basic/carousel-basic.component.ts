@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit, OnDestroy, OnInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnDestroy, OnInit, EventEmitter } from '@angular/core';
 import { NgbCarouselConfig, NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { interval, timer, Subscription } from 'rxjs';
 import { ISlide } from '../models/slide';
@@ -16,6 +16,7 @@ import { ActivatedRoute } from '@angular/router';
 const intervalTime: number = 5000;
 const secondsCounter = interval(1000);
 const slideRetreiver = interval(intervalTime);
+const volumControlRetreiver = interval(1000);
 @Component({
   selector: 'ngb-carousel-basic',
   templateUrl: './carousel-basic.component.html',
@@ -33,6 +34,8 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
 
   slideMover: Subscription;
 
+  globalSoundControlOn:boolean;
+
   constructor(config: NgbCarouselConfig, private _http: HttpClient, private route: ActivatedRoute, ) {
     // customize default values of carousels used by this component tree
     config.showNavigationArrows = false;
@@ -46,7 +49,12 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
     //automatically, but allow us to control it
     config.interval = 172800000;
 
+    this.globalSoundControlOn = true;
 
+  }
+
+  allowSound() {
+    return this.globalSoundControlOn;
   }
 
   isActiveSlide(slide: ISlide) {
@@ -58,6 +66,12 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
   async getSlides(): Promise<Array<ISlide>> {
     const slides = await this._http.get<Array<ISlide>>('./assets/sampleSlides.json').toPromise();
     return slides;
+  }
+
+  //get the array of slides from the server
+  async getMasterVolumeControl(): Promise<boolean> {
+    const volumeControl = await this._http.get<boolean>('./assets/sampleSlides.json').toPromise();
+    return volumeControl;
   }
 
   ngOnDestroy() {
@@ -87,12 +101,21 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
 
     //half way through a slide retireveal get updated Slides from server
     setTimeout(() => {
-      slideRetreiver.subscribe(() => {
+      volumControlRetreiver.subscribe(() => {
         this.getSlides().then(result => {
           this.slidesFromServer = result;
         });
       });
     }, intervalTime / 2)
+
+    //Every second check for a master volume control to see if sound needs to be switched off
+    setTimeout(() => {
+      slideRetreiver.subscribe(() => {
+        this.getMasterVolumeControl().then(result => {
+          this.globalSoundControlOn = result;
+        });
+      });
+    }, 1000)
   }
 
   //filter out any slide which may no longer be valid but is still in array or 
