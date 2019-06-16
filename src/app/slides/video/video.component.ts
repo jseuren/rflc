@@ -35,7 +35,9 @@ export class VideoComponent implements OnChanges {
     if(allowSound) {
       if(allowSound.previousValue != allowSound.currentValue) {
         if(allowSound.currentValue){
-          this.videoplayer.nativeElement.volume = 1;
+          if(this.isActiveSlide) {
+            this.videoplayer.nativeElement.volume = 1;
+          }
         } else {
           this.videoplayer.nativeElement.volume = 0;
         }
@@ -48,6 +50,8 @@ export class VideoComponent implements OnChanges {
     if (this.videoplayer.nativeElement.readyState >= 2) {
       if(!this.allowSound) {
         this.videoplayer.nativeElement.volume = 0;
+      } else {
+        this.videoplayer.nativeElement.volume = 1;
       }
       this.videoplayer.nativeElement.play().then(function () {
         duration.emit(Math.ceil(_event.target.duration));
