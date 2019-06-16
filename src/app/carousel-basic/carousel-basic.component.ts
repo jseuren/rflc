@@ -70,8 +70,8 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
   }
 
   //get the array of slides from the server
-  async getMasterVolumeControl(): Promise<globalVolumControl> {
-    const volumeControl = await this._http.get<globalVolumControl>('https://rflapp.azurewebsites.net/settings.php?s=master_volume').toPromise();
+  async getMasterVolumeControl(): Promise<boolean> {
+    const volumeControl = await this._http.get<boolean>('https://rflapp.azurewebsites.net/settings.php?s=master_volume').toPromise();
     return volumeControl;
   }
 
@@ -113,8 +113,8 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
     setTimeout(() => {
       slideRetreiver.subscribe(() => {
         this.getMasterVolumeControl().then(result => {
-          if (this.globalSoundControlOn !== result.value) {
-            this.globalSoundControlOn = result.value;
+          if (this.globalSoundControlOn !== result) {
+            this.globalSoundControlOn = result;
             if (this.globalSoundControlOn) {
               if (this.spotifyPlayer.isPaused) {
                 if (this.slides.find(s => s.SlideId === this.carousel.activeId).SlideType !== SlideType.Video) {
