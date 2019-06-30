@@ -12,7 +12,7 @@
             <slide-individual-leaderboard [model]="slide"></slide-individual-leaderboard>
           </ng-template>
           <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.TeamLeaderBoard">
-            <slide-team-leaderboard [model]="slide"></slide-team-leaderboard>
+            <slide-team-leaderboard [model]="slide" [isActiveSlide]="isActiveSlide(slide)"></slide-team-leaderboard>
           </ng-template>
           <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.UpcomingSchedule">
             <slide-upcoming-schedule [model]="slide"></slide-upcoming-schedule>
@@ -27,7 +27,7 @@
             <slide-sponsors [model]="slide"></slide-sponsors>
           </ng-template>
           <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Fundraising">
-            <slide-fundraising [model]="slide"></slide-fundraising>
+            <slide-fundraising [model]="slide" [isActiveSlide]="isActiveSlide(slide)"></slide-fundraising>
           </ng-template>
           <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.FundraisingStats">
             <slide-fundraising-stats [model]="slide"></slide-fundraising-stats>

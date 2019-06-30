@@ -1,2 +1,23 @@
-FUNDRAISING
-<div>{{model.Header}}</div>
+<div class="widget has-shadow">
+    <div class="widget-header bordered no-actions d-flex align-items-center">
+        <h4>{{model.Header}}</h4>
+    </div>
+    <div class="widget-body">
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>Team Name</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let team of teamFundraising">
+                        <td>{{team.team_name}}</td>
+                        <td>{{team.amount | currency:'USD'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

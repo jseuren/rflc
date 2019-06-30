@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit, OnDestroy, OnInit, EventEmitter } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnDestroy, OnInit } from '@angular/core';
 import { NgbCarouselConfig, NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { interval, timer, Subscription } from 'rxjs';
 import { ISlide } from '../models/slide';
@@ -12,7 +12,6 @@ import { first } from 'rxjs/operators';
 import { from } from 'rxjs';
 import { SpotifyPlayerComponent } from '../spotify-player/spotify-player/spotify-player.component';
 import { ActivatedRoute } from '@angular/router';
-import { globalVolumControl } from '../models/GobalVolumeControl/global-volume-control';
 
 const intervalTime: number = 5000;
 const secondsCounter = interval(1000);
@@ -101,17 +100,17 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
     });
 
     //half way through a slide retireveal get updated Slides from server
-    setTimeout(() => {
-      volumControlRetreiver.subscribe(() => {
-        this.getSlides().then(result => {
-          this.slidesFromServer = result;
-        });
-      });
-    }, intervalTime / 2)
+    // setTimeout(() => {
+     // slideRetreiver.subscribe(() => {
+     //   this.getSlides().then(result => {
+     //     this.slidesFromServer = result;
+     //   });
+     // });
+    //}, intervalTime / 2)
 
     //Every second check for a master volume control to see if sound needs to be switched off
     setTimeout(() => {
-      slideRetreiver.subscribe(() => {
+      volumControlRetreiver.subscribe(() => {
         this.getMasterVolumeControl().then(result => {
           if (this.globalSoundControlOn !== result) {
             this.globalSoundControlOn = result;
@@ -188,13 +187,13 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
     var random: number = 0;
     do {
       random = this.getRandomInt(this.slides.length);
-      console.log('Random number :- ' + random);
+     //  console.log('Random number :- ' + random);
     } while (this.slides.length > 1 && (this.carousel && (this.slides[random].SlideId === this.carousel.activeId)))
     //If there is only 1 slide then no need to loop as it is the only one to display.
     //If there is more than one slide then make sure that next selected slide is not equal to current one
     //so as to get the slides rotating around
 
-    console.log('Random number selected:- ' + random);
+    // console.log('Random number selected:- ' + random);
     return this.slides[random];
   }
 
@@ -204,9 +203,9 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
     if (max === 1)
       return 0;
 
-    console.log('number of slides to choose from:- ' + max);
+   //  console.log('number of slides to choose from:- ' + max);
     let random = Math.random();
-    console.log("Random number :- " + random);
+   //  console.log("Random number :- " + random);
     let result = Math.floor(random * max);
 
     return result;
