@@ -15,7 +15,7 @@
             <slide-team-leaderboard [model]="slide" [isActiveSlide]="isActiveSlide(slide)"></slide-team-leaderboard>
           </ng-template>
           <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.UpcomingSchedule">
-            <slide-upcoming-schedule [model]="slide"></slide-upcoming-schedule>
+            <slide-upcoming-schedule [model]="slide" [isActiveSlide]="isActiveSlide(slide)"></slide-upcoming-schedule>
           </ng-template>
           <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Instagram">
             <silde-instagram [model]="slide"></silde-instagram>

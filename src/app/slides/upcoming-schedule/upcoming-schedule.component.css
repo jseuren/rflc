@@ -1,0 +1,16 @@
+.row {
+  background-color: white;
+}
+
+#schedulcontainer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+
+}
+.vert {
+  margin-top: auto;
+  margin-bottom: auto;
+}
