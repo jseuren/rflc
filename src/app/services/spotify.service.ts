@@ -23,7 +23,7 @@ export class SpotifyService {
     }
 
     public getPlaylists(): Observable<SpotifyApi.PlaylistSearchResponse> {
-        return this.get<SpotifyApi.PlaylistSearchResponse>('https://api.spotify.com/v1/me/playlists/');
+        return this.get<SpotifyApi.PlaylistSearchResponse>('https://api.spotify.com/v1/me/playlists?limit=50');
     }
 
     public getDevices(): Observable<SpotifyApi.Device[]> {
