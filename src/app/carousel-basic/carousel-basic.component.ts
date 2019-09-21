@@ -120,6 +120,10 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
                   this.spotifyPlayer.resume();
                 }
               }
+            } else {
+              if (!this.spotifyPlayer.isPaused) {
+                this.spotifyPlayer.pause();
+              }
             }
           }
         });
