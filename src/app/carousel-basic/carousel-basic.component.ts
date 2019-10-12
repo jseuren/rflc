@@ -1,9 +1,9 @@
 import { Component, ViewChild, AfterViewInit, OnDestroy, OnInit } from '@angular/core';
 import { NgbCarouselConfig, NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
-import { interval, timer, Subscription } from 'rxjs';
+import { interval, timer, Subscription, Observable, of } from 'rxjs';
 import { ISlide } from '../models/slide';
 import { SlideType } from '../models/slide-type';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as moment from 'moment/moment';
 import { CountdownClockSlide } from '../models/countdown-clock/countdown-clock-slide';
 import { SpotifyService } from '../services/spotify.service';
@@ -12,11 +12,20 @@ import { first } from 'rxjs/operators';
 import { from } from 'rxjs';
 import { SpotifyPlayerComponent } from '../spotify-player/spotify-player/spotify-player.component';
 import { ActivatedRoute } from '@angular/router';
+import { MasterVolumeControl } from '../models/SAP Hana/sapcommon';
+import { SAPService } from '../services/sapService';
 
 const intervalTime: number = 5000;
 const secondsCounter = interval(1000);
 const slideRetreiver = interval(intervalTime);
 const volumControlRetreiver = interval(1000);
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Authorization': 'Basic Wl9STV9VU0VSOldlbGNvbWUy'
+  })
+};
+
 @Component({
   selector: 'ngb-carousel-basic',
   templateUrl: './carousel-basic.component.html',
@@ -36,7 +45,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
 
   globalSoundControlOn: boolean;
 
-  constructor(config: NgbCarouselConfig, private _http: HttpClient, private route: ActivatedRoute, ) {
+  constructor(config: NgbCarouselConfig, private _http: HttpClient, private route: ActivatedRoute, private sapService: SAPService ) {
     // customize default values of carousels used by this component tree
     config.showNavigationArrows = false;
     config.showNavigationIndicators = false;
@@ -50,7 +59,6 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
     config.interval = 172800000;
 
     this.globalSoundControlOn = true;
-
   }
 
   allowSound() {
@@ -69,9 +77,8 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
   }
 
   //get the array of slides from the server
-  async getMasterVolumeControl(): Promise<boolean> {
-    const volumeControl = await this._http.get<boolean>('https://rflapp.azurewebsites.net/settings.php?s=master_volume').toPromise();
-    return volumeControl;
+  getMasterVolumeControl(): Promise<MasterVolumeControl> {
+    return this.sapService.getMasterVolumeControl();
   }
 
   ngOnDestroy() {
@@ -101,29 +108,35 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
 
     //half way through a slide retireveal get updated Slides from server
     // setTimeout(() => {
-     // slideRetreiver.subscribe(() => {
-     //   this.getSlides().then(result => {
-     //     this.slidesFromServer = result;
-     //   });
-     // });
+    // slideRetreiver.subscribe(() => {
+    //   this.getSlides().then(result => {
+    //     this.slidesFromServer = result;
+    //   });
+    // });
     //}, intervalTime / 2)
 
     //Every second check for a master volume control to see if sound needs to be switched off
     setTimeout(() => {
       volumControlRetreiver.subscribe(() => {
         this.getMasterVolumeControl().then(result => {
-          if (this.globalSoundControlOn !== result) {
-            this.globalSoundControlOn = result;
+          if (this.globalSoundControlOn !== result.d.results[0].value) {
+            this.globalSoundControlOn = result.d.results[0].value;
             if (this.globalSoundControlOn) {
-              if (this.spotifyPlayer.isPaused) {
-                if (this.slides.find(s => s.SlideId === this.carousel.activeId).SlideType !== SlideType.Video) {
-                  this.spotifyPlayer.resume();
+              this.spotifyPlayer.isCurrentlyPlaying().subscribe(playing => {
+                if (!playing) {
+                  if (this.slides.find(s => s.SlideId === this.carousel.activeId).SlideType !== SlideType.Video) {
+                    this.spotifyPlayer.resume();
+                  }
                 }
-              }
+              });
             } else {
-              if (!this.spotifyPlayer.isPaused) {
-                this.spotifyPlayer.pause();
-              }
+              this.spotifyPlayer.isCurrentlyPlaying().subscribe(playing => {
+                if (playing) {
+                  if (this.slides.find(s => s.SlideId === this.carousel.activeId).SlideType !== SlideType.Video) {
+                    this.spotifyPlayer.pause();
+                  }
+                }
+              });
             }
           }
         });
@@ -191,7 +204,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
     var random: number = 0;
     do {
       random = this.getRandomInt(this.slides.length);
-     //  console.log('Random number :- ' + random);
+      //  console.log('Random number :- ' + random);
     } while (this.slides.length > 1 && (this.carousel && (this.slides[random].SlideId === this.carousel.activeId)))
     //If there is only 1 slide then no need to loop as it is the only one to display.
     //If there is more than one slide then make sure that next selected slide is not equal to current one
@@ -207,9 +220,9 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
     if (max === 1)
       return 0;
 
-   //  console.log('number of slides to choose from:- ' + max);
+    //  console.log('number of slides to choose from:- ' + max);
     let random = Math.random();
-   //  console.log("Random number :- " + random);
+    //  console.log("Random number :- " + random);
     let result = Math.floor(random * max);
 
     return result;

@@ -1,8 +1,8 @@
 import { Component, OnChanges, Input, SimpleChanges, SimpleChange } from '@angular/core';
 import { UpcomingSchduleSlide } from 'src/app/models/upcoming-schedule/upcomig-schedule-slide';
-import { HttpClient } from '@angular/common/http';
 import { UpcomingSchdule } from 'src/app/models/upcoming-schedule/upcoming-schedule';
 import * as moment from 'moment/moment';
+import { SAPService } from 'src/app/services/sapService';
 
 @Component({
   selector: 'slide-upcoming-schedule',
@@ -14,7 +14,7 @@ export class UpcomingScheduleComponent implements OnChanges {
   @Input() model: UpcomingSchduleSlide;
   @Input() isActiveSlide: boolean;
   schedule: Array<UpcomingSchdule>;
-  constructor(private _http: HttpClient) { }
+  constructor(private sapService: SAPService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     const activeSlide: SimpleChange = changes.isActiveSlide;
@@ -54,8 +54,9 @@ export class UpcomingScheduleComponent implements OnChanges {
   }
 
   async getSchedule(): Promise<Array<UpcomingSchdule>> {
-    const schedule = await this._http.get<Array<UpcomingSchdule>>('https://rflapp.azurewebsites.net/schedule.php').toPromise();
-    return schedule;
+    return this.sapService.getSchedule();
+    //const schedule = await this._http.get<Array<UpcomingSchdule>>('https://rflapp.azurewebsites.net/schedule.php').toPromise();
+    //return schedule;
   }
 
 }
