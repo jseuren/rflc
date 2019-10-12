@@ -454,6 +454,17 @@ declare namespace SpotifyApi {
     }
 
     /**
+     * Get Current Playuing Context
+     * 
+     * GET /v1/me/player
+     * https://developer.spotify.com/documentation/web-api/reference/player/get-information-about-the-users-current-playback/
+     */
+    interface PlaybackResponse {
+        device: Device,
+        is_playing: boolean
+    }
+
+    /**
      * Search for a playlist
      * 
      * GET /v1/search?type=playlist

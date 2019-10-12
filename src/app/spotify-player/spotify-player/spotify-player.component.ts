@@ -1,7 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { SpotifyService } from 'src/app/services/spotify.service';
 import { AppConfig } from 'src/app/app-config/app.config';
-import { interval } from 'rxjs';
+import { interval, Observable } from 'rxjs';
 
 //30 minutes
 const refreshTokenCounter = interval(1800000);
@@ -15,9 +15,6 @@ export class SpotifyPlayerComponent implements AfterViewInit {
 
   constructor(private _spotifyService: SpotifyService) { }
 
-  playlistStarted: boolean = false;
-  public isPaused: boolean = false;
-
   ngAfterViewInit() {
 
     //every 30 mins refresh the access otken from Spotify so as the player will never "stop"
@@ -29,7 +26,11 @@ export class SpotifyPlayerComponent implements AfterViewInit {
     });
 
   }
- 
+
+  isCurrentlyPlaying(): Observable<boolean> {
+    return this._spotifyService.playerIsCurrentlyPlaying();
+  }
+
   //Are all the components there that are required to play spotify ?
   canPlaySpotify(): boolean {
     return !!(AppConfig.settings.ClientId &&
@@ -47,47 +48,67 @@ export class SpotifyPlayerComponent implements AfterViewInit {
 
   public startPlaylist(): void {
     this._spotifyService.startPlaylist(AppConfig.settings.SelectedPlaylistDetails.uri);
-    this.playlistStarted = true;
-    this.isPaused = false;
   }
 
   public resume(): void {
-    if (this.readyToPlaySpotify()){
-      if(!this.playlistStarted) {
-        this.startPlaylist();
-      }else {
-        this._spotifyService.resume();
-      }
-      this.isPaused = false;
+    if (this.readyToPlaySpotify()) {
+      this.isCurrentlyPlaying().subscribe(playing => {
+        if (!playing) {
+          this._spotifyService.play()
+        }
+      });
     }
   }
 
   public pause(): void {
-    if (this.readyToPlaySpotify())
-    {
-      this._spotifyService.pause();
-      this.isPaused = true;
+    if (this.readyToPlaySpotify()) {
+      this.isCurrentlyPlaying().subscribe(playing => {
+        if (playing) {
+          this._spotifyService.pause()
+        }
+      });
     }
   }
 
   public volume100(): void {
-    if (this.readyToPlaySpotify())
-      this._spotifyService.volume100Percent();
+    if (this.readyToPlaySpotify()) {
+      this.isCurrentlyPlaying().subscribe(playing => {
+        if (!playing) {
+          this._spotifyService.volume100Percent()
+        }
+      });
+    }
   }
 
   public volume75(): void {
-    if (this.readyToPlaySpotify())
-      this._spotifyService.volume75Percent();
+    if (this.readyToPlaySpotify()) {
+      this.isCurrentlyPlaying().subscribe(playing => {
+        if (!playing) {
+          this._spotifyService.volume75Percent()
+        }
+      });
+    }
   }
 
   public volume50(): void {
-    if (this.readyToPlaySpotify())
-      this._spotifyService.volume50Percent();
+    if (this.readyToPlaySpotify()) {
+      this.isCurrentlyPlaying().subscribe(playing => {
+        if (!playing) {
+          this._spotifyService.volume50Percent()
+        }
+      });
+    }
   }
 
   public volume25(): void {
     if (this.readyToPlaySpotify())
-      this._spotifyService.volume25Percent();
+      if (this.readyToPlaySpotify()) {
+        this.isCurrentlyPlaying().subscribe(playing => {
+          if (!playing) {
+            this._spotifyService.volume25Percent()
+          }
+        });
+      }
   }
 
 }

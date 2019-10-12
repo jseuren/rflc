@@ -48,6 +48,18 @@ export class SpotifyService {
         this.put('https://api.spotify.com/v1/me/player/pause?device_id=' + AppConfig.settings.Device.id, "").subscribe();
     }
 
+    public play() {
+        this.put('https://api.spotify.com/v1/me/player/play?device_id=' + AppConfig.settings.Device.id, "").subscribe();
+    }
+
+    public playerIsCurrentlyPlaying(): Observable<boolean> {
+        return this.get<SpotifyApi.PlaybackResponse>('https://api.spotify.com/v1/me/player').pipe(
+            map((response) => {
+                return response.is_playing
+            })
+        );
+    }
+
     public resume() {
         this.put('https://api.spotify.com/v1/me/player/play?device_id=' + AppConfig.settings.Device.id, "").subscribe();
     }
