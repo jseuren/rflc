@@ -64,7 +64,7 @@ export class SpotifyComponent implements OnInit {
   }
 
   readyToPlaySpotify(): boolean {
-    return (AppConfig.settings.SelectedPlaylistDetails != null && AppConfig.settings.Device != null && AppConfig.settings.access_token != '');
+    return (AppConfig.settings.Device != null && AppConfig.settings.access_token != '');
   }
 
   resume(): void {
@@ -73,6 +73,10 @@ export class SpotifyComponent implements OnInit {
 
   pause(): void {
     this._spotifyService.pause();
+  }
+
+  play(): void {
+    this._spotifyService.play();
   }
   startPlaylist(): void {
     this._spotifyService.startPlaylist(AppConfig.settings.SelectedPlaylistDetails.uri);
