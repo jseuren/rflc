@@ -1,7 +1,7 @@
 import { Component, OnChanges, Input, SimpleChanges, SimpleChange } from '@angular/core';
 import { FundraisingSlide } from 'src/app/models/fundraising/fundraising-slide';
-import { HttpClient } from '@angular/common/http';
 import { Fundraising } from 'src/app/models/fundraising/fundraising';
+import { SAPService } from 'src/app/services/sapService';
 
 @Component({
   selector: 'slide-fundraising',
@@ -13,7 +13,7 @@ export class FundraisingComponent implements OnChanges {
   @Input() model: FundraisingSlide;
   @Input() isActiveSlide: boolean;
   teamFundraising: Array<Fundraising>;
-  constructor(private _http: HttpClient) { }
+  constructor(private sapService:SAPService) { }
 
   ngOnChanges(changes: SimpleChanges) {
     const activeSlide: SimpleChange = changes.isActiveSlide;
@@ -33,8 +33,7 @@ export class FundraisingComponent implements OnChanges {
   }
 
   async getTeamFundraising(): Promise<Array<Fundraising>> {
-    const teamFundraising = await this._http.get<Array<Fundraising>>('https://rflapp.azurewebsites.net/fundraising.php').toPromise();
-    return teamFundraising;
+    return this.sapService.getTeamFundraising();
   }
 
 }
