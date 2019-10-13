@@ -6,7 +6,8 @@ import { SAPService } from 'src/app/services/sapService';
 @Component({
   selector: 'slide-team-leaderboard',
   templateUrl: './team-leaderboard.component.html',
-  styleUrls: ['./team-leaderboard.component.css']
+  styleUrls: ['./team-leaderboard.component.css'],
+  providers: [SAPService]
 })
 export class TeamLeaderboardComponent implements OnChanges {
   @Input() model: TeamLeaderBoardSlide;

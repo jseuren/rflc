@@ -25,20 +25,20 @@ export class SAPService {
         //const teamLeaderBoard = await this._http.get<Array<TeamLeaderBoard>>('https://rflapp.azurewebsites.net/leaderboard_laps.php').toPromise();
         //return teamLeaderBoard;
 
-        return await this._http.get<Array<TeamLeaderBoard>>('https://rflapp.azurewebsites.net/leaderboard_laps.php').toPromise();
+        return await this._http.get<Array<TeamLeaderBoard>>('https://dlxgrpapitest.apimanagement.ap1.hana.ondemand.com/Z_RM/LEADERBOARD_LAPS?$format=json').toPromise();
     }
 
     async getSchedule(): Promise<Array<UpcomingSchdule>> {
         // const schedule = await this._http.get<Array<UpcomingSchdule>>('https://rflapp.azurewebsites.net/schedule.php').toPromise();
         // schedule;
 
-        return await this._http.get<Array<UpcomingSchdule>>('https://rflapp.azurewebsites.net/schedule.php').toPromise();
+        return await this._http.get<Array<UpcomingSchdule>>('https://dlxgrpapitest.apimanagement.ap1.hana.ondemand.com/Z_RM/SCHEDULE?$format=json').toPromise();
     }
 
     async getTeamFundraising(): Promise<Array<Fundraising>> {
         // const teamFundraising = await this._http.get<Array<Fundraising>>('https://rflapp.azurewebsites.net/fundraising.php').toPromise();
         // return teamFundraising;
-        return await this._http.get<Array<Fundraising>>('https://rflapp.azurewebsites.net/fundraising.php').toPromise();
+        return await this._http.get<Array<Fundraising>>('https://dlxgrpapitest.apimanagement.ap1.hana.ondemand.com/Z_RM/LEADERBOARD_FUNDRAISING?$format=json').toPromise();
 
     }
 

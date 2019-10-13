@@ -6,7 +6,8 @@ import { SAPService } from 'src/app/services/sapService';
 @Component({
   selector: 'slide-fundraising',
   templateUrl: './fundraising.component.html',
-  styleUrls: ['./fundraising.component.css']
+  styleUrls: ['./fundraising.component.css'],
+  providers: [SAPService]
 })
 export class FundraisingComponent implements OnChanges {
 

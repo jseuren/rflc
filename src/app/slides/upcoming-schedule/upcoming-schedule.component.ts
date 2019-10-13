@@ -7,7 +7,8 @@ import { SAPService } from 'src/app/services/sapService';
 @Component({
   selector: 'slide-upcoming-schedule',
   templateUrl: './upcoming-schedule.component.html',
-  styleUrls: ['./upcoming-schedule.component.css']
+  styleUrls: ['./upcoming-schedule.component.css'],
+  providers: [SAPService]
 })
 export class UpcomingScheduleComponent implements OnChanges {
  

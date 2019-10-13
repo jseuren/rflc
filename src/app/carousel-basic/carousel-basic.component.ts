@@ -30,7 +30,7 @@ const httpOptions = {
   selector: 'ngb-carousel-basic',
   templateUrl: './carousel-basic.component.html',
   styleUrls: ['./carousel-basic.component.css'],
-  providers: [NgbCarouselConfig, SpotifyService]
+  providers: [NgbCarouselConfig, SpotifyService, SAPService]
 })
 export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit {
   @ViewChild(NgbCarousel) carousel: NgbCarousel;
