@@ -1,8 +1,8 @@
 import { Component, OnChanges, Input, SimpleChanges, SimpleChange } from '@angular/core';
 import { UpcomingSchduleSlide } from 'src/app/models/upcoming-schedule/upcomig-schedule-slide';
-import { UpcomingSchdule } from 'src/app/models/upcoming-schedule/upcoming-schedule';
 import * as moment from 'moment/moment';
 import { SAPService } from 'src/app/services/sapService';
+import { Schedule } from 'src/app/models/SAP Hana/sapcommon';
 
 @Component({
   selector: 'slide-upcoming-schedule',
@@ -14,7 +14,7 @@ export class UpcomingScheduleComponent implements OnChanges {
  
   @Input() model: UpcomingSchduleSlide;
   @Input() isActiveSlide: boolean;
-  schedule: Array<UpcomingSchdule>;
+  schedule: Schedule;
   constructor(private sapService: SAPService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -24,20 +24,21 @@ export class UpcomingScheduleComponent implements OnChanges {
       if (activeSlide.currentValue === true) {
 
         this.getSchedule().then(result => {
-          result.forEach(function(item){
+          result.d.results.forEach(function(item){
             item.timeDescription = this.getTimeParamter(item);
-            item.start_time = this.getStartTimeParamter(item);
+            item.start_datetime = this.getStartEndTimeParamter(item);
+            item.end_datetime = this.getStartEndTimeParamter(item);
           }, this);
           this.schedule = result;
         });
 
       } else {
-        this.schedule = [];
+        this.schedule = new Schedule();
       }
     }
   }
 
-  getStartTimeParamter(scheduledItem) {
+  getStartEndTimeParamter(scheduledItem) {
    return moment(scheduledItem.start_datetime, 'YYYY-MM-DD HH:mm:ss').format('HH:mm a');
 
   }
@@ -54,7 +55,7 @@ export class UpcomingScheduleComponent implements OnChanges {
     }
   }
 
-  async getSchedule(): Promise<Array<UpcomingSchdule>> {
+  async getSchedule(): Promise<Schedule> {
     return this.sapService.getSchedule();
     //const schedule = await this._http.get<Array<UpcomingSchdule>>('https://rflapp.azurewebsites.net/schedule.php').toPromise();
     //return schedule;

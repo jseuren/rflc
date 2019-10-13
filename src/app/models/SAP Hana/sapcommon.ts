@@ -49,6 +49,29 @@ export class SAPTeamLeaderboardArrayResult {
     public LAPS: number;
 }
 
+export class Schedule{
+    public d: SAPScheduleResult;
+    constructor(){
+        this.d = new SAPScheduleResult();
+    }
+}
+export class SAPScheduleResult {
+    results: Array<SAPScheduleArrayResult>;
+    constructor(){
+        this.results = new Array<SAPScheduleArrayResult>();
+    }
+}
+export class SAPScheduleArrayResult {
+    public __metadata: SAPMetaData;
+    public schedule_name: string;
+    public start_datetime: Date;
+    public end_datetime: Date;
+    public description: string;
+    public location: string;
+
+    public timeDescription: string
+}
+
 
 export class SAPMetaData {
     public type: string;
