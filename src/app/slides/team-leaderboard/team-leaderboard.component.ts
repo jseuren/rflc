@@ -1,7 +1,7 @@
 import { Component, OnChanges, Input, SimpleChanges, SimpleChange } from '@angular/core';
 import { TeamLeaderBoardSlide } from 'src/app/models/team-leaderboard/team-leaderboard-slide';
-import { TeamLeaderBoard } from 'src/app/models/team-leaderboard/team-leaderboard';
 import { SAPService } from 'src/app/services/sapService';
+import { TeamLeaderboard } from 'src/app/models/SAP Hana/sapcommon';
 
 @Component({
   selector: 'slide-team-leaderboard',
@@ -12,7 +12,7 @@ import { SAPService } from 'src/app/services/sapService';
 export class TeamLeaderboardComponent implements OnChanges {
   @Input() model: TeamLeaderBoardSlide;
   @Input() isActiveSlide: boolean;
-  teamLeaderboarData: Array<TeamLeaderBoard>;
+  teamLeaderboarData: TeamLeaderboard;
   constructor(private sapService: SAPService) { }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -26,13 +26,13 @@ export class TeamLeaderboardComponent implements OnChanges {
         });
 
       } else {
-        this.teamLeaderboarData = [];
+        this.teamLeaderboarData = new TeamLeaderboard();
       }
     }
     
   }
 
-  async getTeamLeaderboard(): Promise<Array<TeamLeaderBoard>> {
+  async getTeamLeaderboard(): Promise<TeamLeaderboard> {
     return this.sapService.getTeamLeaderboard();
   }
 

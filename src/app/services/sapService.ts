@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { MasterVolumeControl, Fundraising } from '../models/SAP Hana/sapcommon';
-import { TeamLeaderBoard } from '../models/team-leaderboard/team-leaderboard';
+import { MasterVolumeControl, Fundraising, TeamLeaderboard } from '../models/SAP Hana/sapcommon';
 import { UpcomingSchdule } from '../models/upcoming-schedule/upcoming-schedule';
 
 const httpOptions = {
@@ -20,11 +19,11 @@ export class SAPService {
         return await this._http.get<MasterVolumeControl>('https://dlxgrpapitest.apimanagement.ap1.hana.ondemand.com/Z_RM/MASTER_VOLUME?$format=json').toPromise();
     }
 
-    async getTeamLeaderboard(): Promise<Array<TeamLeaderBoard>> {
+    async getTeamLeaderboard(): Promise<TeamLeaderboard> {
         //const teamLeaderBoard = await this._http.get<Array<TeamLeaderBoard>>('https://rflapp.azurewebsites.net/leaderboard_laps.php').toPromise();
         //return teamLeaderBoard;
 
-        return await this._http.get<Array<TeamLeaderBoard>>('https://dlxgrpapitest.apimanagement.ap1.hana.ondemand.com/Z_RM/LEADERBOARD_LAPS?$format=json').toPromise();
+        return await this._http.get<TeamLeaderboard>('https://dlxgrpapitest.apimanagement.ap1.hana.ondemand.com/Z_RM/LEADERBOARD_LAPS?$format=json').toPromise();
     }
 
     async getSchedule(): Promise<Array<UpcomingSchdule>> {

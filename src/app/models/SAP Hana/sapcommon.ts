@@ -31,6 +31,25 @@ export class SAPFundraisingArrayResult {
 
 
 
+export class TeamLeaderboard{
+    public d: SAPTeamLeaderboardResult;
+    constructor(){
+        this.d = new SAPTeamLeaderboardResult();
+    }
+}
+export class SAPTeamLeaderboardResult {
+    results: Array<SAPTeamLeaderboardArrayResult>;
+    constructor(){
+        this.results = new Array<SAPTeamLeaderboardArrayResult>();
+    }
+}
+export class SAPTeamLeaderboardArrayResult {
+    public __metadata: SAPMetaData;
+    public team_name: string;
+    public LAPS: number;
+}
+
+
 export class SAPMetaData {
     public type: string;
     public uri: string;
