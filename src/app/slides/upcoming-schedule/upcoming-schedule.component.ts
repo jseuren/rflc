@@ -2,7 +2,7 @@ import { Component, OnChanges, Input, SimpleChanges, SimpleChange } from '@angul
 import { UpcomingSchduleSlide } from 'src/app/models/upcoming-schedule/upcomig-schedule-slide';
 import * as moment from 'moment/moment';
 import { SAPService } from 'src/app/services/sapService';
-import { Schedule } from 'src/app/models/SAP Hana/sapcommon';
+import { Schedule, SAPScheduleArrayResult } from 'src/app/models/SAP Hana/sapcommon';
 
 @Component({
   selector: 'slide-upcoming-schedule',
@@ -26,10 +26,12 @@ export class UpcomingScheduleComponent implements OnChanges {
         this.getSchedule().then(result => {
           result.d.results.forEach(function(item){
             item.timeDescription = this.getTimeParamter(item);
-            item.start_datetime = this.getStartEndTimeParamter(item);
-            item.end_datetime = this.getStartEndTimeParamter(item);
+            //item.start_time = this.getStartEndTimeParamter(item.start_date + ' ' + item.start_time);
+            //item.end_time = this.getStartEndTimeParamter(item.end_date + ' ' + item.end_time);
           }, this);
           this.schedule = result;
+
+          this.schedule.d.results = this.schedule.d.results.sort((a,b) => <any>new Date(a.start_date + ' ' + a.start_time) - <any> new Date(b.start_date + ' ' + b.start_time))
         });
 
       } else {
@@ -38,18 +40,20 @@ export class UpcomingScheduleComponent implements OnChanges {
     }
   }
 
-  getStartEndTimeParamter(scheduledItem) {
-   return moment(scheduledItem.start_datetime, 'YYYY-MM-DD HH:mm:ss').format('HH:mm a');
-
+  getStartEndTimeParamter(date_time: string) {
+    let dateTime = moment(date_time,'YYYY-MM-DD HH:mm:ss');
+    console.log(date_time);
+    console.log(dateTime);
+   return dateTime.format('HH:mm a');
   }
 
-  getTimeParamter(scheduledItem) {
-    let eventTime = moment(scheduledItem.start_datetime, 'YYYY-MM-DD HH:mm:ss').unix();
+  getTimeParamter(scheduledItem: SAPScheduleArrayResult) {
+    let eventTime = moment(scheduledItem.start_date + ' ' + scheduledItem.start_time ).unix();
     let currentTime = moment().unix();
     let diffTime = eventTime - currentTime;
     let duration = moment.duration(diffTime, 'minutes');
     if(diffTime > 0) {
-      return duration.asMinutes() + ' minutes time';
+      return 'In' + duration.asMinutes() + ' minutes time';
     } else {
       return duration.asMinutes() + ' minutes ago';
     }

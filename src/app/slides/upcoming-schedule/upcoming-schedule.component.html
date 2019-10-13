@@ -10,9 +10,9 @@
   <div class="col-xl-10 col-12 vert">
     <!-- Begin Timeline -->
     <div class="timeline timeline-line-solid">
-      <span class="timeline-label">
+      <!--<span class="timeline-label">
         <span class="label">Start Of Relay</span>
-      </span>
+      </span>-->
       <ng-template ngFor let-item [ngForOf]="schedule.d.results" let-i="index">
         <!-- Begin Timeline Item -->
         <div class="timeline-item">
@@ -41,11 +41,12 @@
                 <p>
                   {{item.description}}
                 </p>
+                <div class="time-right">{{item.timeDescription}}</div>
               </div>
               <!-- End Widget Body -->
             </div>
             <!-- End Widget -->
-            <div class="time-right">{{item.timeDescription}}</div>
+          
           </div>
           <!-- End Timeline Event -->
         </div>
@@ -53,9 +54,9 @@
       </ng-template>
 
 
-      <span class="timeline-label">
+      <!--<span class="timeline-label">
         <span class="label">End Of Relay</span>
-      </span>
+      </span>-->
     </div>
   </div>
 </div>

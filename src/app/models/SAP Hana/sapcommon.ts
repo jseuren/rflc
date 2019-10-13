@@ -64,8 +64,10 @@ export class SAPScheduleResult {
 export class SAPScheduleArrayResult {
     public __metadata: SAPMetaData;
     public schedule_name: string;
-    public start_datetime: Date;
-    public end_datetime: Date;
+    public start_date: string;
+    public start_time: string;
+    public end_date: string;
+    public end_time: string;
     public description: string;
     public location: string;
 
