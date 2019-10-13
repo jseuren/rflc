@@ -1,7 +1,7 @@
 import { Component, OnChanges, Input, SimpleChanges, SimpleChange } from '@angular/core';
 import { FundraisingSlide } from 'src/app/models/fundraising/fundraising-slide';
-import { Fundraising } from 'src/app/models/fundraising/fundraising';
 import { SAPService } from 'src/app/services/sapService';
+import { Fundraising } from 'src/app/models/SAP Hana/sapcommon';
 
 @Component({
   selector: 'slide-fundraising',
@@ -13,7 +13,7 @@ export class FundraisingComponent implements OnChanges {
 
   @Input() model: FundraisingSlide;
   @Input() isActiveSlide: boolean;
-  teamFundraising: Array<Fundraising>;
+  teamFundraising: Fundraising;
   constructor(private sapService:SAPService) { }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -27,13 +27,13 @@ export class FundraisingComponent implements OnChanges {
         });
 
       } else {
-        this.teamFundraising = [];
+        this.teamFundraising = new Fundraising();
       }
     }
     
   }
 
-  async getTeamFundraising(): Promise<Array<Fundraising>> {
+  async getTeamFundraising(): Promise<Fundraising> {
     return this.sapService.getTeamFundraising();
   }
 

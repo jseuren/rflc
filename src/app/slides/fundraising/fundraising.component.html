@@ -11,8 +11,8 @@
                         <th>Amount</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr *ngFor="let team of teamFundraising">
+                <tbody *ngIf="teamFundraising.d.results">
+                    <tr *ngFor="let team of teamFundraising.d.results">
                         <td>{{team.team_name}}</td>
                         <td>{{team.amount | currency:'USD'}}</td>
                     </tr>
