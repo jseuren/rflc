@@ -35,6 +35,9 @@
           <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Video">
             <slide-video (duration)="onDuration($event)" [model]="slide" [isActiveSlide]="isActiveSlide(slide)" [allowSound]="allowSound()"></slide-video>
           </ng-template>
+          <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.RandomVideo">
+            <slide-random-video (duration)="onDuration($event)" [model]="slide" [isActiveSlide]="isActiveSlide(slide)" [allowSound]="allowSound()"></slide-random-video>
+          </ng-template>
           <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Announcement">
             <slide-announcement [model]="slide"></slide-announcement>
           </ng-template>

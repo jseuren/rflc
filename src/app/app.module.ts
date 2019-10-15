@@ -14,6 +14,7 @@ import { SponsorsComponent } from './slides/sponsors/sponsors.component';
 import { FundraisingComponent } from './slides/fundraising/fundraising.component';
 import { FundraisingStatsComponent } from './slides/fundraising-stats/fundraising-stats.component';
 import { VideoComponent } from './slides/video/video.component';
+import { RandomVideoComponent } from './slides/random-video/video.component';
 import { AnnouncementComponent } from './slides/announcement/announcement.component';
 import { WeatherComponent } from './slides/weather/weather.component';
 import { AppConfig } from './app-config/app.config';
@@ -56,6 +57,7 @@ export function initializeApp(appConfig: AppConfig) {
     FundraisingComponent, 
     FundraisingStatsComponent, 
     VideoComponent, 
+    RandomVideoComponent,
     AnnouncementComponent, 
     WeatherComponent, SpotifyPlayerComponent 
   ],
