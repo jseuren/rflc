@@ -8,9 +8,9 @@
           <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.CountdownClock">
             <slide-countdown-clock [model]="slide"></slide-countdown-clock>
           </ng-template>
-          <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.IndividualLeaderBoard">
+          <!--<ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.IndividualLeaderBoard">
             <slide-individual-leaderboard [model]="slide"></slide-individual-leaderboard>
-          </ng-template>
+          </ng-template>-->
           <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.TeamLeaderBoard">
             <slide-team-leaderboard [model]="slide" [isActiveSlide]="isActiveSlide(slide)"></slide-team-leaderboard>
           </ng-template>
@@ -23,27 +23,27 @@
           <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.SlideShow">
             <slide-slide-show [model]="slide"></slide-slide-show>
           </ng-template>
-          <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Sponsors">
+          <!--<ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Sponsors">
             <slide-sponsors [model]="slide"></slide-sponsors>
-          </ng-template>
+          </ng-template>-->
           <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Fundraising">
             <slide-fundraising [model]="slide" [isActiveSlide]="isActiveSlide(slide)"></slide-fundraising>
           </ng-template>
-          <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.FundraisingStats">
+          <!--<ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.FundraisingStats">
             <slide-fundraising-stats [model]="slide"></slide-fundraising-stats>
-          </ng-template>
+          </ng-template>-->
           <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Video">
             <slide-video (duration)="onDuration($event)" [model]="slide" [isActiveSlide]="isActiveSlide(slide)" [allowSound]="allowSound()"></slide-video>
           </ng-template>
           <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.RandomVideo">
-            <slide-random-video (duration)="onDuration($event)" [model]="slide" [isActiveSlide]="isActiveSlide(slide)" [allowSound]="allowSound()"></slide-random-video>
+            <slide-random-video (duration)="onDuration($event)" [isActiveSlide]="isActiveSlide(slide)" [allowSound]="allowSound()"></slide-random-video>
           </ng-template>
-          <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Announcement">
+          <!--<ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Announcement">
             <slide-announcement [model]="slide"></slide-announcement>
           </ng-template>
           <ng-template ngbSlide id="{{slide.SlideId}}" *ngIf="slide.SlideType == SlideType.Weather">
             <slide-weather [model]="slide"></slide-weather>
-          </ng-template>
+          </ng-template>-->
         </ng-container>
       </ngb-carousel>
     </div>

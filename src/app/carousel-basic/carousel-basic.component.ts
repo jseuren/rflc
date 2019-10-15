@@ -45,7 +45,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
 
   globalSoundControlOn: boolean;
 
-  constructor(config: NgbCarouselConfig, private _http: HttpClient, private route: ActivatedRoute, private sapService: SAPService ) {
+  constructor(config: NgbCarouselConfig, private _http: HttpClient, private route: ActivatedRoute, private sapService: SAPService) {
     // customize default values of carousels used by this component tree
     config.showNavigationArrows = false;
     config.showNavigationIndicators = false;
@@ -66,8 +66,9 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
   }
 
   isActiveSlide(slide: ISlide) {
-    //is teh carousel active and the carousel active slide ID equal to the slide being checked
-    return !!this.carousel && (slide.SlideId === this.carousel.activeId);
+  //is the carousel active and the carousel active slide ID equal to the slide being checked
+  return !!this.carousel && (slide.SlideId === this.carousel.activeId);
+  
   }
 
   //get the array of slides from the server
@@ -122,21 +123,13 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
           if (this.globalSoundControlOn !== result.d.results[0].value) {
             this.globalSoundControlOn = result.d.results[0].value;
             if (this.globalSoundControlOn) {
-              this.spotifyPlayer.isCurrentlyPlaying().subscribe(playing => {
-                if (!playing) {
-                  if (this.slides.find(s => s.SlideId === this.carousel.activeId).SlideType !== SlideType.Video) {
-                    this.spotifyPlayer.resume();
-                  }
-                }
-              });
+              if (this.slides.find(s => s.SlideId === this.carousel.activeId).SlideType !== SlideType.Video) {
+                this.spotifyPlayer.resume();
+              }
             } else {
-              this.spotifyPlayer.isCurrentlyPlaying().subscribe(playing => {
-                if (playing) {
-                  if (this.slides.find(s => s.SlideId === this.carousel.activeId).SlideType !== SlideType.Video) {
-                    this.spotifyPlayer.pause();
-                  }
-                }
-              });
+              if (this.slides.find(s => s.SlideId === this.carousel.activeId).SlideType !== SlideType.Video) {
+                this.spotifyPlayer.pause();
+              }
             }
           }
         });
@@ -238,8 +231,10 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
       }
 
       if (this.carousel.activeId !== slide.SlideId) {
-        this.carousel.select(slide.SlideId);
-        console.log('Slide ' + slide.SlideId + ' selected');
+        setTimeout(() => {
+          this.carousel.select(slide.SlideId);
+          console.log('Slide ' + slide.SlideId + ' selected');
+        });
       }
 
       //set timer to check for next slide

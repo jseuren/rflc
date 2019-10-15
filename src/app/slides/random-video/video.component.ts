@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnChanges, SimpleChanges, SimpleChange, ChangeDetectorRef } from '@angular/core';
-import { VideoSlide } from 'src/app/models/video/video-slide';
 import { HttpClient } from '@angular/common/http';
 import { RandomVideoList } from 'src/app/models/random-videos/videos';
 
@@ -10,10 +9,9 @@ import { RandomVideoList } from 'src/app/models/random-videos/videos';
 })
 export class RandomVideoComponent implements OnChanges {
 
-  constructor(private _http: HttpClient, private cd: ChangeDetectorRef) {
+  constructor(private _http: HttpClient, private _cdRef:ChangeDetectorRef) {
   }
 
-  @Input() model: VideoSlide;
   @Input() isActiveSlide: boolean;
   @Input() allowSound: boolean;
   @Output() duration = new EventEmitter<number>();
@@ -26,18 +24,19 @@ export class RandomVideoComponent implements OnChanges {
     const allowSound: SimpleChange = changes.allowSound;
     if (activeSlide) {
       if (activeSlide.currentValue === true) {
-        this.getVideos().then(results => {
-          this.fileName = this.getRandomVideo(results.videos);
-          this.videoplayer.nativeElement.src = this.fileName;
-          this.videoplayer.nativeElement.addEventListener('loadeddata', function (_event: any) {
-            this.startVideoPlayer(_event);
-          }.bind(this));
-        });
-
+          this.getVideos().then(results => {
+            this.fileName = this.getRandomVideo(results.videos);
+            this.videoplayer.nativeElement.src = this.fileName;
+            this.videoplayer.nativeElement.addEventListener('loadeddata', function (_event: any) {
+              this.startVideoPlayer(_event);
+            }.bind(this));
+            this._cdRef.detectChanges();
+      })
       } else {
         this.fileName = '';
-        this.videoplayer.nativeElement.pause()
-        this.videoplayer.nativeElement.removeEventListener('loadeddata', this.startVideoPlayer)
+        this.videoplayer.nativeElement.pause();
+        this.videoplayer.nativeElement.removeEventListener('loadeddata', this.startVideoPlayer);
+        this._cdRef.detectChanges();
       }
     }
 
@@ -51,6 +50,7 @@ export class RandomVideoComponent implements OnChanges {
         } else {
           this.videoplayer.nativeElement.volume = 0;
         }
+        this._cdRef.detectChanges();
       }
     }
   }
@@ -65,16 +65,16 @@ export class RandomVideoComponent implements OnChanges {
       }
       this.videoplayer.nativeElement.play().then(function () {
         duration.emit(Math.ceil(_event.target.duration));
-      })
-        .catch(function (error) {
+      }).catch(function (error) {
+        console.error('error playing video' + error);
           //something happened so give a duration of 1 second so carousle moves onto next slide
           duration.emit(Math.ceil(1));
         });
     }
   }
 
-  async getVideos(): Promise<RandomVideoList> {
-    return await this._http.get<RandomVideoList>('http://localhost:8888/videos').toPromise()
+  getVideos(): Promise<RandomVideoList> {
+    return this._http.get<RandomVideoList>('http://localhost:8888/videos').toPromise()
   }
 
   private getRandomVideo(videos: Array<string>): string {
@@ -83,7 +83,6 @@ export class RandomVideoComponent implements OnChanges {
 
     random = this.getRandomInt(videos.length);
 
-    // console.log('Random number selected:- ' + random);
     return "./assets/videos/" + videos[random];
   }
 
