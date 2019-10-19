@@ -33,12 +33,12 @@ export class CountdownClockComponent implements OnInit {
   private calculateTimeTillEnd(): void {
     //if it is still valid to show the date time (as the end time has not already passed)
     let now = moment();
-    let countodownEnd = moment(this.model.CountdownEndTime);
+    let countodownEnd = moment(this.model.CountdownEndTime,'YYYY-MM-DD HH:mm:ss');
     if (now <= countodownEnd) {
-      let a = moment(this.model.CountdownEndTime);
+      let a = moment(this.model.CountdownEndTime,'YYYY-MM-DD HH:mm:ss');
       let b = moment();
       //event not yet started
-      let duration = moment.duration(b.diff(a));
+      let duration = moment.duration(a.diff(b));
       this.Days = Math.abs(duration.days());
       this.Hours = Math.abs(duration.hours());
       this.Minutes = Math.abs(duration.minutes());

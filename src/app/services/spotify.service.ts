@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, RequestMethod } from '@angular/http';
 import { AppConfig } from '../app-config/app.config';
-import { Observable, throwError as observableThrowError } from 'rxjs';
+import { Observable, throwError as observableThrowError, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 @Injectable()
@@ -9,6 +9,8 @@ export class SpotifyService {
 
     constructor(private _http: Http) {
     }
+
+    private playlistIsCurrentlyPlaying: boolean
 
     private commonHeader(): Headers {
         return new Headers({
@@ -42,17 +44,24 @@ export class SpotifyService {
             },
             "position_ms": 0
         }).subscribe();
+
+        this.playlistIsCurrentlyPlaying = true;
     }
 
     public pause() {
         this.put('https://api.spotify.com/v1/me/player/pause?device_id=' + AppConfig.settings.Device.id, "").subscribe();
+
+        this.playlistIsCurrentlyPlaying = false;
     }
 
     public play() {
         this.put('https://api.spotify.com/v1/me/player/play?device_id=' + AppConfig.settings.Device.id, "").subscribe();
+        this.playlistIsCurrentlyPlaying = true;
     }
 
     public playerIsCurrentlyPlaying(): Observable<boolean> {
+
+      //  return of(this.playlistIsCurrentlyPlaying);
         return this.get<SpotifyApi.PlaybackResponse>('https://api.spotify.com/v1/me/player').pipe(
             map((response) => {
                 return response.is_playing
@@ -62,6 +71,7 @@ export class SpotifyService {
 
     public resume() {
         this.put('https://api.spotify.com/v1/me/player/play?device_id=' + AppConfig.settings.Device.id, "").subscribe();
+        this.playlistIsCurrentlyPlaying = true;
     }
 
     public volume100Percent() {
@@ -122,6 +132,8 @@ export class SpotifyService {
                     return observableThrowError([]);
                 }
             }),
-            map((response) => response.json()));
+            map((response) => {
+                return response.json()
+            }));
     }
 }

@@ -64,7 +64,7 @@ export class SpotifyComponent implements OnInit {
   }
 
   readyToPlaySpotify(): boolean {
-    return (AppConfig.settings.Device != null && AppConfig.settings.access_token != '');
+    return (AppConfig.settings.SelectedPlaylistDetails!= null && AppConfig.settings.Device != null && AppConfig.settings.access_token != '');
   }
 
   resume(): void {

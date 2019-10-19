@@ -21,11 +21,9 @@ export class FundraisingComponent implements OnChanges {
     
     if(activeSlide) {
       if (activeSlide.currentValue === true) {
-
         this.getTeamFundraising().then(result => {
           this.teamFundraising = result;
         });
-
       } else {
         this.teamFundraising = new Fundraising();
       }

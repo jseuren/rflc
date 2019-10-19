@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnChanges, SimpleChanges, SimpleChange, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RandomVideoList } from 'src/app/models/random-videos/videos';
 
@@ -9,7 +9,7 @@ import { RandomVideoList } from 'src/app/models/random-videos/videos';
 })
 export class RandomVideoComponent implements OnChanges {
 
-  constructor(private _http: HttpClient, private _cdRef:ChangeDetectorRef) {
+  constructor(private _http: HttpClient) {
   }
 
   @Input() isActiveSlide: boolean;
@@ -24,19 +24,19 @@ export class RandomVideoComponent implements OnChanges {
     const allowSound: SimpleChange = changes.allowSound;
     if (activeSlide) {
       if (activeSlide.currentValue === true) {
-          this.getVideos().then(results => {
-            this.fileName = this.getRandomVideo(results.videos);
-            this.videoplayer.nativeElement.src = this.fileName;
-            this.videoplayer.nativeElement.addEventListener('loadeddata', function (_event: any) {
-              this.startVideoPlayer(_event);
-            }.bind(this));
-            this._cdRef.detectChanges();
-      })
+        this.getVideos().then(results => {
+          this.fileName = this.getRandomVideo(results.videos);
+          this.videoplayer.nativeElement.src = this.fileName;
+          this.videoplayer.nativeElement.addEventListener('loadeddata', function (_event: any) {
+            this.startVideoPlayer(_event);
+          }.bind(this));
+        })
       } else {
-        this.fileName = '';
-        this.videoplayer.nativeElement.pause();
         this.videoplayer.nativeElement.removeEventListener('loadeddata', this.startVideoPlayer);
-        this._cdRef.detectChanges();
+        if (!this.videoplayer.nativeElement.paused)
+          this.videoplayer.nativeElement.pause();
+        this.fileName = '';
+
       }
     }
 
@@ -50,7 +50,6 @@ export class RandomVideoComponent implements OnChanges {
         } else {
           this.videoplayer.nativeElement.volume = 0;
         }
-        this._cdRef.detectChanges();
       }
     }
   }
@@ -67,9 +66,9 @@ export class RandomVideoComponent implements OnChanges {
         duration.emit(Math.ceil(_event.target.duration));
       }).catch(function (error) {
         console.error('error playing video' + error);
-          //something happened so give a duration of 1 second so carousle moves onto next slide
-          duration.emit(Math.ceil(1));
-        });
+        //something happened so give a duration of 1 second so carousle moves onto next slide
+        duration.emit(Math.ceil(1));
+      });
     }
   }
 
@@ -98,4 +97,5 @@ export class RandomVideoComponent implements OnChanges {
 
     return result;
   }
+
 }

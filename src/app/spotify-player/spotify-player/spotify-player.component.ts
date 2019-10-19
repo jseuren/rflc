@@ -1,7 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { SpotifyService } from 'src/app/services/spotify.service';
 import { AppConfig } from 'src/app/app-config/app.config';
-import { interval, Observable } from 'rxjs';
+import { interval, Observable, of } from 'rxjs';
 
 //30 minutes
 const refreshTokenCounter = interval(1800000);

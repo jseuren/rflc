@@ -25,9 +25,10 @@ export class VideoComponent implements OnChanges {
           this.startVideoPlayer(_event);
         }.bind(this));
       } else {
+        this.videoplayer.nativeElement.removeEventListener('loadeddata', this.startVideoPlayer);
+        if (!this.videoplayer.nativeElement.paused)
+          this.videoplayer.nativeElement.pause();
         this.fileName = '';
-        this.videoplayer.nativeElement.pause()
-        this.videoplayer.nativeElement.removeEventListener('loadeddata', this.startVideoPlayer)
       }
     }
     

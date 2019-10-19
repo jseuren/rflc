@@ -460,8 +460,14 @@ declare namespace SpotifyApi {
      * https://developer.spotify.com/documentation/web-api/reference/player/get-information-about-the-users-current-playback/
      */
     interface PlaybackResponse {
-        device: Device,
+        device: Device
         is_playing: boolean
+        timestamp: number
+        progress_ms:number
+        currently_playing_type: string
+        shuffle_state:boolean
+        repeat_state:string
+        context:TrackObjectFull
     }
 
     /**
@@ -953,7 +959,6 @@ declare namespace SpotifyApi {
     interface Device {
         id: string,
         is_active: boolean,
-        is_private_session: boolean,
         is_restricted: boolean,
         name: string,
         type: string,

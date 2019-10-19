@@ -1,9 +1,9 @@
 import { Component, ViewChild, AfterViewInit, OnDestroy, OnInit } from '@angular/core';
 import { NgbCarouselConfig, NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
-import { interval, timer, Subscription} from 'rxjs';
+import { interval, timer, Subscription } from 'rxjs';
 import { ISlide } from '../models/slide';
 import { SlideType } from '../models/slide-type';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment/moment';
 import { CountdownClockSlide } from '../models/countdown-clock/countdown-clock-slide';
 import { SpotifyService } from '../services/spotify.service';
@@ -19,12 +19,6 @@ const intervalTime: number = 5000;
 const secondsCounter = interval(1000);
 const slideRetreiver = interval(intervalTime);
 const volumControlRetreiver = interval(1000);
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Authorization': 'Basic Wl9STV9VU0VSOldlbGNvbWUy'
-  })
-};
 
 @Component({
   selector: 'ngb-carousel-basic',
@@ -66,9 +60,14 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
   }
 
   isActiveSlide(slide: ISlide) {
-  //is the carousel active and the carousel active slide ID equal to the slide being checked
-  return !!this.carousel && (slide.SlideId === this.carousel.activeId);
-  
+    try {
+      //is the carousel active and the carousel active slide ID equal to the slide being checked
+      return !!this.carousel && (slide.SlideId === this.carousel.activeId);
+    } catch (e) {
+      console.error(e);
+    }
+
+
   }
 
   //get the array of slides from the server
@@ -265,7 +264,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
     from(this.slides)
       .pipe(first(slide => slide.SlideId === params.current)).subscribe(
         current => {
-          if (current.SlideType === SlideType.Video || !this.globalSoundControlOn) {
+          if (current.SlideType === SlideType.Video || current.SlideType === SlideType.RandomVideo || !this.globalSoundControlOn) {
             this.spotifyPlayer.pause();
           }
         });
@@ -276,7 +275,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
       from(this.slides)
         .pipe(first(slide => slide.SlideId === params.prev)).subscribe(
           previous => {
-            if (previous.SlideType === SlideType.Video && this.globalSoundControlOn) {
+            if ((previous.SlideType === SlideType.Video || previous.SlideType === SlideType.RandomVideo) && this.globalSoundControlOn) {
               this.spotifyPlayer.resume();
             }
           });
