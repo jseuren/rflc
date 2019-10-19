@@ -1,6 +1,6 @@
 import { Component, ViewChild, AfterViewInit, OnDestroy, OnInit } from '@angular/core';
 import { NgbCarouselConfig, NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
-import { interval, timer, Subscription, Observable, of } from 'rxjs';
+import { interval, timer, Subscription} from 'rxjs';
 import { ISlide } from '../models/slide';
 import { SlideType } from '../models/slide-type';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
