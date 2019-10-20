@@ -27,10 +27,6 @@ export class SpotifyPlayerComponent implements AfterViewInit {
 
   }
 
-  isCurrentlyPlaying(): Observable<boolean> {
-    return this._spotifyService.playerIsCurrentlyPlaying();
-  }
-
   //Are all the components there that are required to play spotify ?
   canPlaySpotify(): boolean {
     return !!(AppConfig.settings.ClientId &&
@@ -52,63 +48,37 @@ export class SpotifyPlayerComponent implements AfterViewInit {
 
   public resume(): void {
     if (this.readyToPlaySpotify()) {
-      this.isCurrentlyPlaying().subscribe(playing => {
-        if (!playing) {
-          this._spotifyService.play()
-        }
-      });
+      this._spotifyService.play()
     }
   }
 
   public pause(): void {
     if (this.readyToPlaySpotify()) {
-      this.isCurrentlyPlaying().subscribe(playing => {
-        if (playing) {
-          this._spotifyService.pause()
-        }
-      });
+      this._spotifyService.pause()
     }
   }
 
   public volume100(): void {
     if (this.readyToPlaySpotify()) {
-      this.isCurrentlyPlaying().subscribe(playing => {
-        if (!playing) {
-          this._spotifyService.volume100Percent()
-        }
-      });
+      this._spotifyService.volume100Percent()
     }
   }
 
   public volume75(): void {
     if (this.readyToPlaySpotify()) {
-      this.isCurrentlyPlaying().subscribe(playing => {
-        if (!playing) {
-          this._spotifyService.volume75Percent()
-        }
-      });
+      this._spotifyService.volume75Percent()
     }
   }
 
   public volume50(): void {
     if (this.readyToPlaySpotify()) {
-      this.isCurrentlyPlaying().subscribe(playing => {
-        if (!playing) {
-          this._spotifyService.volume50Percent()
-        }
-      });
+      this._spotifyService.volume50Percent()
     }
   }
 
   public volume25(): void {
     if (this.readyToPlaySpotify())
-      if (this.readyToPlaySpotify()) {
-        this.isCurrentlyPlaying().subscribe(playing => {
-          if (!playing) {
-            this._spotifyService.volume25Percent()
-          }
-        });
-      }
+      this._spotifyService.volume25Percent()
   }
 
 }

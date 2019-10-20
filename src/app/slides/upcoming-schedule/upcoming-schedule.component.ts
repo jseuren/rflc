@@ -61,8 +61,6 @@ export class UpcomingScheduleComponent implements OnChanges {
 
   async getSchedule(): Promise<Schedule> {
     return this.sapService.getSchedule();
-    //const schedule = await this._http.get<Array<UpcomingSchdule>>('https://rflapp.azurewebsites.net/schedule.php').toPromise();
-    //return schedule;
   }
 
 }

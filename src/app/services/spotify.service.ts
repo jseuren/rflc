@@ -49,19 +49,29 @@ export class SpotifyService {
     }
 
     public pause() {
-        this.put('https://api.spotify.com/v1/me/player/pause?device_id=' + AppConfig.settings.Device.id, "").subscribe();
+        this.playerIsCurrentlyPlaying().subscribe(playing => {
+            if (playing) {
+                this.put('https://api.spotify.com/v1/me/player/pause?device_id=' + AppConfig.settings.Device.id, "").subscribe();
+            } 
+            this.playlistIsCurrentlyPlaying = false;
 
-        this.playlistIsCurrentlyPlaying = false;
+        });
     }
 
     public play() {
-        this.put('https://api.spotify.com/v1/me/player/play?device_id=' + AppConfig.settings.Device.id, "").subscribe();
-        this.playlistIsCurrentlyPlaying = true;
+        this.playerIsCurrentlyPlaying().subscribe(playing => {
+            if (!playing) {
+                this.put('https://api.spotify.com/v1/me/player/play?device_id=' + AppConfig.settings.Device.id, "").subscribe();
+                this.playlistIsCurrentlyPlaying = true;
+            } else {
+                this.playlistIsCurrentlyPlaying = false;
+            }
+        });
     }
 
     public playerIsCurrentlyPlaying(): Observable<boolean> {
 
-      //  return of(this.playlistIsCurrentlyPlaying);
+        //  return of(this.playlistIsCurrentlyPlaying);
         return this.get<SpotifyApi.PlaybackResponse>('https://api.spotify.com/v1/me/player').pipe(
             map((response) => {
                 return response.is_playing
@@ -70,8 +80,14 @@ export class SpotifyService {
     }
 
     public resume() {
-        this.put('https://api.spotify.com/v1/me/player/play?device_id=' + AppConfig.settings.Device.id, "").subscribe();
-        this.playlistIsCurrentlyPlaying = true;
+        this.playerIsCurrentlyPlaying().subscribe(playing => {
+            if (!playing) {
+                this.put('https://api.spotify.com/v1/me/player/play?device_id=' + AppConfig.settings.Device.id, "").subscribe();
+                this.playlistIsCurrentlyPlaying = true;
+            } else {
+                this.playlistIsCurrentlyPlaying = false;
+            }
+        });
     }
 
     public volume100Percent() {

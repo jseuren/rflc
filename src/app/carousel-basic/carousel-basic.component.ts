@@ -122,11 +122,11 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
           if (this.globalSoundControlOn !== result.d.results[0].value) {
             this.globalSoundControlOn = result.d.results[0].value;
             if (this.globalSoundControlOn) {
-              if (this.slides.find(s => s.SlideId === this.carousel.activeId).SlideType !== SlideType.Video) {
+              if (this.slides.find(s => s.SlideId === this.carousel.activeId).SlideType !== SlideType.Video && this.slides.find(s => s.SlideId === this.carousel.activeId).SlideType !== SlideType.RandomVideo) {
                 this.spotifyPlayer.resume();
               }
             } else {
-              if (this.slides.find(s => s.SlideId === this.carousel.activeId).SlideType !== SlideType.Video) {
+              if (this.slides.find(s => s.SlideId === this.carousel.activeId).SlideType !== SlideType.Video || this.slides.find(s => s.SlideId === this.carousel.activeId).SlideType !== SlideType.RandomVideo) {
                 this.spotifyPlayer.pause();
               }
             }
