@@ -23,6 +23,7 @@ export class SlideShowComponent implements OnChanges {
   }
   public imageList: Array<string>;
   slideMover: Subscription;
+  public img: HTMLImageElement;
 
 
 
@@ -34,7 +35,6 @@ export class SlideShowComponent implements OnChanges {
         this.getImages().then(results => {
           this.imageList = results.images;
           this.displayNextSlide();
-
         })
       } else {
         this.imageList = [];
@@ -79,6 +79,7 @@ export class SlideShowComponent implements OnChanges {
 
     return result;
   }
+
 
   private selectSlide(slide: number): void {
     //if carousel is fully initialised

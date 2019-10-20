@@ -1,8 +1,8 @@
 <ngb-carousel *ngIf="imageList" #rflImagesCarousel>
   <ng-container *ngFor="let image of imageList; index as i;">
     <ng-template ngbSlide id="{{i}}">
-      <div>
-        <span class="helper"></span><img src="./assets/rotationimages/{{image}}">
+      <div id="container{{i}}">
+       <img id="img{{i}}" src="./assets/rotationimages/{{image}}">
       </div>
     </ng-template>
   </ng-container>
