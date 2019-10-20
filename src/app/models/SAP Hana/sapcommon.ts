@@ -66,8 +66,10 @@ export class SAPScheduleArrayResult {
     public schedule_name: string;
     public start_date: string;
     public start_time: string;
+    public start_time_formatted: string;
     public end_date: string;
     public end_time: string;
+    public end_time_formatted: string;
     public description: string;
     public location: string;
 

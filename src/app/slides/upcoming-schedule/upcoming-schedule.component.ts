@@ -26,8 +26,8 @@ export class UpcomingScheduleComponent implements OnChanges {
         this.getSchedule().then(result => {
           result.d.results.forEach(function(item){
             item.timeDescription = this.getTimeParamter(item);
-            //item.start_time = this.getStartEndTimeParamter(item.start_date + ' ' + item.start_time);
-            //item.end_time = this.getStartEndTimeParamter(item.end_date + ' ' + item.end_time);
+            item.start_time_formatted = this.getStartStartEndTimeParamter(item.start_date + ' ' + item.start_time);
+            item.end_time_formatted = this.getStartStartEndTimeParamter(item.end_date + ' ' + item.end_time);
           }, this);
           this.schedule = result;
 
@@ -42,7 +42,7 @@ export class UpcomingScheduleComponent implements OnChanges {
     }
   }
 
-  getStartEndTimeParamter(date_time: string) {
+  getStartStartEndTimeParamter(date_time: string) {
     let dateTime = moment(date_time,'YYYY-MM-DD HH:mm:ss');
     console.log(date_time);
     console.log(dateTime);
