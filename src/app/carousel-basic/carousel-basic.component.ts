@@ -143,7 +143,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
       if (x.hasOwnProperty('CountdownEndTime')) {
         //if it is a countodown slide, has the time to countdown to
         //already passed ? If so remove slide
-        if (moment() > moment((<CountdownClockSlide>x).CountdownEndTime)) {
+        if (moment() > moment((<CountdownClockSlide>x).CountdownEndTime,'YYYY-MM-DD HH:mm:ss')) {
           return false;
         }
       }

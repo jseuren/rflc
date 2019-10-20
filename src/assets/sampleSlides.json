@@ -1,19 +1,86 @@
 [
   {
-    "SlideId": "countdownTill",
-    "Header": "This is the base slide of a countdown timer till the start of the event",
+    "SlideId": "start-of-relay",
+    "Header": "Countdown to start",
     "SlideType": 1,
-    "CountdownEndTime": "2019-06-16T10:00:00.000Z",
-    "ForceSlideToShowAtTime": "2019-06-17T10:00:00.000Z",
-    "SecondsToForceShowFor": "6",
-    "ShowForSeconds":"6"
-  }, {
-      "SlideId": "instagram",
-      "Header": "",
-      "SlideType": 6,
-      "SecondsToForceShowFor": "0",
-      "ForceSlideToShowAtTime": "",
-      "ShowForSeconds":"30"
-    }
+    "SecondsToForceShowFor": "60",
+    "ForceSlideToShowAtTime": "2019-10-20 10:15:00",
+    "ShowForSeconds":"30",
+    "CountdownEndTime" : "2019-10-20 10:30:00"
+  },
+  {
+    "SlideId": "end-of-relay",
+    "Header": "Time Remaining",
+    "SlideType": 1,
+    "SecondsToForceShowFor": "60",
+    "ForceSlideToShowAtTime": "2019-10-21 10:15:00",
+    "ShowForSeconds":"30",
+    "CountdownEndTime" : "2019-10-21 10:30:00"
+  },
+  {
+    "SlideId": "team-leaderboard",
+    "Header": "Team Lap Leaderboard",
+    "SlideType": 4,
+    "SecondsToForceShowFor": "0",
+    "ForceSlideToShowAtTime": "",
+    "ShowForSeconds":"30"
+  },
+  {
+    "SlideId": "schedule",
+    "Header": "Upcoming Schedule",
+    "SlideType": 5,
+    "SecondsToForceShowFor": "0",
+    "ForceSlideToShowAtTime": "",
+    "ShowForSeconds":"30"
+  },
+  {
+    "SlideId": "instagram",
+    "Header": "",
+    "SlideType": 6,
+    "SecondsToForceShowFor": "0",
+    "ForceSlideToShowAtTime": "",
+    "ShowForSeconds":"30"
+  },
+  {
+    "SlideId": "image-slideshow",
+    "Header": "",
+    "SlideType": 7,
+    "SecondsToForceShowFor": "0",
+    "ForceSlideToShowAtTime": "",
+    "ShowForSeconds":"60"
+  },
+  {
+    "SlideId": "fundraising",
+    "Header": "Team Fundraising Amounts",
+    "SlideType": 9,
+    "SecondsToForceShowFor": "0",
+    "ForceSlideToShowAtTime": "",
+    "ShowForSeconds":"30"
+  },
+  {
+    "SlideId": "random-video",
+    "Header": "",
+    "SlideType": 14,
+    "SecondsToForceShowFor": "0",
+    "ForceSlideToShowAtTime": "",
+    "ShowForSeconds":"30"
+  },
+  {
+    "SlideId": "video-opening-ceromony",
+    "Header": "",
+    "SlideType": 11,
+    "SecondsToForceShowFor": "30",
+    "ForceSlideToShowAtTime": "2019-10-20 10:00:00",
+    "ShowForSeconds":"30",
+    "Filename": "./assets/time-videos/Next - Opening Ceremony.mp4"
+  },
+  {
+    "SlideId": "video-zumba",
+    "Header": "",
+    "SlideType": 11,
+    "SecondsToForceShowFor": "30",
+    "ForceSlideToShowAtTime": "2019-10-20 09:45:00",
+    "ShowForSeconds":"30",
+    "Filename": "./assets/time-videos/Next - Zumba_2.mp4"
+  }
 ]
-

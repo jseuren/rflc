@@ -22,7 +22,7 @@ export class SAPService {
         //const teamLeaderBoard = await this._http.get<Array<TeamLeaderBoard>>('https://rflapp.azurewebsites.net/leaderboard_laps.php').toPromise();
         //return teamLeaderBoard;
 
-        return await this._http.get<TeamLeaderboard>('https://dlxgrpapitest.apimanagement.ap1.hana.ondemand.com/Z_RM/LEADERBOARD_LAPS?$format=json').toPromise();
+        return await this._http.get<TeamLeaderboard>('https://dlxgrpapitest.apimanagement.ap1.hana.ondemand.com/Z_RM/LEADERBOARD_LAPS?$format=json&$orderby=LAPS%20desc').toPromise();
     }
 
     async getSchedule(): Promise<Schedule> {
@@ -35,7 +35,7 @@ export class SAPService {
     async getTeamFundraising(): Promise<Fundraising> {
         // const teamFundraising = await this._http.get<Array<Fundraising>>('https://rflapp.azurewebsites.net/fundraising.php').toPromise();
         // return teamFundraising;
-        return await this._http.get<Fundraising>('https://dlxgrpapitest.apimanagement.ap1.hana.ondemand.com/Z_RM/LEADERBOARD_FUNDRAISING?$format=json').toPromise();
+        return await this._http.get<Fundraising>('https://dlxgrpapitest.apimanagement.ap1.hana.ondemand.com/Z_RM/LEADERBOARD_FUNDRAISING?$format=json&$orderby=amount%20desc').toPromise();
 
     }
 

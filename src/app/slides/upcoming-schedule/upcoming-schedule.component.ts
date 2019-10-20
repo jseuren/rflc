@@ -31,7 +31,9 @@ export class UpcomingScheduleComponent implements OnChanges {
           }, this);
           this.schedule = result;
 
-          this.schedule.d.results = this.schedule.d.results.sort((a,b) => <any>new Date(a.start_date + ' ' + a.start_time) - <any> new Date(b.start_date + ' ' + b.start_time))
+          this.schedule.d.results = this.schedule.d.results.sort((a,b) => <any>new Date(a.start_date + ' ' + a.start_time) - <any> new Date(b.start_date + ' ' + b.start_time));
+          this.schedule.d.results = this.schedule.d.results.filter(a => <any>new Date(a.start_date + ' ' + a.start_time) > new Date());
+
         });
 
       } else {
