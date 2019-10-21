@@ -28,8 +28,10 @@ export class RandomVideoComponent implements OnChanges {
           this.fileName = this.getRandomVideo(results.videos);
           this.videoplayer.nativeElement.src = this.fileName;
           this.videoplayer.nativeElement.addEventListener('loadeddata', function (_event: any) {
-            if(this.videoplayer.nativeElement.paused)
-              this.startVideoPlayer(_event);
+            if (this.videoplayer.nativeElement.paused) {
+              if (this.isActiveSlide)
+                this.startVideoPlayer(_event);
+            }
           }.bind(this));
         })
       } else {

@@ -225,7 +225,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
     if (this.carousel) {
       //for inital load...do some basic setup here
       if (!this.carousel.activeId) {
-        if (slide.SlideType !== SlideType.Video && this.globalSoundControlOn)
+        if (slide.SlideType !== SlideType.Video && slide.SlideType !== SlideType.RandomVideo && this.globalSoundControlOn)
           this.spotifyPlayer.resume();
       }
 
@@ -239,7 +239,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
       //set timer to check for next slide
       //except for video slides
       //they will emit an event with the duration of hte slide
-      if (slide.SlideType !== SlideType.Video) {
+      if (slide.SlideType !== SlideType.Video && slide.SlideType !== SlideType.RandomVideo) {
         if (this.slideMover)
           this.slideMover.unsubscribe();
         this.slideMover = timer(slide.ShowForSeconds * 1000).subscribe(() => this.displayNextSlide());
@@ -270,7 +270,7 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
         });
 
     //if currentslide is not a video slide
-    if (this.slides.find(s => s.SlideId == params.current).SlideType !== SlideType.Video) {
+    if (this.slides.find(s => s.SlideId == params.current).SlideType !== SlideType.Video && this.slides.find(s => s.SlideId == params.current).SlideType !== SlideType.RandomVideo) {
       //If previous slide was a video and current one is not a video the restart Spotify
       from(this.slides)
         .pipe(first(slide => slide.SlideId === params.prev)).subscribe(

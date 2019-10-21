@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef,  OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 import { VideoSlide } from 'src/app/models/video/video-slide';
 
 @Component({
@@ -17,12 +17,15 @@ export class VideoComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     const activeSlide: SimpleChange = changes.isActiveSlide;
     const allowSound: SimpleChange = changes.allowSound;
-    if(activeSlide) {
+    if (activeSlide) {
       if (activeSlide.currentValue === true) {
         this.fileName = this.model.Filename;
         this.videoplayer.nativeElement.src = this.model.Filename;
         this.videoplayer.nativeElement.addEventListener('loadeddata', function (_event: any) {
-          this.startVideoPlayer(_event);
+          if (this.videoplayer.nativeElement.paused) {
+            if (this.isActiveSlide)
+              this.startVideoPlayer(_event);
+          }
         }.bind(this));
       } else {
         this.videoplayer.nativeElement.removeEventListener('loadeddata', this.startVideoPlayer);
@@ -31,12 +34,12 @@ export class VideoComponent implements OnChanges {
         this.fileName = '';
       }
     }
-    
 
-    if(allowSound) {
-      if(allowSound.previousValue != allowSound.currentValue) {
-        if(allowSound.currentValue){
-          if(this.isActiveSlide) {
+
+    if (allowSound) {
+      if (allowSound.previousValue != allowSound.currentValue) {
+        if (allowSound.currentValue) {
+          if (this.isActiveSlide) {
             this.videoplayer.nativeElement.volume = 1;
           }
         } else {
@@ -49,7 +52,7 @@ export class VideoComponent implements OnChanges {
     var duration = this.duration;
 
     if (this.videoplayer.nativeElement.readyState >= 2) {
-      if(!this.allowSound) {
+      if (!this.allowSound) {
         this.videoplayer.nativeElement.volume = 0;
       } else {
         this.videoplayer.nativeElement.volume = 1;
