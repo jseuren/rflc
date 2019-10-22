@@ -46,3 +46,7 @@ Thumbs.db
 /src/assets/videos/*
 /src/assets/rotationimages/*
 /src/assets/time-videos/*
+#web api auth examples not required
+/src/spotifyauth/client_credentials/*
+/src/spotifyauth/implicit_grant/*
+/src/spotifyauth/.gitignore
