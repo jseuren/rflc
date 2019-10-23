@@ -1,21 +1,30 @@
 [
   {
+    "SlideId": "video-zumba",
+    "Header": "",
+    "SlideType": 11,
+    "SecondsToForceShowFor": "30",
+    "ForceSlideToShowAtTime": "2019-10-26 09:30:00",
+    "ShowForSeconds":"30",
+    "Filename": "./assets/time-videos/Next - Zumba_2.mp4"
+  },
+  {
+    "SlideId": "video-zumba2",
+    "Header": "",
+    "SlideType": 11,
+    "SecondsToForceShowFor": "30",
+    "ForceSlideToShowAtTime": "2019-10-26 09:45:00",
+    "ShowForSeconds":"30",
+    "Filename": "./assets/time-videos/Next - Zumba_2.mp4"
+  },
+  {
     "SlideId": "start-of-relay",
     "Header": "Countdown to start",
     "SlideType": 1,
-    "SecondsToForceShowFor": "60",
-    "ForceSlideToShowAtTime": "2019-10-20 10:15:00",
-    "ShowForSeconds":"30",
-    "CountdownEndTime" : "2019-10-20 10:30:00"
-  },
-  {
-    "SlideId": "end-of-relay",
-    "Header": "Time Remaining",
-    "SlideType": 1,
-    "SecondsToForceShowFor": "60",
-    "ForceSlideToShowAtTime": "2019-10-21 10:15:00",
-    "ShowForSeconds":"30",
-    "CountdownEndTime" : "2019-10-21 10:30:00"
+    "SecondsToForceShowFor": "2700",
+    "ForceSlideToShowAtTime": "2019-10-26 09:45:00",
+    "ShowForSeconds":"2700",
+    "CountdownEndTime" : "2019-10-26 10:30:00"
   },
   {
     "SlideId": "team-leaderboard",
@@ -23,7 +32,7 @@
     "SlideType": 4,
     "SecondsToForceShowFor": "0",
     "ForceSlideToShowAtTime": "",
-    "ShowForSeconds":"30"
+    "ShowForSeconds":"600"
   },
   {
     "SlideId": "schedule",
@@ -31,7 +40,7 @@
     "SlideType": 5,
     "SecondsToForceShowFor": "0",
     "ForceSlideToShowAtTime": "",
-    "ShowForSeconds":"30"
+    "ShowForSeconds":"300"
   },
   {
     "SlideId": "instagram",
@@ -39,7 +48,7 @@
     "SlideType": 6,
     "SecondsToForceShowFor": "0",
     "ForceSlideToShowAtTime": "",
-    "ShowForSeconds":"30"
+    "ShowForSeconds":"900"
   },
   {
     "SlideId": "image-slideshow",
@@ -47,7 +56,7 @@
     "SlideType": 7,
     "SecondsToForceShowFor": "0",
     "ForceSlideToShowAtTime": "",
-    "ShowForSeconds":"60"
+    "ShowForSeconds":"900"
   },
   {
     "SlideId": "fundraising",
@@ -55,7 +64,7 @@
     "SlideType": 9,
     "SecondsToForceShowFor": "0",
     "ForceSlideToShowAtTime": "",
-    "ShowForSeconds":"30"
+    "ShowForSeconds":"600"
   },
   {
     "SlideId": "random-video",
@@ -66,21 +75,12 @@
     "ShowForSeconds":"30"
   },
   {
-    "SlideId": "video-opening-ceromony",
-    "Header": "",
-    "SlideType": 11,
-    "SecondsToForceShowFor": "30",
-    "ForceSlideToShowAtTime": "2019-10-20 10:00:00",
-    "ShowForSeconds":"30",
-    "Filename": "./assets/time-videos/Next - Opening Ceremony.mp4"
-  },
-  {
-    "SlideId": "video-zumba",
-    "Header": "",
-    "SlideType": 11,
-    "SecondsToForceShowFor": "30",
-    "ForceSlideToShowAtTime": "2019-10-20 09:45:00",
-    "ShowForSeconds":"30",
-    "Filename": "./assets/time-videos/Next - Zumba_2.mp4"
+    "SlideId": "end-of-relay",
+    "Header": "Time Remaining",
+    "SlideType": 1,
+    "SecondsToForceShowFor": "900",
+    "ForceSlideToShowAtTime": "2019-10-27 10:15:00",
+    "ShowForSeconds":"900",
+    "CountdownEndTime" : "2019-10-27 10:30:00"
   }
 ]
