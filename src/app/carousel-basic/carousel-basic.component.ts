@@ -14,6 +14,7 @@ import { SpotifyPlayerComponent } from '../spotify-player/spotify-player/spotify
 import { ActivatedRoute } from '@angular/router';
 import { MasterVolumeControl } from '../models/SAP Hana/sapcommon';
 import { SAPService } from '../services/sapService';
+import { stringify } from '@angular/core/src/render3/util';
 
 const intervalTime: number = 5000;
 const secondsCounter = interval(1000);
@@ -147,6 +148,8 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
           return false;
         }
       }
+      if(x.ForceSlideToShowAtTime)
+        return false;
       return true;
     });
   }
@@ -156,8 +159,8 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
     //filter out the slides that have a forced show time
     var forcedSlides = this.slidesFromServer ? this.slidesFromServer.filter(x => {
       if (x.ForceSlideToShowAtTime) {
-        var forceTime = moment(x.ForceSlideToShowAtTime);
-        var endTime = moment(x.ForceSlideToShowAtTime).add(x.SecondsToForceShowFor, 'seconds');
+        var forceTime = moment(x.ForceSlideToShowAtTime,'YYYY-MM-DD HH:mm:ss');
+        var endTime = moment(x.ForceSlideToShowAtTime,'YYYY-MM-DD HH:mm:ss').add(x.SecondsToForceShowFor, 'seconds');
         //if the forced time has passed but end forced time is less than now
         if (forceTime < moment() && endTime > moment()) {
           return true;
@@ -166,10 +169,11 @@ export class CarouselBasicComponent implements AfterViewInit, OnDestroy, OnInit 
       return false;
     }) : [];
     //if there are any forced slides
-    if (forcedSlides && forcedSlides.length) {
+    if (forcedSlides && forcedSlides.length == 1) {
       this.slides = forcedSlides;
-      //there may be multipe configured so only allow them to rotate through until they are invalid
-      this.selectSlide(this.getRandomSlide());
+      //dont reselect it if it is currently active as that will rest the counter for when the next slide will display
+      if(this.carousel.activeId !== this.slides[0].SlideId)
+        this.selectSlide(this.slides[0]);
       return true;
     } else {
       return false;
