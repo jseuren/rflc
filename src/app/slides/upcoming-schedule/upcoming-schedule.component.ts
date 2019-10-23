@@ -55,7 +55,7 @@ export class UpcomingScheduleComponent implements OnChanges {
     let diffTime = eventTime - currentTime;
     let duration = moment.duration(diffTime, 'minutes');
     if(diffTime > 0) {
-      return 'In' + duration.asMinutes() + ' minutes time';
+      return 'In ' + duration.asMinutes() + ' minutes time';
     } else {
       return duration.asMinutes() + ' minutes ago';
     }

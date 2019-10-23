@@ -17,4 +17,18 @@
 
 .time-right {
   position: relative;
+  color:black;
+  font-size: 1.5rem;
+}
+
+.widget-options {
+  color:black;
+  font-size: 1.5rem;
+}
+.widget-body {
+  color:black;
+  font-size: 2rem;
+}
+.username{
+  font-size: 2rem;
 }
