@@ -74,7 +74,12 @@ export class SpotifyService {
         //  return of(this.playlistIsCurrentlyPlaying);
         return this.get<SpotifyApi.PlaybackResponse>('https://api.spotify.com/v1/me/player').pipe(
             map((response) => {
-                return response.is_playing
+                try{
+                    this.playlistIsCurrentlyPlaying = response.is_playing;
+                    return response.is_playing
+                } catch {
+                    return this.playlistIsCurrentlyPlaying;
+                }
             })
         );
     }
