@@ -50,3 +50,4 @@ Thumbs.db
 /src/spotifyauth/client_credentials/*
 /src/spotifyauth/implicit_grant/*
 /src/spotifyauth/.gitignore
+/src/spotifyauth/node_modules/*

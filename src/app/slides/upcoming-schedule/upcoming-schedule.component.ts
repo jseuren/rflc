@@ -11,7 +11,7 @@ import { Schedule, SAPScheduleArrayResult } from 'src/app/models/SAP Hana/sapcom
   providers: [SAPService]
 })
 export class UpcomingScheduleComponent implements OnChanges {
- 
+
   @Input() model: UpcomingSchduleSlide;
   @Input() isActiveSlide: boolean;
   schedule: Schedule;
@@ -19,19 +19,19 @@ export class UpcomingScheduleComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     const activeSlide: SimpleChange = changes.isActiveSlide;
-    
-    if(activeSlide) {
+
+    if (activeSlide) {
       if (activeSlide.currentValue === true) {
 
         this.getSchedule().then(result => {
-          result.d.results.forEach(function(item){
+          result.d.results.forEach(function (item) {
             item.timeDescription = this.getTimeParamter(item);
             item.start_time_formatted = this.getStartStartEndTimeParamter(item.start_date + ' ' + item.start_time);
             item.end_time_formatted = this.getStartStartEndTimeParamter(item.end_date + ' ' + item.end_time);
           }, this);
           this.schedule = result;
 
-          this.schedule.d.results = this.schedule.d.results.sort((a,b) => <any>new Date(a.start_date + ' ' + a.start_time) - <any> new Date(b.start_date + ' ' + b.start_time));
+          this.schedule.d.results = this.schedule.d.results.sort((a, b) => <any>new Date(a.start_date + ' ' + a.start_time) - <any>new Date(b.start_date + ' ' + b.start_time));
           this.schedule.d.results = this.schedule.d.results.filter(a => <any>new Date(a.start_date + ' ' + a.start_time) > new Date());
 
         });
@@ -43,22 +43,16 @@ export class UpcomingScheduleComponent implements OnChanges {
   }
 
   getStartStartEndTimeParamter(date_time: string) {
-    let dateTime = moment(date_time,'YYYY-MM-DD HH:mm:ss');
+    let dateTime = moment(date_time, 'YYYY-MM-DD HH:mm:ss');
     console.log(date_time);
     console.log(dateTime);
-   return dateTime.format('HH:mm a');
+    return dateTime.format('HH:mm a');
   }
 
   getTimeParamter(scheduledItem: SAPScheduleArrayResult) {
-    let eventTime = moment(scheduledItem.start_date + ' ' + scheduledItem.start_time ).unix();
-    let currentTime = moment().unix();
-    let diffTime = eventTime - currentTime;
-    let duration = moment.duration(diffTime, 'minutes');
-    if(diffTime > 0) {
-      return 'In ' + duration.asMinutes() + ' minutes time';
-    } else {
-      return duration.asMinutes() + ' minutes ago';
-    }
+
+    var duration = moment.duration(moment(scheduledItem.start_date + ' ' + scheduledItem.start_time, 'YYYY-MM-DD HH:mm').diff(moment()));
+    return 'In ' + Math.round(duration.asMinutes()) + ' minutes time';
   }
 
   async getSchedule(): Promise<Schedule> {
